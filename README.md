@@ -12,3 +12,5 @@ As of 13/02/2023, there is no support from QtCreator to automate the refactoring
 # External References
 Markdown [Link](https://www.markdownguide.org/cheat-sheet/)
 <br>Playlist/Video to get started [Link](https://www.youtube.com/playlist?list=PL3JVwFmb_BnSOj_OtnKlsc2c7Jcs6boyB)
+<br>Argon2 [Binding](https://github.com/p-h-c/phc-winner-argon2#bindings)
+<br> Visual C++ 14.0 to build Argon2 Library [Link](https://answers.microsoft.com/en-us/windows/forum/all/microsoft-visual-c-140/6f0726e2-6c32-4719-9fe5-aa68b5ad8e6d)

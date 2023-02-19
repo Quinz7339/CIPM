@@ -1,9 +1,13 @@
 import sys
+import os
 
-from PyQt6.QtWidgets import QApplication, QWidget, QLineEdit, QPushButton, QLabel, QVBoxLayout, QTextEdit
+from PyQt6.QtWidgets import QApplication, QWidget, QLineEdit, QPushButton, QLabel, QVBoxLayout, QTextEdit,QFileDialog
 from PyQt6.QtGui import QIcon, QFont, QFontDatabase
 from PyQt6.QtCore import Qt
 from PyQt6 import uic
+
+from cryptography.fernet import Fernet
+from argon2 import PasswordHasher
 
 import resource_rc
 
@@ -29,9 +33,10 @@ class Main(QWidget):
         #self.input_masterpassword = QLineEdit()
         #btn_Unlock = QPushButton("Unlock")
         self.btn_CreateDb.clicked.connect(self.CreateDatabase)
+        self.btn_OpenDb.clicked.connect(self.OpenDatabase)  
 
+        '''dummy code'''
         #self.output = QTextEdit()
-
         # layout.addWidget(self.input_masterpassword)
         # layout.addWidget(btn_Unlock)
         # layout.addWidget(self.output)
@@ -43,13 +48,41 @@ class Main(QWidget):
 
 
     def CreateDatabase(self):
+        print ("Hi")
         #1. Let user create database name
         #2. Let user add a descriptionS
         #3. Ask for user master password (include password generator and visisibility toggle)
         #4. Confirm master password
         #5. Done -> Let them store at arbitary file location
 
+        #uid.loadUi('create.ui',self)
+        #self.setWindowTitle("Creating a new CIPM password database...")
+
+        return
+
+
+    def OpenDatabase(self):
+        #snippet adapted from https://www.youtube.com/watch?v=V_TU0eCOVP8&list=PL3JVwFmb_BnSOj_OtnKlsc2c7Jcs6boyB&index=37
+        file_filter = 'CIPM file (*.cipm)'
         
+        #response returns a tuple with 2 values
+        #1. full file path of the selected file
+        #2. file type of the selected file
+        response = QFileDialog.getOpenFileName(
+            self,
+            caption='Select a file',
+            directory=os.getcwd(),
+            filter=file_filter,
+            initialFilter = 'CIPM file (*.cipm)'
+            )
+        file = response[0]
+        if file == '':
+            print ("No file selected")
+            return
+        else: 
+            f = open(file, "r")
+        print (file)
+        #pass the f around
         return
 
     def unlock(self):
