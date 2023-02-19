@@ -1,0 +1,14 @@
+<RCC>
+  <qresource>
+    <file>Icons/Folder.svg</file>
+    <file>Icons/Add.svg</file>
+    <file>Icons/Copy Password.svg</file>
+    <file>Icons/Copy Username.svg</file>
+    <file>Icons/Delete.svg</file>
+    <file>Icons/Edit.svg</file>
+    <file>Icons/Exit.svg</file>
+    <file>Icons/Gear.svg</file>
+    <file>Icons/Lock.svg</file>
+    <file>Icons/Logo.svg</file>
+  </qresource>
+</RCC>
