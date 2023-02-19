@@ -10,5 +10,5 @@ As of 13/02/2023, there is no support from QtCreator to automate the refactoring
 
 
 # External References
-Markdown [Markdown Guide](https://www.markdownguide.org/cheat-sheet/)
+Markdown [Markdown Guide](https://www.markdownguide.org/cheat-sheet/)\n
 Playlist/Video to get started [Link](https://www.youtube.com/playlist?list=PL3JVwFmb_BnSOj_OtnKlsc2c7Jcs6boyB)
