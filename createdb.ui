@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>Form</class>
  <widget class="QWidget" name="Form">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -183,7 +186,11 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit_MasterPasswd_2"/>
+       <widget class="QLineEdit" name="lineEdit_MasterPasswd2">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>

@@ -28,27 +28,10 @@ class CreateDb(QWidget):
         self.btn_dbCreate.setStyleSheet('QPushButton {background-color: #BFBFBF; color: #2B96CB;}')
         self.show()
         print("Showing create DB menu")
-        #solve how to make it show persistently until the operation is done
-        # self.styleSheet('''
-        #     QWidget {
-        #         background-color: #40444B;
-        #         font-size: 18px;  
-        #     }
-        #     QPushButton {
-        #         font-size: 25px;
-        #     }
-        #     QLabel {
-        #         color: #FFFFFF;
-        #     }
-        #     QToolButton{
-        #         background-color: #BFBFBF;
-        #         border-radius: 15px;
-        #     }
-        #     QTextEdit{
-        #         background-color: #BFBFBF;
-        #         border-radius: 15px;
-        #     }    
-        # ''')
+
+        #self.btn_dbCreate.clicked.connect(CreateDb_checkout)
+        self.btn_dbBack.clicked.connect(self.close)
+
     # def createDb_window():
     #     app = QApplication(sys.argv)
     #     window = CreateDb()

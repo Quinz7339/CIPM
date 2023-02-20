@@ -24,6 +24,7 @@ class Ui_Form(object):
     def setupUi(self, Form):
         if not Form.objectName():
             Form.setObjectName(u"Form")
+        Form.setEnabled(True)
         Form.resize(700, 500)
         Form.setMinimumSize(QSize(700, 500))
         icon = QIcon()
@@ -132,10 +133,11 @@ class Ui_Form(object):
 
         self.horizontalLayout_3.addWidget(self.label_5)
 
-        self.lineEdit_MasterPasswd_2 = QLineEdit(self.frame_5)
-        self.lineEdit_MasterPasswd_2.setObjectName(u"lineEdit_MasterPasswd_2")
+        self.lineEdit_MasterPasswd2 = QLineEdit(self.frame_5)
+        self.lineEdit_MasterPasswd2.setObjectName(u"lineEdit_MasterPasswd2")
+        self.lineEdit_MasterPasswd2.setEnabled(True)
 
-        self.horizontalLayout_3.addWidget(self.lineEdit_MasterPasswd_2)
+        self.horizontalLayout_3.addWidget(self.lineEdit_MasterPasswd2)
 
 
         self.verticalLayout.addWidget(self.frame_5)
