@@ -10,6 +10,7 @@ from cryptography.fernet import Fernet
 from argon2 import PasswordHasher
 
 import resource_rc
+from createdb import CreateDb
 
 class Main(QWidget):
     def __init__(self):
@@ -49,6 +50,8 @@ class Main(QWidget):
 
     def CreateDatabase(self):
         print ("Hi")
+        self.createdb = CreateDb()
+        self.createdb.show()
         #1. Let user create database name
         #2. Let user add a descriptionS
         #3. Ask for user master password (include password generator and visisibility toggle)
