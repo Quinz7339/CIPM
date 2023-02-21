@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>700</width>
-    <height>500</height>
+    <height>793</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -105,12 +105,19 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit">
+       <widget class="QLineEdit" name="lineEdit_dbName">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="lbl_dbName_msg">
+        <property name="text">
+         <string/>
         </property>
        </widget>
       </item>
@@ -189,6 +196,13 @@
        <widget class="QLineEdit" name="lineEdit_MasterPasswd2">
         <property name="enabled">
          <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="lbl_MasterPasswd_msg">
+        <property name="text">
+         <string/>
         </property>
        </widget>
       </item>

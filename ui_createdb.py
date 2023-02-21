@@ -25,7 +25,7 @@ class Ui_Form(object):
         if not Form.objectName():
             Form.setObjectName(u"Form")
         Form.setEnabled(True)
-        Form.resize(700, 500)
+        Form.resize(700, 793)
         Form.setMinimumSize(QSize(700, 500))
         icon = QIcon()
         icon.addFile(u":/Icons/Logo.svg", QSize(), QIcon.Normal, QIcon.Off)
@@ -78,15 +78,20 @@ class Ui_Form(object):
 
         self.horizontalLayout.addWidget(self.label_3)
 
-        self.lineEdit = QLineEdit(self.frame)
-        self.lineEdit.setObjectName(u"lineEdit")
+        self.lineEdit_dbName = QLineEdit(self.frame)
+        self.lineEdit_dbName.setObjectName(u"lineEdit_dbName")
         sizePolicy2 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy2.setHorizontalStretch(0)
         sizePolicy2.setVerticalStretch(0)
-        sizePolicy2.setHeightForWidth(self.lineEdit.sizePolicy().hasHeightForWidth())
-        self.lineEdit.setSizePolicy(sizePolicy2)
+        sizePolicy2.setHeightForWidth(self.lineEdit_dbName.sizePolicy().hasHeightForWidth())
+        self.lineEdit_dbName.setSizePolicy(sizePolicy2)
 
-        self.horizontalLayout.addWidget(self.lineEdit)
+        self.horizontalLayout.addWidget(self.lineEdit_dbName)
+
+        self.lbl_dbName_msg = QLabel(self.frame)
+        self.lbl_dbName_msg.setObjectName(u"lbl_dbName_msg")
+
+        self.horizontalLayout.addWidget(self.lbl_dbName_msg)
 
 
         self.verticalLayout.addWidget(self.frame)
@@ -139,6 +144,11 @@ class Ui_Form(object):
 
         self.horizontalLayout_3.addWidget(self.lineEdit_MasterPasswd2)
 
+        self.lbl_MasterPasswd_msg = QLabel(self.frame_5)
+        self.lbl_MasterPasswd_msg.setObjectName(u"lbl_MasterPasswd_msg")
+
+        self.horizontalLayout_3.addWidget(self.lbl_MasterPasswd_msg)
+
 
         self.verticalLayout.addWidget(self.frame_5)
 
@@ -168,9 +178,11 @@ class Ui_Form(object):
         self.lbl_CreateDb.setText(QCoreApplication.translate("Form", u"Input Database Information", None))
         self.label.setText(QCoreApplication.translate("Form", u"Please fill in the name for your newly created password database.", None))
         self.label_3.setText(QCoreApplication.translate("Form", u"Password database name:", None))
+        self.lbl_dbName_msg.setText("")
         self.label_2.setText(QCoreApplication.translate("Form", u"Enter the password to secure and unlock your passsword database.", None))
         self.label_4.setText(QCoreApplication.translate("Form", u"Master password:", None))
         self.label_5.setText(QCoreApplication.translate("Form", u"Renter password:", None))
+        self.lbl_MasterPasswd_msg.setText("")
         self.btn_dbCreate.setText(QCoreApplication.translate("Form", u"Create database", None))
         self.btn_dbBack.setText(QCoreApplication.translate("Form", u"Back", None))
     # retranslateUi
