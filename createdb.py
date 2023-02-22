@@ -1,8 +1,13 @@
-from PyQt6.QtWidgets import QApplication, QLineEdit, QPushButton, QLabel, QVBoxLayout, QWidget
+import os
+
+from PyQt6.QtWidgets import QFileDialog, QLineEdit, QPushButton, QLabel, QVBoxLayout, QWidget
 from PyQt6.QtGui import QIcon, QFont, QFontDatabase
 from PyQt6 import uic
 
-import sys
+from cryptography.fernet import Fernet
+
+import Passwords
+
 
 class CreateDb(QWidget):
     def __init__(self):
@@ -29,13 +34,13 @@ class CreateDb(QWidget):
         self.lineEdit_MasterPasswd2.setEchoMode(QLineEdit.EchoMode.Password)
         
         self.btn_dbCreate.setEnabled(False) #disables the Create button until all fields are filled
-        self.btn_dbCreate.setStyleSheet('QPushButton {background-color: #BFBFBF; color: #2B96CB;}')
+        self.btn_dbCreate.setStyleSheet('QPushButton {background-color: #BFBFBF; color: #2B96CB;}') #sets the Create Database button to grey
         self.show()
 
         self.lineEdit_dbName.textChanged.connect(self.CreateDb_dbName_checker)
         self.lineEdit_MasterPasswd.textChanged.connect(self.CreateDb_fieldChecker)
         self.lineEdit_MasterPasswd2.textChanged.connect(self.CreateDb_fieldChecker)
-
+        
         self.btn_dbCreate.clicked.connect(self.CreateDb_checkout)
         self.btn_dbBack.clicked.connect(self.close)
 
@@ -44,7 +49,7 @@ class CreateDb(QWidget):
      supporting functions for UI logic
 
     """
-    #disables the Create button, shows a message, until a name is entered
+    #function - disables the Create button, shows a message, until a name is entered
     def CreateDb_dbName_checker(self): 
         if (len(self.lineEdit_dbName.text()) <=0):
             self.btn_dbCreate.setEnabled(False)
@@ -54,33 +59,22 @@ class CreateDb(QWidget):
         else:
             self.CreateDb_fieldChecker()
             self.lbl_dbName_msg.setText("")
-
-    # #disables the Create button, shows a message, until a master password is entered
-    # def CreateDb_MasterPasswd_checker(self):
-    #     #display
-    #     if (len(self.lineEdit_MasterPasswd.text()) <=0):
-    #         self.btn_dbCreate.setEnabled(False)
-    #         self.lbl_MasterPasswd_msg.setText("Please enter a master password.")
-    #         self.lbl_MasterPasswd_msg.setStyleSheet('QLabel {color: #FF0000;}')
-    #     elif (len(self.lineEdit_MasterPasswd.text()) >0 & (len(self.lineEdit_MasterPasswd.text()) <8)):
-    #         self.btn_dbCreate.setEnabled(False)
-    #         self.lbl_MasterPasswd_msg.setText("Please enter a password with at least 8 characters.")
-    #     else:
-    #         self.btn_dbCreate.setEnabled(False)
-    #         self.lbl_MasterPasswd_msg.setText("")
     
-    #disables the Create button, shows a message, until all fields are entered and correct
+    #function - disables the Create button, shows a message, until all fields are entered and correct
     def CreateDb_fieldChecker(self):
-        #ensures all fields are entered as intended
-        if (len(self.lineEdit_MasterPasswd.text()) <=0):
+        #checks if master password is empty
+        if (len(self.lineEdit_MasterPasswd.text()) <=0): 
             self.btn_dbCreate.setEnabled(False)
             self.lbl_MasterPasswd_msg.setText("Please enter a master password.")
             self.lbl_MasterPasswd_msg.setStyleSheet('QLabel {color: #FF0000;}')
-        elif((len(self.lineEdit_MasterPasswd.text()) >=0) & ((len(self.lineEdit_MasterPasswd.text()) <=7))):
+
+        #checks if master password is less than 8 characters
+        elif((len(self.lineEdit_MasterPasswd.text()) >=0) & ((len(self.lineEdit_MasterPasswd.text()) <=7))): 
             self.btn_dbCreate.setEnabled(False)
             self.lbl_MasterPasswd_msg.setStyleSheet('QLabel {color: #FF0000;}')
             self.lbl_MasterPasswd_msg.setText("Please enter a password with at least 8 characters.")
-        #(len(self.lineEdit_MasterPasswd.text()) >=8)
+
+        #checks if all fields are filled as intended
         else:
             if (self.lineEdit_MasterPasswd.text() == self.lineEdit_MasterPasswd2.text()) & (len(self.lineEdit_dbName.text()) >=0):
                 self.btn_dbCreate.setEnabled(True)
@@ -94,12 +88,26 @@ class CreateDb(QWidget):
                 self.lbl_MasterPasswd_msg.setText("Entered password does not match.")
                 print("Passwords do not match")           
             
-
+    #function - creates the encrypted database file using the entered database name and password
     def CreateDb_checkout(self):
         print("CreateDb_checkout")
         db_name = self.lineEdit_dbName.text()
         db_master_passwd = self.lineEdit_MasterPasswd.text()
 
+        hash = Passwords.encryptor(db_master_passwd)
+        hash = Fernet(hash)
+        
+        default_dir ="/home/qt_user/Documents"
+        default_filename = os.path.join(default_dir, db_name)
+        filename, _ = QFileDialog.getSaveFileName(
+            self, "Save password database file", default_filename, "CIPM Database file (*.cipm)"
+        )
+        with open(filename,'rb') as db:
+            unencrypted_db = db.read()
+
+        encrypted_db = hash.encrypt(unencrypted_db)
+        with open(filename,'wb') as db:
+            db.write(encrypted_db)
         self.close()
 
 

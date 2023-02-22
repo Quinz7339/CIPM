@@ -2,20 +2,20 @@
 Password manager with cyber education and awareness components.
 
 
-# Working environment
-Python -> version 3.11.1
-PyQt6 -> version 6.4.2
-Argon2-cffi-bindings -> version 21.3.0
+## Working environment
+Python -> version 3.11.1 
+<br>PyQt6 -> version 6.4.2
+<br>Argon2-cffi-bindings -> version 21.3.0
 
 
-# To Refactor/Rename files
+## To Refactor/Rename files
 1. Change the original file name in <projectname>.pyproject to the new file name.
 2. Change the original file name in <projectname>.pyproject.user to the new file name.
 As of 13/02/2023, there is no support from QtCreator to automate the refactoring process with a single click. One would need to rename the filenames manually. Refer:
 [Stack Overflow](https://stackoverflow.com/questions/5528134/how-can-files-and-classes-be-renamed-in-qt-creator)
 
 
-# External References
+## External References
 Markdown [Link](https://www.markdownguide.org/cheat-sheet/)
 <br>Playlist/Video to get started [Youtube](https://www.youtube.com/playlist?list=PL3JVwFmb_BnSOj_OtnKlsc2c7Jcs6boyB)
 <br>Argon2 [Repo](https://github.com/p-h-c/phc-winner-argon2#bindings)
