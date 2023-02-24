@@ -1,6 +1,6 @@
 import os
 
-from PyQt6.QtWidgets import QFileDialog, QLineEdit, QPushButton, QLabel, QVBoxLayout, QWidget
+from PyQt6.QtWidgets import QFileDialog, QLineEdit, QPushButton, QLabel, QVBoxLayout, QWidget, QMessageBox
 from PyQt6.QtGui import QIcon, QFont, QFontDatabase
 from PyQt6 import uic
 
@@ -90,25 +90,55 @@ class CreateDb(QWidget):
             
     #function - creates the encrypted database file using the entered database name and password
     def CreateDb_checkout(self):
-        print("CreateDb_checkout")
+
+        print("Entering folder and file creation phase.")
         db_name = self.lineEdit_dbName.text()
         db_master_passwd = self.lineEdit_MasterPasswd.text()
+        #insert code to produce a plaintext file with a salt
 
-        hash = Passwords.encryptor(db_master_passwd)
-        hash = Fernet(hash)
+        user_path = os.path.expanduser('~') #'C:\Users\<username>'
+        default_dir = user_path+"\\Documents"#'C:\Users\<username>\Documents'
         
-        default_dir ="/home/qt_user/Documents"
-        default_filename = os.path.join(default_dir, db_name)
-        filename, _ = QFileDialog.getSaveFileName(
-            self, "Save password database file", default_filename, "CIPM Database file (*.cipm)"
-        )
-        with open(filename,'rb') as db:
+        folderPath = ''
+        while folderPath == '':
+            try:
+                folderPath = QFileDialog.getExistingDirectory(self, 
+                caption="Select the location to create a new folder to store your password database files...", 
+                directory=default_dir,
+                options=QFileDialog.Option.DontUseNativeDialog
+                )
+                if folderPath == '':
+                    raise Exception("No directories/folders were selected.")
+                folderPath = folderPath + "/" + db_name
+                os.mkdir(folderPath)
+                print("Folder created.")
+            except:
+                error = QMessageBox(self)
+                error.setIcon(QMessageBox.Icon.Critical)
+                error.setText("No files were selected.")
+                error.setInformativeText("Please select a folder to create a new folder to store your password database files.")
+                error.setStandardButtons(QMessageBox.StandardButton.Ok)
+                error.exec()
+                print("Folder creation failed.")
+       
+        salt = Passwords.salter()
+        with open(os.path.join(folderPath, db_name + "_salt.txt"), 'wb') as salt_file:
+            salt_file.write(salt)
+            print ("Salt file created. Salt: ",salt)
+            
+        encryptor = Passwords.encryptor(db_master_passwd, salt)
+        #default_folderPath = os.path.join(default_dir, db_name)
+        
+        db_filename = folderPath + "\\" + db_name + ".CIPM"
+        with open(db_filename,'rb') as db:
             unencrypted_db = db.read()
 
-        encrypted_db = hash.encrypt(unencrypted_db)
-        with open(filename,'wb') as db:
+        encrypted_db = encryptor.encrypt(unencrypted_db)
+        with open(db_filename,'wb') as db:
             db.write(encrypted_db)
         self.close()
-
-
+        
+        #with open(os.path.join(folderPath, "salt.txt"), 'rb') as salt_file:
+            #salt = salt_file.read()
+        
     
