@@ -10,7 +10,7 @@ from cryptography.fernet import Fernet
 from argon2 import PasswordHasher
 
 import resource_rc
-from createdb import CreateDb
+from database import CreateDb, OpenDb
 
 class Main(QWidget):
     def __init__(self):
@@ -25,14 +25,6 @@ class Main(QWidget):
         id = QFontDatabase.addApplicationFont("zh-cn.ttf")
         if id < 0: print("Error")
 
-
-        #Creating layout to store widgets
-        # layout = QVBoxLayout()
-        # self.setLayout(layout)
-        
-        #Creating widgets
-        #self.input_masterpassword = QLineEdit()
-        #btn_Unlock = QPushButton("Unlock")
         self.btn_CreateDb.clicked.connect(self.CreateDatabase)
         self.btn_OpenDb.clicked.connect(self.OpenDatabase)  
 
@@ -52,7 +44,6 @@ class Main(QWidget):
         print ("Hi")
         self.createdb = CreateDb()
         self.createdb.show()
-
         return
 
 
@@ -70,6 +61,7 @@ class Main(QWidget):
             filter=file_filter,
             initialFilter = 'CIPM file (*.cipm)'
             )
+        
         file = response[0]
         if file == '':
             print ("No file selected")
