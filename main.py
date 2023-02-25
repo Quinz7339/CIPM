@@ -19,7 +19,7 @@ class Main(QWidget):
 
         #Initializing landing page UI
         self.setWindowTitle("CIPM - Cybersecrurity Integrated Password Manager")
-        self.resize (640, 480)
+        self.resize (800, 540)
         
         
         id = QFontDatabase.addApplicationFont("zh-cn.ttf")
@@ -52,14 +52,6 @@ class Main(QWidget):
         print ("Hi")
         self.createdb = CreateDb()
         self.createdb.show()
-        #1. Let user create database name
-        #2. Let user add a descriptionS
-        #3. Ask for user master password (include password generator and visisibility toggle)
-        #4. Confirm master password
-        #5. Done -> Let them store at arbitary file location
-
-        #uid.loadUi('create.ui',self)
-        #self.setWindowTitle("Creating a new CIPM password database...")
 
         return
 

@@ -94,10 +94,9 @@ class CreateDb(QWidget):
         print("Entering folder and file creation phase.")
         db_name = self.lineEdit_dbName.text()
         db_master_passwd = self.lineEdit_MasterPasswd.text()
-        #insert code to produce a plaintext file with a salt
 
-        user_path = os.path.expanduser('~') #'C:\Users\<username>'
-        default_dir = user_path+"\\Documents"#'C:\Users\<username>\Documents'
+        user_path = os.path.expanduser('~')     #'C:\Users\<username>'
+        default_dir = user_path+"\\Documents"   #'C:\Users\<username>\Documents'
         
         folderPath = ''
         while folderPath == '':
@@ -112,6 +111,7 @@ class CreateDb(QWidget):
                 folderPath = folderPath + "/" + db_name
                 os.mkdir(folderPath)
                 print("Folder created.")
+
             except:
                 error = QMessageBox(self)
                 error.setIcon(QMessageBox.Icon.Critical)
@@ -121,24 +121,32 @@ class CreateDb(QWidget):
                 error.exec()
                 print("Folder creation failed.")
        
-        salt = Passwords.salter()
-        with open(os.path.join(folderPath, db_name + "_salt.txt"), 'wb') as salt_file:
+        salt = str(Passwords.salter())
+        hi =input ("Salt: " + salt)
+
+        #w is used instead of wb because salt is a string, not bytes
+        with open(os.path.join(folderPath, db_name + "_salt.txt"), 'w') as salt_file:
             salt_file.write(salt)
             print ("Salt file created. Salt: ",salt)
             
-        encryptor = Passwords.encryptor(db_master_passwd, salt)
-        #default_folderPath = os.path.join(default_dir, db_name)
+        encryptor = Passwords.encryptor(bytes(db_master_passwd,'utf-8'), bytes(salt,'utf-8'))
         
-        db_filename = folderPath + "\\" + db_name + ".CIPM"
+        db_filename = folderPath + "//" + db_name + ".CIPM"
+        with open(db_filename,'w') as db:
+            pass
+        
         with open(db_filename,'rb') as db:
             unencrypted_db = db.read()
 
         encrypted_db = encryptor.encrypt(unencrypted_db)
+
         with open(db_filename,'wb') as db:
             db.write(encrypted_db)
+
         self.close()
         
         #with open(os.path.join(folderPath, "salt.txt"), 'rb') as salt_file:
             #salt = salt_file.read()
-        
+
+      
     
