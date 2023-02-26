@@ -6,13 +6,10 @@ from PyQt6.QtGui import QIcon, QFont, QFontDatabase
 from PyQt6.QtCore import Qt
 from PyQt6 import uic
 
-from cryptography.fernet import Fernet
-from argon2 import PasswordHasher
-
 import resource_rc
 from database import CreateDb, OpenDb
 
-class Main(QWidget):
+class Main(QWidget): 
     def __init__(self):
         super().__init__()
         uic.loadUi('login.ui',self)
@@ -21,56 +18,29 @@ class Main(QWidget):
         self.setWindowTitle("CIPM - Cybersecrurity Integrated Password Manager")
         self.resize (800, 540)
         
-        
-        id = QFontDatabase.addApplicationFont("zh-cn.ttf")
-        if id < 0: print("Error")
+        id = QFontDatabase.addApplicationFont("zh-cn.ttf") #changes the application's font to the one specified
+        if id < 0: 
+            print("Error")   #prints error if font is not found
 
         self.btn_CreateDb.clicked.connect(self.CreateDatabase)
         self.btn_OpenDb.clicked.connect(self.OpenDatabase)  
 
-        '''dummy code'''
-        #self.output = QTextEdit()
-        # layout.addWidget(self.input_masterpassword)
-        # layout.addWidget(btn_Unlock)
-        # layout.addWidget(self.output)
-
-
-        '''code block for hiding passwords'''
-        # self.input_masterpassword.setPlaceholderText("Enter Master Password")
-        # self.input_masterpassword.setEchoMode(QLineEdit.EchoMode.Password)
-
+    '''
+        main functions (abstracted) are defined here
+    '''
 
     def CreateDatabase(self):
-        print ("Hi")
+        print ("Create Database function is called in main.py")
         self.createdb = CreateDb()
         self.createdb.show()
         return
 
-
     def OpenDatabase(self):
-        #snippet adapted from https://www.youtube.com/watch?v=V_TU0eCOVP8&list=PL3JVwFmb_BnSOj_OtnKlsc2c7Jcs6boyB&index=37
-        file_filter = 'CIPM file (*.cipm)'
-        
-        #response returns a tuple with 2 values
-        #1. full file path of the selected file
-        #2. file type of the selected file
-        response = QFileDialog.getOpenFileName(
-            self,
-            caption='Select a file',
-            directory=os.getcwd(),
-            filter=file_filter,
-            initialFilter = 'CIPM file (*.cipm)'
-            )
-        
-        file = response[0]
-        if file == '':
-            print ("No file selected")
-            return
-        else: 
-            f = open(file, "r")
-        print (file)
-        #pass the f around
+        print ("Open Database function is called in main.py")
+        self.opendb = OpenDb()
+        #self.opendb.show()
         return
+
 
     def unlock(self):
         inputText = self.input_masterpassword.text()
@@ -103,6 +73,7 @@ if __name__ == "__main__":
 
     window = Main()
     window.show()
+
     #wrap QApplication with sys.exit() to ensure the application is closed properly
     try:
         sys.exit(app.exec())

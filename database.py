@@ -29,6 +29,9 @@ class CreateDb(QWidget):
             }
         ''')
         print("CreateDb UI loaded")
+        self.user_path = os.path.expanduser('~')     #'C:\Users\<username>'
+        self.default_dir = self.user_path+"\\Documents"   #'C:\Users\<username>\Documents'
+
         #makes the password fields show dots instead of characters
         self.lineEdit_MasterPasswd.setEchoMode(QLineEdit.EchoMode.Password)
         self.lineEdit_MasterPasswd2.setEchoMode(QLineEdit.EchoMode.Password)
@@ -36,11 +39,13 @@ class CreateDb(QWidget):
         self.btn_dbCreate.setEnabled(False) #disables the Create button until all fields are filled
         self.btn_dbCreate.setStyleSheet('QPushButton {background-color: #BFBFBF; color: #2B96CB;}') #sets the Create Database button to grey
         self.show()
-
+        
+        #connecting textFields to field checking functions
         self.lineEdit_dbName.textChanged.connect(self.CreateDb_dbName_checker)
         self.lineEdit_MasterPasswd.textChanged.connect(self.CreateDb_fieldChecker)
         self.lineEdit_MasterPasswd2.textChanged.connect(self.CreateDb_fieldChecker)
         
+        #concludes the file creation and encryption process and closes database creation window
         self.btn_dbCreate.clicked.connect(self.CreateDb_checkout)
         self.btn_dbBack.clicked.connect(self.close)
 
@@ -87,66 +92,117 @@ class CreateDb(QWidget):
                 self.lbl_MasterPasswd_msg.setStyleSheet('QLabel {color: #FF0000;}')
                 self.lbl_MasterPasswd_msg.setText("Entered password does not match.")
                 print("Passwords do not match")           
-            
-    #function - creates the encrypted database file using the entered database name and password
-    def CreateDb_checkout(self):
+    
 
+    '''
+        main function for file creation and encryption using entered database name and password
+    '''
+
+    def CreateDb_checkout(self):
         print("Entering folder and file creation phase.")
         db_name = self.lineEdit_dbName.text()
         db_master_passwd = self.lineEdit_MasterPasswd.text()
-
-        user_path = os.path.expanduser('~')     #'C:\Users\<username>'
-        default_dir = user_path+"\\Documents"   #'C:\Users\<username>\Documents'
         
         folderPath = ''
-        while folderPath == '':
-            try:
-                folderPath = QFileDialog.getExistingDirectory(self, 
-                caption="Select the location to create a new folder to store your password database files...", 
-                directory=default_dir,
+        try:
+            folderPath = QFileDialog.getExistingDirectory(
+            self, 
+            caption="Select the location to create a new folder to store your password database files...", 
+            directory=self.default_dir,
+            options=QFileDialog.Option.DontUseNativeDialog
+            )
+            if folderPath == '':
+                raise Exception("No directories/folders were selected.")
+            folderPath = folderPath + "/" + db_name
+            os.mkdir(folderPath)
+            print("Folder created.")
+        except:
+            error = QMessageBox(self)
+            error.setIcon(QMessageBox.Icon.Critical)
+            error.setText("No files were selected.")
+            error.setInformativeText("Please select a folder to create a new folder to store your password database files.")
+            error.setStandardButtons(QMessageBox.StandardButton.Ok)
+            error.exec()
+            print("Folder creation failed.")
+
+        if folderPath != '':
+            salt = str(Passwords.salter())
+            hi =input ("Salt: " + salt)
+
+            #w is used instead of wb because salt is a string, not bytes
+            with open(os.path.join(folderPath, db_name + "_salt.txt"), 'w') as salt_file:
+                salt_file.write(salt)
+                print ("Salt file created. Salt: ",salt)
+                
+            encryptor = Passwords.encryptor(bytes(db_master_passwd,'utf-8'), bytes(salt,'utf-8'))
+            
+            db_filename = folderPath + "//" + db_name + ".CIPM"
+
+            #creates a blank database file
+            with open(db_filename,'w') as db:
+                pass
+            
+            #reads the empty database file and encrypts it
+            with open(db_filename,'rb') as db:
+                unencrypted_db = db.read()
+            
+            print(unencrypted_db)
+            encrypted_db = encryptor.encrypt(unencrypted_db)
+            hi = input (encrypted_db)
+
+            #writes the encrypted database file
+            with open(db_filename,'wb') as db:
+                db.write(encrypted_db)
+            
+            self.close()        
+        
+class OpenDb(QWidget):
+    def __init__(self):
+        super().__init__()
+        #snippet adapted from https://www.youtube.com/watch?v=V_TU0eCOVP8&list=PL3JVwFmb_BnSOj_OtnKlsc2c7Jcs6boyB&index=37
+        self.user_path = os.path.expanduser('~')     #'C:\Users\<username>'
+        self.default_dir = self.user_path+"\\Documents"   #'C:\Users\<username>\Documents'
+        
+        #response returns a tuple with 2 values
+        #1. full file path of the selected file
+        #2. file type of the selected file
+
+        file = ''
+        try:
+            response = QFileDialog.getOpenFileName(
+                self,
+                caption='Select a file',
+                directory=os.getcwd(),
+                filter=self.default_dir,
+                initialFilter = 'CIPM file (*.cipm)',
                 options=QFileDialog.Option.DontUseNativeDialog
                 )
-                if folderPath == '':
-                    raise Exception("No directories/folders were selected.")
-                folderPath = folderPath + "/" + db_name
-                os.mkdir(folderPath)
-                print("Folder created.")
-
-            except:
-                error = QMessageBox(self)
-                error.setIcon(QMessageBox.Icon.Critical)
-                error.setText("No files were selected.")
-                error.setInformativeText("Please select a folder to create a new folder to store your password database files.")
-                error.setStandardButtons(QMessageBox.StandardButton.Ok)
-                error.exec()
-                print("Folder creation failed.")
-       
-        salt = str(Passwords.salter())
-        hi =input ("Salt: " + salt)
-
-        #w is used instead of wb because salt is a string, not bytes
-        with open(os.path.join(folderPath, db_name + "_salt.txt"), 'w') as salt_file:
-            salt_file.write(salt)
-            print ("Salt file created. Salt: ",salt)
-            
-        encryptor = Passwords.encryptor(bytes(db_master_passwd,'utf-8'), bytes(salt,'utf-8'))
+            file = response[0]
+            if file == '':
+                print ("No file selected")
+                raise Exception("No directories/folders were selected.")
+        except:
+            error = QMessageBox(self)
+            error.setIcon(QMessageBox.Icon.Critical)
+            error.setWindowTitle("No file selected.")
+            error.setText("No database file were selected.")
+            error.setInformativeText("Please select a .CIPM file to unlock.")
+            error.setStandardButtons(QMessageBox.StandardButton.Ok)
+            error.exec()
         
-        db_filename = folderPath + "//" + db_name + ".CIPM"
-        with open(db_filename,'w') as db:
-            pass
-        
-        with open(db_filename,'rb') as db:
-            unencrypted_db = db.read()
+        if file != '':
+            with open(file, 'r') as f:
+                print (f.read())
+            hi = input (file)
 
-        encrypted_db = encryptor.encrypt(unencrypted_db)
 
-        with open(db_filename,'wb') as db:
-            db.write(encrypted_db)
+        #open file dialog
+        #get file path
+        #get salt
 
-        self.close()
-        
-        #with open(os.path.join(folderPath, "salt.txt"), 'rb') as salt_file:
-            #salt = salt_file.read()
+        #create ppt slide2 ui
 
-      
-    
+class EncryptDb(QWidget):
+    def __init__(self):
+        super().__init__()
+        #create ppt slide3 ui

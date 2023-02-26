@@ -1,5 +1,5 @@
 # CIPM
-Password manager with cyber education and awareness components.
+Password manager with cyber education and awareness components. Heavily inspired by KeePassXC but developed using the Qt(Python) GUI framework.
 
 
 ## Working environment
@@ -20,3 +20,9 @@ Markdown [Link](https://www.markdownguide.org/cheat-sheet/)
 <br>Playlist/Video to get started [Youtube](https://www.youtube.com/playlist?list=PL3JVwFmb_BnSOj_OtnKlsc2c7Jcs6boyB)
 <br>Argon2 [Repo](https://github.com/p-h-c/phc-winner-argon2#bindings)
 <br> Visual C++ 14.0 to build Argon2 Library [Link](https://answers.microsoft.com/en-us/windows/forum/all/microsoft-visual-c-140/6f0726e2-6c32-4719-9fe5-aa68b5ad8e6d)
+
+## To-do
+1. main.py --> ensure initializing of resources 
+2. main.py --> include a requirement.txt to enable users to install required libraries
+3. readme.md --> include an installation guide
+4. 

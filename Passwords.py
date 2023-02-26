@@ -30,11 +30,6 @@ def encryptor(input_password,input_salt):
     encryptor = Fernet(encoded_hash)
     return encryptor
     
-    hash = argon2Hasher.hash(password)
-    print ("raw hash:", hash)
-    print (hash[-32:])
-    encoded_hash = base64.urlsafe_b64encode(hash[-32:].encode("utf-8"))
-    return encoded_hash
 
 def decryptor(password):
     '''decryption portion'''
