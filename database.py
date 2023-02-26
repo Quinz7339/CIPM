@@ -112,22 +112,24 @@ class CreateDb(QWidget):
             options=QFileDialog.Option.DontUseNativeDialog
             )
             if folderPath == '':
+                print ("No file selected. Closing file dialog.")
                 raise Exception("No directories/folders were selected.")
             folderPath = folderPath + "/" + db_name
             os.mkdir(folderPath)
             print("Folder created.")
         except:
+            print("Exception caught.")
             error = QMessageBox(self)
             error.setIcon(QMessageBox.Icon.Critical)
             error.setText("No files were selected.")
             error.setInformativeText("Please select a folder to create a new folder to store your password database files.")
             error.setStandardButtons(QMessageBox.StandardButton.Ok)
             error.exec()
-            print("Folder creation failed.")
+            print("Exception message closed.")
 
         if folderPath != '':
             salt = str(Passwords.salter())
-            hi =input ("Salt: " + salt)
+            print("Salt: " + salt)
 
             #w is used instead of wb because salt is a string, not bytes
             with open(os.path.join(folderPath, db_name + "_salt.txt"), 'w') as salt_file:
@@ -136,7 +138,7 @@ class CreateDb(QWidget):
                 
             encryptor = Passwords.encryptor(bytes(db_master_passwd,'utf-8'), bytes(salt,'utf-8'))
             
-            db_filename = folderPath + "//" + db_name + ".CIPM"
+            db_filename = folderPath + "//" + db_name + ".cipm"
 
             #creates a blank database file
             with open(db_filename,'w') as db:
@@ -148,7 +150,6 @@ class CreateDb(QWidget):
             
             print(unencrypted_db)
             encrypted_db = encryptor.encrypt(unencrypted_db)
-            hi = input (encrypted_db)
 
             #writes the encrypted database file
             with open(db_filename,'wb') as db:
@@ -174,28 +175,28 @@ class OpenDb(QWidget):
                 caption='Select a file',
                 directory=os.getcwd(),
                 filter=self.default_dir,
-                initialFilter = 'CIPM file (*.cipm)',
+                initialFilter = 'CIPM database file (*.cipm)',
                 options=QFileDialog.Option.DontUseNativeDialog
                 )
             file = response[0]
             if file == '':
-                print ("No file selected")
+                print ("No file selected. Closing file dialog.")
                 raise Exception("No directories/folders were selected.")
         except:
+            print ("Exception caught.")
             error = QMessageBox(self)
             error.setIcon(QMessageBox.Icon.Critical)
             error.setWindowTitle("No file selected.")
             error.setText("No database file were selected.")
-            error.setInformativeText("Please select a .CIPM file to unlock.")
+            error.setInformativeText("Please select a .cipm file to unlock.")
             error.setStandardButtons(QMessageBox.StandardButton.Ok)
             error.exec()
+            print ("Exception message closed.")
         
         if file != '':
-            with open(file, 'r') as f:
+            with open(file, 'rb') as f:
                 print (f.read())
             hi = input (file)
-
-
         #open file dialog
         #get file path
         #get salt
