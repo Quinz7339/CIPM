@@ -30,19 +30,31 @@ class Main(QWidget):
     '''
 
     def CreateDatabase(self):
-        print ("Create Database function is called in main.py")
+        print ("\nCreate Database function is called in main.py")
         self.createdb = CreateDb()
         self.createdb.show()
         return
 
     def OpenDatabase(self):
-        print ("Open Database function is called in main.py")
+        print ("\nOpen Database function is called in main.py")
         self.opendb = OpenDb()
-        #self.opendb.show()
+        self.database = self.opendb.DecryptDb()
+        if self.database == '':
+            print ("main.py - Opening dashboard")
+            self.close()
+            #call the line below and see if can close the original window
+            # self.dashboard = self.Dashboard()
+            return
+        #file in bytes retrieved sucessfully
+
+
+        #print ("Open DB function: ",self.database_file)
         return
 
-
-    def unlock(self):
+    def Dashboard(self):
+        self.close()
+        print ("Hi")
+        #self.dashboard = 
         inputText = self.input_masterpassword.text()
         self.output.setText("You entered {0}".format(inputText))
 

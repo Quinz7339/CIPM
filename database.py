@@ -155,8 +155,9 @@ class CreateDb(QWidget):
             with open(db_filename,'wb') as db:
                 db.write(encrypted_db)
             
-            self.close()        
-        
+            self.close()       
+
+
 class OpenDb(QWidget):
     def __init__(self):
         super().__init__()
@@ -164,22 +165,20 @@ class OpenDb(QWidget):
         self.user_path = os.path.expanduser('~')     #'C:\Users\<username>'
         self.default_dir = self.user_path+"\\Documents"   #'C:\Users\<username>\Documents'
         
-        #response returns a tuple with 2 values
-        #1. full file path of the selected file
-        #2. file type of the selected file
-
-        file = ''
+        file_path = ''
         try:
+            #response returns a tuple with 2 values
+            #1. full file path of the selected file
+            #2. file type of the selected file
             response = QFileDialog.getOpenFileName(
                 self,
                 caption='Select a file',
-                directory=os.getcwd(),
-                filter=self.default_dir,
-                initialFilter = 'CIPM database file (*.cipm)',
+                directory=self.default_dir,
+                filter='CIPM database file (*.cipm)',
                 options=QFileDialog.Option.DontUseNativeDialog
                 )
-            file = response[0]
-            if file == '':
+            file_path = response[0]
+            if file_path == '':
                 print ("No file selected. Closing file dialog.")
                 raise Exception("No directories/folders were selected.")
         except:
@@ -193,15 +192,21 @@ class OpenDb(QWidget):
             error.exec()
             print ("Exception message closed.")
         
-        if file != '':
-            with open(file, 'rb') as f:
-                print (f.read())
-            hi = input (file)
-        #open file dialog
-        #get file path
-        #get salt
+        self.dir_name = os.path.dirname(file_path)
+        print (self.dir_name)
 
-        #create ppt slide2 ui
+        if file_path != '':
+            with open(file_path, 'rb') as f:
+                self.file = f.read()
+                print ("File content",self.file)
+                self.DecryptDb()
+            
+    def DecryptDb(self):
+    #this method needs to return the decrypted database file
+        self.file 
+        print ("bruh - 2")
+        print ("Decrypt db " + self.dir_name)
+        return
 
 class EncryptDb(QWidget):
     def __init__(self):

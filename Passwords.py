@@ -31,23 +31,13 @@ def encryptor(input_password,input_salt):
     return encryptor
     
 
-def decryptor(password):
+def decryptor(input_password,input_salt):
     '''decryption portion'''
     #master_password = input("Please enter your master password: ")
-    try:
-        argon2Hasher = argon2.PasswordHasher(
-        time_cost=16, 
-        memory_cost=2**15, 
-        parallelism=2, 
-        hash_len=32, 
-        salt_len=16)
-
-        argon2Hasher.verify(hash, password)
-        #print ("Correct password.")
-        return True
-    except:
-        #print("Incorrect password.")
-        return False
+    password_hash = argon2.hash_password_raw(password=input_password, salt=input_salt)
+    encoded_hash = base64.urlsafe_b64encode(password_hash[:32])
+    decryptor = Fernet(encoded_hash)
+    return decryptor
 
 def salter():
     '''salt generator'''

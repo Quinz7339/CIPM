@@ -25,4 +25,9 @@ Markdown [Link](https://www.markdownguide.org/cheat-sheet/)
 1. main.py --> ensure initializing of resources 
 2. main.py --> include a requirement.txt to enable users to install required libraries
 3. readme.md --> include an installation guide
-4. 
+4. design UI for database unlocking (unlockdb)
+5. database.py --> call (unlockdb).ui and close original window
+6. database.py --> decrypt db to be sent to interface.py 
+7. password.py --> decryptor
+8. dashboard aka main interface
+9. figure out whether when self.close is called, dashboard function can be called or not
