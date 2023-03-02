@@ -7,6 +7,7 @@ from PyQt6 import uic
 
 import resource_rc
 from database import CreateDb, OpenDb
+import manager
 
 #main class to initialize the landing page
 #this class will hold abstracted functions to call the corresponding UIs
@@ -41,7 +42,7 @@ class Main(QWidget):
     def OpenDatabase(self):
         print ("\nOpen Database function is called in main.py")
         self.opendb = OpenDb()
-        self.opendb.btn_unlockDb.clicked.connect(self.Dashboard)
+        self.opendb.btn_unlockDb.clicked.connect(self.Password_Manager)
         self.database = self.opendb.database
 
         #logic to return the database done dy
@@ -49,13 +50,13 @@ class Main(QWidget):
     '''---------------------------------------------------------------
     function to call dashboard UI - for displaying the main dashboard
     ------------------------------------------------------------------'''
-    def Dashboard(self):
+    def Password_Manager(self):
         if self.database == None:
             print("Database is empty")
         else:
             print("Database is not empty")
             self.close()
-            self.dashboard = Dashboard(self)
+            self.dashboard = manager(self)
         
         #self.dashboard = 
         # inputText = self.input_masterpassword.text()
