@@ -25,8 +25,6 @@ class Main(QWidget):
 
         self.btn_CreateDb.clicked.connect(self.CreateDatabase)
         self.btn_OpenDb.clicked.connect(self.OpenDatabase)  
-
-    
         
     '''-------------------------------------------------------------
     function to call the createdb UI - for database creation
@@ -43,24 +41,25 @@ class Main(QWidget):
     def OpenDatabase(self):
         print ("\nOpen Database function is called in main.py")
         self.opendb = OpenDb()
+        self.opendb.btn_unlockDb.clicked.connect(self.Dashboard)
         self.database = self.opendb.database
-        #logic to return the database done dy
 
-        if self.database != '':
-            print ("Under if - Open DB function:",self.database)
-            return
-        else:
-            return
+        #logic to return the database done dy
 
     '''---------------------------------------------------------------
     function to call dashboard UI - for displaying the main dashboard
     ------------------------------------------------------------------'''
     def Dashboard(self):
-        self.close()
-        print ("Hi")
+        if self.database == None:
+            print("Database is empty")
+        else:
+            print("Database is not empty")
+            self.close()
+            self.dashboard = Dashboard(self)
+        
         #self.dashboard = 
-        inputText = self.input_masterpassword.text()
-        self.output.setText("You entered {0}".format(inputText))
+        # inputText = self.input_masterpassword.text()
+        # self.output.setText("You entered {0}".format(inputText))
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
