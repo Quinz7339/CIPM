@@ -1,5 +1,4 @@
 import sys
-import os
 
 from PyQt6.QtWidgets import QApplication, QWidget, QLineEdit, QPushButton, QLabel, QVBoxLayout, QTextEdit,QFileDialog
 from PyQt6.QtGui import QIcon, QFont, QFontDatabase
@@ -9,6 +8,8 @@ from PyQt6 import uic
 import resource_rc
 from database import CreateDb, OpenDb
 
+#main class to initialize the landing page
+#this class will hold abstracted functions to call the corresponding UIs
 class Main(QWidget): 
     def __init__(self):
         super().__init__()
@@ -25,32 +26,35 @@ class Main(QWidget):
         self.btn_CreateDb.clicked.connect(self.CreateDatabase)
         self.btn_OpenDb.clicked.connect(self.OpenDatabase)  
 
-    '''
-        main functions (abstracted) are defined here
-    '''
-
+    
+        
+    '''-------------------------------------------------------------
+    function to call the createdb UI - for database creation
+    -------------------------------------------------------------'''
     def CreateDatabase(self):
         print ("\nCreate Database function is called in main.py")
         self.createdb = CreateDb()
         self.createdb.show()
         return
 
+    '''-------------------------------------------------------------
+    function to call unlockdb UI - for database unlocking
+    -------------------------------------------------------------'''
     def OpenDatabase(self):
         print ("\nOpen Database function is called in main.py")
         self.opendb = OpenDb()
-        self.database = self.opendb.DecryptDb()
-        if self.database == '':
-            print ("main.py - Opening dashboard")
-            self.close()
-            #call the line below and see if can close the original window
-            # self.dashboard = self.Dashboard()
+        self.database = self.opendb.database
+        #logic to return the database done dy
+
+        if self.database != '':
+            print ("Under if - Open DB function:",self.database)
             return
-        #file in bytes retrieved sucessfully
+        else:
+            return
 
-
-        #print ("Open DB function: ",self.database_file)
-        return
-
+    '''---------------------------------------------------------------
+    function to call dashboard UI - for displaying the main dashboard
+    ------------------------------------------------------------------'''
     def Dashboard(self):
         self.close()
         print ("Hi")
@@ -60,8 +64,8 @@ class Main(QWidget):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-
-    #setstylesheet methods applies to child widgets as well
+    #declaration of the application wide stylesheet
+    #setStyleSheet method applies to all child widgets
     app.setStyleSheet('''
         QWidget {
             background-color: #40444B;
@@ -82,11 +86,10 @@ if __name__ == "__main__":
             border-radius: 15px;
         }    
     ''')
-
     window = Main()
     window.show()
 
-    #wrap QApplication with sys.exit() to ensure the application is closed properly
+    #wraps QApplication with sys.exit() to ensure the application is closed properly
     try:
         sys.exit(app.exec())
     except SystemExit:

@@ -4,25 +4,15 @@ import secrets
 from cryptography.fernet import Fernet
 
 
+'''---------------------------------------------------------------
+function to establish the object to encrypt the password database
+------------------------------------------------------------------'''   
 def encryptor(input_password,input_salt):
     '''
-    hashing portion aka encryption
-
+    Note:
     The developer is aware  that hashing and encryption are different.
     However, a hashed password is used to encrypt the password database.
-
-    Function - returns a file encrypting object
-    
     '''
-    #code adapted from https://cryptobook.nakov.com/mac-and-key-derivation/argon2
-    
-    #master_password = input("Please enter your master password: ")
-    # argon2Hasher = argon2.PasswordHasher(
-    #     time_cost=16, 
-    #     memory_cost=2**15, 
-    #     parallelism=2, 
-    #     hash_len=32, 
-    #     salt_len=16)
 
     #code adapted from https://stackoverflow.com/questions/49465692/is-it-possible-to-encrypt-then-decrypt-data-securely-against-a-password-in-pytho
     password_hash = argon2.hash_password_raw(password=input_password, salt=input_salt)
@@ -30,7 +20,9 @@ def encryptor(input_password,input_salt):
     encryptor = Fernet(encoded_hash)
     return encryptor
     
-
+'''---------------------------------------------------------------
+function to establish the object to decrypt the password database
+------------------------------------------------------------------''' 
 def decryptor(input_password,input_salt):
     '''decryption portion'''
     #master_password = input("Please enter your master password: ")
@@ -39,6 +31,9 @@ def decryptor(input_password,input_salt):
     decryptor = Fernet(encoded_hash)
     return decryptor
 
+'''------------------------------------------------------------------------
+function to generate a randomly generated salt to hash the entered password
+---------------------------------------------------------------------------''' 
 def salter():
     '''salt generator'''
     #code adapted from https://stackoverflow.com/questions/2257441/random-string-generation-with-upper-case-letters-and-digits-in-python

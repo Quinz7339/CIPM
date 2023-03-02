@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>806</width>
-    <height>524</height>
+    <height>546</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -67,6 +67,9 @@
         <property name="text">
          <string>Unlocking &lt;filename&gt; database:</string>
         </property>
+        <property name="margin">
+         <number>8</number>
+        </property>
        </widget>
       </item>
       <item>
@@ -80,7 +83,7 @@
          <string>Location: &lt;insert text here&gt;</string>
         </property>
         <property name="margin">
-         <number>0</number>
+         <number>8</number>
         </property>
         <property name="indent">
          <number>0</number>
@@ -100,10 +103,10 @@
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <property name="leftMargin">
-          <number>15</number>
+          <number>20</number>
          </property>
          <property name="topMargin">
-          <number>25</number>
+          <number>15</number>
          </property>
          <property name="rightMargin">
           <number>15</number>
@@ -151,14 +154,24 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QPushButton" name="pushButton">
+             <widget class="QPushButton" name="btn_unlockDb">
+              <property name="font">
+               <font>
+                <family>HYWenHei</family>
+               </font>
+              </property>
               <property name="text">
                <string>Unlock</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_2">
+             <widget class="QPushButton" name="btn_cancelUnlock">
+              <property name="font">
+               <font>
+                <family>HYWenHei</family>
+               </font>
+              </property>
               <property name="text">
                <string>Cancel</string>
               </property>

@@ -8,7 +8,9 @@ from cryptography.fernet import Fernet
 
 import Passwords
 
-
+############################################################################################################
+################             Class to create new password database     #####################################
+############################################################################################################
 class CreateDb(QWidget):
     def __init__(self):
         super().__init__()
@@ -49,11 +51,9 @@ class CreateDb(QWidget):
         self.btn_dbCreate.clicked.connect(self.CreateDb_checkout)
         self.btn_dbBack.clicked.connect(self.close)
 
-    """
-
-     supporting functions for UI logic
-
-    """
+    """-------------------------------------------------------------
+     supporting functions for CreateDb user interface logic
+    -------------------------------------------------------------"""
     #function - disables the Create button, shows a message, until a name is entered
     def CreateDb_dbName_checker(self): 
         if (len(self.lineEdit_dbName.text()) <=0):
@@ -94,16 +94,17 @@ class CreateDb(QWidget):
                 print("Passwords do not match")           
     
 
-    '''
-        main function for file creation and encryption using entered database name and password
-    '''
-
+    '''-------------------------------------------------------------------------------------
+    main function for file creation and encryption using entered database name and password
+    ----------------------------------------------------------------------------------------''' 
     def CreateDb_checkout(self):
         print("Entering folder and file creation phase.")
         db_name = self.lineEdit_dbName.text()
         db_master_passwd = self.lineEdit_MasterPasswd.text()
         
         folderPath = ''
+
+        #try catch block to catch if no folder is selected for database file creation
         try:
             folderPath = QFileDialog.getExistingDirectory(
             self, 
@@ -127,6 +128,7 @@ class CreateDb(QWidget):
             error.exec()
             print("Exception message closed.")
 
+        #if a folder is selected, the salt file is created and the database file is created and encrypted
         if folderPath != '':
             salt = str(Passwords.salter())
             print("Salt: " + salt)
@@ -135,7 +137,8 @@ class CreateDb(QWidget):
             with open(os.path.join(folderPath, db_name + "_salt.txt"), 'w') as salt_file:
                 salt_file.write(salt)
                 print ("Salt file created. Salt: ",salt)
-                
+
+            #establishing the parameters for the encryptor function    
             encryptor = Passwords.encryptor(bytes(db_master_passwd,'utf-8'), bytes(salt,'utf-8'))
             
             db_filename = folderPath + "//" + db_name + ".cipm"
@@ -149,26 +152,42 @@ class CreateDb(QWidget):
                 unencrypted_db = db.read()
             
             print(unencrypted_db)
+
+            #encrypts the database file
             encrypted_db = encryptor.encrypt(unencrypted_db)
 
             #writes the encrypted database file
             with open(db_filename,'wb') as db:
                 db.write(encrypted_db)
-            
             self.close()       
 
-
+############################################################################################################
+################             Class to unlock selected database      ########################################
+############################################################################################################
 class OpenDb(QWidget):
     def __init__(self):
         super().__init__()
-        #snippet adapted from https://www.youtube.com/watch?v=V_TU0eCOVP8&list=PL3JVwFmb_BnSOj_OtnKlsc2c7Jcs6boyB&index=37
-        self.user_path = os.path.expanduser('~')     #'C:\Users\<username>'
-        self.default_dir = self.user_path+"\\Documents"   #'C:\Users\<username>\Documents'
-        
+        self.user_path = os.path.expanduser('~')            #'C:\Users\<username>'
+        self.default_dir = self.user_path+"\\Documents"     #'C:\Users\<username>\Documents'
+        uic.loadUi('unlockdb.ui', self)
+
+        #styling of the unlockdb.ui window
+        self.btn_unlockDb.setStyleSheet('QPushButton {background-color: #5B9BD5; color: #FFFFFF; font-size: 18px}')
+        self.btn_cancelUnlock.setStyleSheet('QPushButton {background-color: #40444B; color: #A6A6A6; font-size: 18px}')
+        self.lineEdit_
+        self.SelectDb()
+        self.database = ''
+
+    '''-------------------------------------------------------------
+    function to select the database file to be opened and decrypted
+    -------------------------------------------------------------'''       
+    def SelectDb(self):
         file_path = ''
+
+        #try catch block to catch if no file is selected
         try:
-            #response returns a tuple with 2 values
-            #1. full file path of the selected file
+            #QFileDialog (response variable) returns a tuple with 2 values
+            #1. full file path of the selected file   <--- this is the value we want
             #2. file type of the selected file
             response = QFileDialog.getOpenFileName(
                 self,
@@ -192,21 +211,46 @@ class OpenDb(QWidget):
             error.exec()
             print ("Exception message closed.")
         
+        self.file_path = file_path
         self.dir_name = os.path.dirname(file_path)
-        print (self.dir_name)
 
-        if file_path != '':
-            with open(file_path, 'rb') as f:
-                self.file = f.read()
-                print ("File content",self.file)
-                self.DecryptDb()
-            
+        if ".cipm" not in self.file_path:
+            return ""
+        else:
+            print (self.file_path)
+            self.lbl_unlockFileName.setText("Unlocking {} CIPM database".format(os.path.basename(self.file_path)))
+            self.lbl_unlockFileDir.setText("Location {}".format(self.dir_name))
+            self.show()
+            self.lineEdit_MasterPasswd.setEchoMode(QLineEdit.EchoMode.Password)
+            self.btn_unlockDb.clicked.connect(self.DecryptDb)
+            self.btn_cancelUnlock.clicked.connect(self.close)
+
     def DecryptDb(self):
-    #this method needs to return the decrypted database file
-        self.file 
-        print ("bruh - 2")
-        print ("Decrypt db " + self.dir_name)
-        return
+        db_master_passwd = self.lineEdit_MasterPasswd.text()
+        file_name = os.path.basename(self.file_path).split(".")[0]
+        with open (self.dir_name + "//" + file_name + "_salt.txt", 'r') as salt_file:
+            salt = salt_file.read()
+        with open (self.file_path, 'rb') as db:
+            encrypted_db = db.read()
+        
+        #create UI for inputting master password    
+        self.db_master_passwd = self.lineEdit_MasterPasswd.text()
+        try:
+            decryptor = Passwords.decryptor(bytes(db_master_passwd,'utf-8'), bytes(salt,'utf-8'))
+            decrypted_db = decryptor.decrypt(encrypted_db)
+            print ("Decrypt db " + self.dir_name)
+            print ("Content of db : " + decrypted_db.decode())
+            self.close()
+            self.database = decrypted_db
+        except: 
+            error = QMessageBox(self)
+            error.setIcon(QMessageBox.Icon.Critical)
+            error.setWindowTitle("Incorrect password.")
+            error.setText("The password you entered is incorrect.")
+            error.setInformativeText("Please try again.")
+            error.setStandardButtons(QMessageBox.StandardButton.Ok)
+            error.exec()
+            return
 
 class EncryptDb(QWidget):
     def __init__(self):
