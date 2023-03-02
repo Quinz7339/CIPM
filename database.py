@@ -51,9 +51,9 @@ class CreateDb(QWidget):
         self.btn_dbCreate.clicked.connect(self.CreateDb_checkout)
         self.btn_dbBack.clicked.connect(self.close)
 
-    """-------------------------------------------------------------
-     supporting functions for CreateDb user interface logic
-    -------------------------------------------------------------"""
+    """----------------------------------------------------------------------
+     supporting functions for CreateDb user interface logic - fields checker
+    -------------------------------------------------------------------------"""
     #function - disables the Create button, shows a message, until a name is entered
     def CreateDb_dbName_checker(self): 
         if (len(self.lineEdit_dbName.text()) <=0):
@@ -101,7 +101,6 @@ class CreateDb(QWidget):
         print("Entering folder and file creation phase.")
         db_name = self.lineEdit_dbName.text()
         db_master_passwd = self.lineEdit_MasterPasswd.text()
-        
         folderPath = ''
 
         #try catch block to catch if no folder is selected for database file creation
@@ -169,12 +168,15 @@ class OpenDb(QWidget):
         super().__init__()
         self.user_path = os.path.expanduser('~')            #'C:\Users\<username>'
         self.default_dir = self.user_path+"\\Documents"     #'C:\Users\<username>\Documents'
+        
+        self.decrypted_flag = False #flag to enable passing of decryption status
         uic.loadUi('unlockdb.ui', self)
 
         #styling of the unlockdb.ui window
+        self.setWindowTitle("Unlocking database....")
         self.btn_unlockDb.setStyleSheet('QPushButton {background-color: #5B9BD5; color: #FFFFFF; font-size: 18px}')
         self.btn_cancelUnlock.setStyleSheet('QPushButton {background-color: #40444B; color: #A6A6A6; font-size: 18px}')
-        self.lineEdit_
+        self.lineEdit_MasterPasswd.setStyleSheet('QLineEdit {background-color: #FFFFFF; color: #000000; font-size: 18px}')
         self.SelectDb()
         self.database = ''
 
@@ -218,8 +220,8 @@ class OpenDb(QWidget):
             return ""
         else:
             print (self.file_path)
-            self.lbl_unlockFileName.setText("Unlocking {} CIPM database".format(os.path.basename(self.file_path)))
-            self.lbl_unlockFileDir.setText("Location {}".format(self.dir_name))
+            self.lbl_unlockFileName.setText("Unlocking [{}] CIPM database".format(os.path.basename(self.file_path)))
+            self.lbl_unlockFileDir.setText("Location: {}".format(self.dir_name))
             self.show()
             self.lineEdit_MasterPasswd.setEchoMode(QLineEdit.EchoMode.Password)
             self.btn_unlockDb.clicked.connect(self.DecryptDb)
@@ -228,6 +230,8 @@ class OpenDb(QWidget):
     '''-------------------------------------------------------------
     supporting function to decrypt the selected database file
     -------------------------------------------------------------''' 
+    def has_decrypted(self):
+        return True if self.decrypted_flag == True else False
     def DecryptDb(self):
         db_master_passwd = self.lineEdit_MasterPasswd.text()
         file_name = os.path.basename(self.file_path).split(".")[0]
@@ -244,6 +248,8 @@ class OpenDb(QWidget):
             print ("Content of db : " + decrypted_db.decode())
             self.close()
             self.database = decrypted_db
+            #self.decrypted_flag = True
+            #print(str(self.decrypted_flag))
         except: 
             error = QMessageBox(self)
             error.setIcon(QMessageBox.Icon.Critical)
@@ -253,6 +259,8 @@ class OpenDb(QWidget):
             error.setStandardButtons(QMessageBox.StandardButton.Ok)
             error.exec()
             return
+        if self.database != "":
+            self.decrypted_flag = True  
 
 class EncryptDb(QWidget):
     def __init__(self):
