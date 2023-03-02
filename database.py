@@ -224,7 +224,10 @@ class OpenDb(QWidget):
             self.lineEdit_MasterPasswd.setEchoMode(QLineEdit.EchoMode.Password)
             self.btn_unlockDb.clicked.connect(self.DecryptDb)
             self.btn_cancelUnlock.clicked.connect(self.close)
-
+    
+    '''-------------------------------------------------------------
+    supporting function to decrypt the selected database file
+    -------------------------------------------------------------''' 
     def DecryptDb(self):
         db_master_passwd = self.lineEdit_MasterPasswd.text()
         file_name = os.path.basename(self.file_path).split(".")[0]
@@ -232,8 +235,7 @@ class OpenDb(QWidget):
             salt = salt_file.read()
         with open (self.file_path, 'rb') as db:
             encrypted_db = db.read()
-        
-        #create UI for inputting master password    
+           
         self.db_master_passwd = self.lineEdit_MasterPasswd.text()
         try:
             decryptor = Passwords.decryptor(bytes(db_master_passwd,'utf-8'), bytes(salt,'utf-8'))

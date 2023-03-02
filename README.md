@@ -22,12 +22,12 @@ Markdown [Link](https://www.markdownguide.org/cheat-sheet/)
 <br> Visual C++ 14.0 to build Argon2 Library [Link](https://answers.microsoft.com/en-us/windows/forum/all/microsoft-visual-c-140/6f0726e2-6c32-4719-9fe5-aa68b5ad8e6d)
 
 ## To-do
-1. main.py --> ensure initializing of resources 
-2. main.py --> include a requirement.txt to enable users to install required libraries
-3. readme.md --> include an installation guide
-4. design UI for database unlocking (unlockdb)
-5. database.py --> call (unlockdb).ui and close original window
-6. database.py --> decrypt db to be sent to interface.py 
-7. password.py --> decryptor
-8. dashboard aka main interface
-9. figure out whether when self.close is called, dashboard function can be called or not
+- main.py --> ensure initializing of resources 
+- main.py --> include a requirement.txt to enable users to install required libraries
+- readme.md --> include an installation guide
+~~- design UI for database unlocking (unlockdb)~~
+- database.py --> call (unlockdb).ui and close original window
+- database.py --> decrypt db to be sent to interface.py 
+~~- password.py --> decryptor~~
+- dashboard aka main interface
+- figure out whether when self.close is called, dashboard function can be called or not
