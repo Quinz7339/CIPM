@@ -1,11 +1,8 @@
-import os
-
 from PyQt6.QtWidgets import QFileDialog, QLineEdit, QPushButton, QLabel, QVBoxLayout, QWidget, QMessageBox
 from PyQt6.QtGui import QIcon, QFont, QFontDatabase
 from PyQt6 import uic
 
-from cryptography.fernet import Fernet
-
+import os
 import Passwords
 
 ############################################################################################################

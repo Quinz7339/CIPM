@@ -1,13 +1,12 @@
-import sys
-
 from PyQt6.QtWidgets import QApplication, QWidget, QLineEdit, QPushButton, QLabel, QVBoxLayout, QTextEdit,QFileDialog
 from PyQt6.QtGui import QIcon, QFont, QFontDatabase
 from PyQt6.QtCore import Qt
 from PyQt6 import uic
 
+import sys
 import resource_rc
 from database import CreateDb, OpenDb
-import manager
+from manager import Manager
 
 #main class to initialize the landing page
 #this class will hold abstracted functions to call the corresponding UIs
@@ -42,6 +41,8 @@ class Main(QWidget):
     def OpenDatabase(self):
         print ("\nOpen Database function is called in main.py")
         self.opendb = OpenDb()
+
+        #triggers the password manager UI when the unlock button is clicked
         self.opendb.btn_unlockDb.clicked.connect(self.Password_Manager)
         self.database = self.opendb.database
 
@@ -56,7 +57,7 @@ class Main(QWidget):
         else:
             print("Database is not empty")
             self.close()
-            self.dashboard = manager(self)
+            self.dashboard = Manager()
         
         #self.dashboard = 
         # inputText = self.input_masterpassword.text()

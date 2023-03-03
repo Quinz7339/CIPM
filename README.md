@@ -31,3 +31,8 @@ Markdown [Link](https://www.markdownguide.org/cheat-sheet/)
 ~~- password.py --> decryptor~~
 - dashboard aka main interface
 - figure out whether when self.close is called, dashboard function can be called or not
+
+- extension: rss news site
+- extension: password integration
+- extension: security tips (sendiri generate tips)
+- extension: malicious link detection (either thru webpage signature or virustotal)
