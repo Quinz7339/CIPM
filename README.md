@@ -30,7 +30,11 @@ Markdown [Link](https://www.markdownguide.org/cheat-sheet/)
 - database.py --> decrypt db to be sent to interface.py 
 ~~- password.py --> decryptor~~
 - dashboard aka main interface
-- figure out whether when self.close is called, dashboard function can be called or not
+- load credentials dynamically into QTable
+- manager.py --> Add Credential and be reflected in table
+- manager.py --> fetch favicon based on entered domain
+- manager.py --> Edit Credential and be reflected in table
+~~- figure out whether when self.close is called, dashboard function can be called or not~~
 
 - extension: rss news site
 - extension: password integration

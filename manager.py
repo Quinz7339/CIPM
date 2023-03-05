@@ -57,12 +57,14 @@ class Manager(QMainWindow):
     
     def exitManager(self):
         print("Exit Manager")
-        self.exitManager()
+        self.lockDatabase()
+        self.close()
         return
     def lockDatabase(self):
         print("Lock Database")
         return
     def addEntry(self):
+        
         print("Add Entry")
         return
     def editEntry(self):
@@ -74,33 +76,33 @@ class Manager(QMainWindow):
 
 
 '''comment the code block below after testing'''
-# if __name__ == "__main__":
-#     app = QApplication(sys.argv)
-#     app.setStyleSheet('''
-#         QWidget {
-#             background-color: #40444B;
-#             font-size: 18px;  
-#         }
-#         QPushButton {
-#             font-size: 25px;
-#         }
-#         QLabel {
-#             color: #FFFFFF;
-#         }
-#         QToolButton{
-#             background-color: #BFBFBF;
-#             border-radius: 15px;
-#         }
-#         QTextEdit{
-#             background-color: #BFBFBF;
-#             border-radius: 15px;
-#         }    
-#     ''')
-#     window = Manager()
-#     window.show()
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    app.setStyleSheet('''
+        QWidget {
+            background-color: #40444B;
+            font-size: 18px;  
+        }
+        QPushButton {
+            font-size: 25px;
+        }
+        QLabel {
+            color: #FFFFFF;
+        }
+        QToolButton{
+            background-color: #BFBFBF;
+            border-radius: 15px;
+        }
+        QTextEdit{
+            background-color: #BFBFBF;
+            border-radius: 15px;
+        }    
+    ''')
+    window = Manager()
+    window.show()
 
-#     #wraps QApplication with sys.exit() to ensure the application is closed properly
-#     try:
-#         sys.exit(app.exec())
-#     except SystemExit:
-#         print("Closing Window...")
+    #wraps QApplication with sys.exit() to ensure the application is closed properly
+    try:
+        sys.exit(app.exec())
+    except SystemExit:
+        print("Closing Window...")
