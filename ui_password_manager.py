@@ -118,10 +118,14 @@ class Ui_MainWindow(object):
         __qtablewidgetitem5 = QTableWidgetItem()
         self.table_credentialList.setHorizontalHeaderItem(5, __qtablewidgetitem5)
         self.table_credentialList.setObjectName(u"table_credentialList")
-        self.table_credentialList.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        font = QFont()
+        font.setFamilies([u"HYWenHei"])
+        self.table_credentialList.setFont(font)
+        self.table_credentialList.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.table_credentialList.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.table_credentialList.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.table_credentialList.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.table_credentialList.setSortingEnabled(True)
 
         self.verticalLayout.addWidget(self.table_credentialList)
 
@@ -240,22 +244,22 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2 = QHBoxLayout(self.frame)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.horizontalLayout_2.setContentsMargins(500, -1, -1, -1)
-        self.btn_Confirm = QPushButton(self.frame)
-        self.btn_Confirm.setObjectName(u"btn_Confirm")
+        self.btn_Cancel = QPushButton(self.frame)
+        self.btn_Cancel.setObjectName(u"btn_Cancel")
         sizePolicy4 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         sizePolicy4.setHorizontalStretch(0)
         sizePolicy4.setVerticalStretch(0)
-        sizePolicy4.setHeightForWidth(self.btn_Confirm.sizePolicy().hasHeightForWidth())
-        self.btn_Confirm.setSizePolicy(sizePolicy4)
-
-        self.horizontalLayout_2.addWidget(self.btn_Confirm)
-
-        self.btn_Cancel = QPushButton(self.frame)
-        self.btn_Cancel.setObjectName(u"btn_Cancel")
         sizePolicy4.setHeightForWidth(self.btn_Cancel.sizePolicy().hasHeightForWidth())
         self.btn_Cancel.setSizePolicy(sizePolicy4)
 
         self.horizontalLayout_2.addWidget(self.btn_Cancel)
+
+        self.btn_Confirm = QPushButton(self.frame)
+        self.btn_Confirm.setObjectName(u"btn_Confirm")
+        sizePolicy4.setHeightForWidth(self.btn_Confirm.sizePolicy().hasHeightForWidth())
+        self.btn_Confirm.setSizePolicy(sizePolicy4)
+
+        self.horizontalLayout_2.addWidget(self.btn_Confirm)
 
 
         self.gridLayout.addWidget(self.frame, 6, 2, 1, 1)
@@ -329,8 +333,8 @@ class Ui_MainWindow(object):
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"Username:", None))
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"Title:", None))
         self.label_5.setText(QCoreApplication.translate("MainWindow", u"Expiry Date:", None))
-        self.btn_Confirm.setText(QCoreApplication.translate("MainWindow", u"Cancel", None))
-        self.btn_Cancel.setText(QCoreApplication.translate("MainWindow", u"Confirm", None))
+        self.btn_Cancel.setText(QCoreApplication.translate("MainWindow", u"Cancel", None))
+        self.btn_Confirm.setText(QCoreApplication.translate("MainWindow", u"Confirm", None))
         self.toolBar.setWindowTitle(QCoreApplication.translate("MainWindow", u"toolBar", None))
     # retranslateUi
 

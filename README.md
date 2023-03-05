@@ -30,7 +30,12 @@ Markdown [Link](https://www.markdownguide.org/cheat-sheet/)
 - database.py --> decrypt db to be sent to interface.py 
 ~~- password.py --> decryptor~~
 - dashboard aka main interface
-- load credentials dynamically into QTable
+~~- load credentials dynamically into QTable~~ (done semi dynamically)
+- track user selected credential, prompt info into the existing fields
+- if any fields are changed upon clicking "Confirm", update the dictionary
+- if nothing is changed, set the "Confirm" button to be disabled
+- add password generating function
+- add show/hide password function
 - manager.py --> Add Credential and be reflected in table
 - manager.py --> fetch favicon based on entered domain
 - manager.py --> Edit Credential and be reflected in table

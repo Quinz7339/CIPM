@@ -1,5 +1,6 @@
-from PyQt6.QtWidgets import QApplication, QWidget,QMainWindow
+from PyQt6.QtWidgets import QApplication, QWidget,QMainWindow, QButtonGroup, QTableWidgetItem
 from PyQt6 import uic
+import ast
 import sys
 
 import resource_rc
@@ -27,6 +28,11 @@ class Manager(QMainWindow):
         self.database = None
         self.showCredentialInfo()
 
+        #index 0 = main page
+        #index 1 = add entry page
+        #index 2 = edit entry page
+        self.stackedWidget.setCurrentIndex(0)
+
         #estalishing connections for the toolbar buttons
         self.actionLock.triggered.connect(self.lockDatabase)
         self.actionAdd_Entry.triggered.connect(self.addEntry)
@@ -34,25 +40,31 @@ class Manager(QMainWindow):
         self.actionDelete_Entry.triggered.connect(self.deleteEntry)
         self.actionExit.triggered.connect(self.exitManager)
 
+        self.actionAdd_Entry.triggered.connect(lambda:self.stackedWidget.setCurrentIndex(1))
+        self.actionEdit_Entry.triggered.connect(lambda:self.stackedWidget.setCurrentIndex(1))
         
-        #insert code to intialize UI styling
         self.show()
         
 
     def showCredentialInfo(self):
-        credentialList = []
-        credentialInfos = []
-        #self.database = "icon here,title,username,password,url,remarks\nicon2 here,title2,username2,password2,url2,remarks2"
+        with open ('D:\Studies\Degree Year 3\FYP\CIPM\dict.txt','r') as f:
+            self.database1 = f.readlines()
+        credList=[]
         try:
-            for credential in self.database.split("\n"):
-                credentialInfos = credential.split(",")
-                credentialList.append(credentialInfos)
+            for lines in self.database1:
+                cred= ast.literal_eval(lines) #evaluates the string as a dictionary
+                credList.append(cred)
         except:
             pass
-        #insert code of adding credentialList to the table
-        
-        print ("Credential list",credentialList)
-
+        self.table_credentialList.setRowCount(len(credList))
+        self.table_credentialList.setColumnCount(6)
+        for creds in credList:
+            self.table_credentialList.setItem(credList.index(creds),0,QTableWidgetItem(creds['icon']))
+            self.table_credentialList.setItem(credList.index(creds),1,QTableWidgetItem(creds['title']))
+            self.table_credentialList.setItem(credList.index(creds),2,QTableWidgetItem(creds['username']))
+            self.table_credentialList.setItem(credList.index(creds),3,QTableWidgetItem(creds['url']))
+            self.table_credentialList.setItem(credList.index(creds),4,QTableWidgetItem(creds['remarks']))
+            self.table_credentialList.setItem(credList.index(creds),5,QTableWidgetItem(creds['dateMod']))
         return
     
     def exitManager(self):
@@ -63,11 +75,24 @@ class Manager(QMainWindow):
     def lockDatabase(self):
         print("Lock Database")
         return
+    
+    def entry_UI(self):
+        self.btn_Confirm.setStyleSheet('QPushButton {background-color: #5B9BD5; color: #FFFFFF; font-size: 18px}')
+        self.btn_Cancel.setStyleSheet('QPushButton {background-color: #40444B; color: #A6A6A6; font-size: 18px}')
+        self.stackedWidget.btn_Confirm.clicked.connect(lambda:self.stackedWidget.setCurrentIndex(0))
+        self.stackedWidget.btn_Cancel.clicked.connect(lambda:self.stackedWidget.setCurrentIndex(0))
+
     def addEntry(self):
+        self.entry_UI()
         
         print("Add Entry")
         return
+    def confirmAddEntry(self):
+        print("Confirm add Entry")
+        return
     def editEntry(self):
+        # self.stackedWidget.setCurrentIndex(1)
+        self.entry_UI()
         print("Edit Entry")
         return
     def deleteEntry(self):
