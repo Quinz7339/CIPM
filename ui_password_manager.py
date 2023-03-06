@@ -28,7 +28,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(833, 606)
+        MainWindow.resize(833, 605)
         icon = QIcon()
         icon.addFile(u":/Icons/Logo.svg", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)
@@ -152,10 +152,12 @@ class Ui_MainWindow(object):
         sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.frame_credDetail.sizePolicy().hasHeightForWidth())
         self.frame_credDetail.setSizePolicy(sizePolicy1)
+        self.frame_credDetail.setStyleSheet(u"#frame_bodyCredDetail { border: 1px solid #BFBFBF;}")
         self.frame_credDetail.setFrameShape(QFrame.StyledPanel)
         self.frame_credDetail.setFrameShadow(QFrame.Raised)
         self.verticalLayout_3 = QVBoxLayout(self.frame_credDetail)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.verticalLayout_3.setContentsMargins(0, -1, -1, -1)
         self.frame_headerCredInfo = QFrame(self.frame_credDetail)
         self.frame_headerCredInfo.setObjectName(u"frame_headerCredInfo")
         sizePolicy2 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Maximum)
@@ -196,6 +198,8 @@ class Ui_MainWindow(object):
         sizePolicy4.setVerticalStretch(0)
         sizePolicy4.setHeightForWidth(self.btn_closeCredInfo.sizePolicy().hasHeightForWidth())
         self.btn_closeCredInfo.setSizePolicy(sizePolicy4)
+        self.btn_closeCredInfo.setStyleSheet(u"border: 1px solid #BFBFBF;\n"
+"border-radius: 5px;")
         icon7 = QIcon()
         icon7.addFile(u":/Icons/Cross.svg", QSize(), QIcon.Normal, QIcon.Off)
         self.btn_closeCredInfo.setIcon(icon7)

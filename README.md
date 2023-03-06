@@ -30,7 +30,8 @@ Markdown [Link](https://www.markdownguide.org/cheat-sheet/)
 - database.py --> decrypt db to be sent to interface.py 
 ~~- password.py --> decryptor~~
 ~~- load credentials dynamically into QTable~~ (done semi dynamically)
-- manager.py - track user selected credential, prompt info into the existing fields
+~~- manager.py - track user selected credential, prompt info into the existing fields~~
+- manager.py --> sort list of creds based on value of dictionary
 - manager.py -if any fields are changed upon clicking "Confirm", update the dictionary
 - manager.py -if nothing is changed, set the "Confirm" button to be disabled
 - reflect changes correctly on the local database file

@@ -5,8 +5,6 @@ import ast
 import sys
 
 import resource_rc
-
-
 '''import re
 
 from bs4 import BeautifulSoup
@@ -55,16 +53,23 @@ class Manager(QMainWindow):
 
     def populateCredentials(self):
         with open ('D:\Studies\Degree Year 3\FYP\CIPM\dict.txt','r') as f:
-            self.database1 = f.readlines()
+            self.database = f.readlines()
         self.credList=[]
         try:
-            for lines in self.database1:
-                cred= ast.literal_eval(lines) #evaluates the string as a dictionary
+            for lines in self.database:
+                cred = ast.literal_eval(lines) #literal_eval is used to convert the string to a dictionary
                 self.credList.append(cred)
         except:
             pass
+
+        #sorting the list of dictionaries by the title key
+        self.credList = sorted(self.credList, key=lambda k: k['title']) 
+
+        #initializing the dimensions of the table
         self.table_credentialList.setRowCount(len(self.credList))
         self.table_credentialList.setColumnCount(6)
+
+        #populating the table with the details of the credentials
         for creds in self.credList:
             #self.table_credentialList.setItem(self.credList.index(creds),0,QTableWidgetItem(<insert code to get favicon>)
             self.table_credentialList.setItem(self.credList.index(creds),1,QTableWidgetItem(creds['title']))
@@ -76,24 +81,19 @@ class Manager(QMainWindow):
     
     def showCredentialDetails(self):
         self.btn_closeCredInfo.clicked.connect(self.hideCrendetialDetails)
-
-        #self.table_credentialList.item(self.table_credentialList.currentRow()).setBackground(QColor("#595959"))
-        self.frame_credDetail.setStyleSheet('#frame_bodyCredDetail { border: 1px solid #BFBFBF;}')
         self.frame_credDetail.show()
 
         #populating labels based on selected credential (QTableWidget Row)
-        #self.table_credentialList.currentRow() = returns the row number of the selected row
-        
-        self.lbl_credTitle.setText(self.credList[self.table_credentialList.currentRow()]['title'])
+        self.lbl_credTitle.setText(self.credList[self.table_credentialList.currentRow()]['title']) #QTableWidget.currentRow() = returns the row number of the selected row
         #self.lbl_credIcon.setPixmap(<insert part to fetch icon programitically>)
         self.lbl_Username.setText("Username: \t" + self.credList[self.table_credentialList.currentRow()]['username'])
         self.lbl_Password.setText("Password: \t" + self.credList[self.table_credentialList.currentRow()]['password'])
         self.lbl_Remarks.setText("Remarks: \t" + self.credList[self.table_credentialList.currentRow()]['remarks'])
-        self.lbl_URL.setText("URL: \t" + self.credList[self.table_credentialList.currentRow()]['url'])
+        self.lbl_URL.setText("URL: \t\t" + self.credList[self.table_credentialList.currentRow()]['url'])
         self.lbl_dateExp.setText("Expiry Date: \t" + self.credList[self.table_credentialList.currentRow()]['dateExp'])
     
     def hideCrendetialDetails(self):
-        self.credDetail.hide()
+        self.frame_credDetail.hide()
         return
 
     def exitManager(self):
@@ -121,11 +121,16 @@ class Manager(QMainWindow):
     def confirmAddEntry(self):
         print("Confirm add Entry")
         return
+    
     def editEntry(self):
-        # self.stackedWidget.setCurrentIndex(1)
         self.entry_UI()
+        #add code here 6/march/2023
+
+
         print("Edit Entry")
         return
+    
+    
     def deleteEntry(self):
         print("Delete Entry")
         return
