@@ -1,5 +1,6 @@
 from PyQt6.QtWidgets import QApplication, QWidget,QMainWindow, QButtonGroup, QTableWidgetItem
 from PyQt6 import uic
+from PyQt6.QtGui import QColor
 import ast
 import sys
 
@@ -26,12 +27,15 @@ class Manager(QMainWindow):
         self.toolBar.layout().setContentsMargins(5,5,5,5) #left, top, right, bottom
 
         self.database = None
-        self.showCredentialInfo()
+        self.populateCredentials()
 
         #index 0 = main page
         #index 1 = add entry page
         #index 2 = edit entry page
         self.stackedWidget.setCurrentIndex(0)
+
+        #hiding the frame containing the specific entry details
+        self.frame_credDetail.hide()
 
         #estalishing connections for the toolbar buttons
         self.actionLock.triggered.connect(self.lockDatabase)
@@ -43,30 +47,55 @@ class Manager(QMainWindow):
         self.actionAdd_Entry.triggered.connect(lambda:self.stackedWidget.setCurrentIndex(1))
         self.actionEdit_Entry.triggered.connect(lambda:self.stackedWidget.setCurrentIndex(1))
         
+        #estalishing connections for showing/hiding the frame displaying the specific entry details
+        self.table_credentialList.cellClicked.connect(self.showCredentialDetails)
+
         self.show()
         
 
-    def showCredentialInfo(self):
+    def populateCredentials(self):
         with open ('D:\Studies\Degree Year 3\FYP\CIPM\dict.txt','r') as f:
             self.database1 = f.readlines()
-        credList=[]
+        self.credList=[]
         try:
             for lines in self.database1:
                 cred= ast.literal_eval(lines) #evaluates the string as a dictionary
-                credList.append(cred)
+                self.credList.append(cred)
         except:
             pass
-        self.table_credentialList.setRowCount(len(credList))
+        self.table_credentialList.setRowCount(len(self.credList))
         self.table_credentialList.setColumnCount(6)
-        for creds in credList:
-            self.table_credentialList.setItem(credList.index(creds),0,QTableWidgetItem(creds['icon']))
-            self.table_credentialList.setItem(credList.index(creds),1,QTableWidgetItem(creds['title']))
-            self.table_credentialList.setItem(credList.index(creds),2,QTableWidgetItem(creds['username']))
-            self.table_credentialList.setItem(credList.index(creds),3,QTableWidgetItem(creds['url']))
-            self.table_credentialList.setItem(credList.index(creds),4,QTableWidgetItem(creds['remarks']))
-            self.table_credentialList.setItem(credList.index(creds),5,QTableWidgetItem(creds['dateMod']))
+        for creds in self.credList:
+            #self.table_credentialList.setItem(self.credList.index(creds),0,QTableWidgetItem(<insert code to get favicon>)
+            self.table_credentialList.setItem(self.credList.index(creds),1,QTableWidgetItem(creds['title']))
+            self.table_credentialList.setItem(self.credList.index(creds),2,QTableWidgetItem(creds['username']))
+            self.table_credentialList.setItem(self.credList.index(creds),3,QTableWidgetItem(creds['url']))
+            self.table_credentialList.setItem(self.credList.index(creds),4,QTableWidgetItem(creds['remarks']))
+            self.table_credentialList.setItem(self.credList.index(creds),5,QTableWidgetItem(creds['dateMod']))
         return
     
+    def showCredentialDetails(self):
+        self.btn_closeCredInfo.clicked.connect(self.hideCrendetialDetails)
+
+        #self.table_credentialList.item(self.table_credentialList.currentRow()).setBackground(QColor("#595959"))
+        self.frame_credDetail.setStyleSheet('#frame_bodyCredDetail { border: 1px solid #BFBFBF;}')
+        self.frame_credDetail.show()
+
+        #populating labels based on selected credential (QTableWidget Row)
+        #self.table_credentialList.currentRow() = returns the row number of the selected row
+        
+        self.lbl_credTitle.setText(self.credList[self.table_credentialList.currentRow()]['title'])
+        #self.lbl_credIcon.setPixmap(<insert part to fetch icon programitically>)
+        self.lbl_Username.setText("Username: \t" + self.credList[self.table_credentialList.currentRow()]['username'])
+        self.lbl_Password.setText("Password: \t" + self.credList[self.table_credentialList.currentRow()]['password'])
+        self.lbl_Remarks.setText("Remarks: \t" + self.credList[self.table_credentialList.currentRow()]['remarks'])
+        self.lbl_URL.setText("URL: \t" + self.credList[self.table_credentialList.currentRow()]['url'])
+        self.lbl_dateExp.setText("Expiry Date: \t" + self.credList[self.table_credentialList.currentRow()]['dateExp'])
+    
+    def hideCrendetialDetails(self):
+        self.credDetail.hide()
+        return
+
     def exitManager(self):
         print("Exit Manager")
         self.lockDatabase()
@@ -77,14 +106,16 @@ class Manager(QMainWindow):
         return
     
     def entry_UI(self):
+        self.btn_Confirm.clicked.connect(lambda:self.stackedWidget.setCurrentIndex(1))
+        self.btn_Cancel.clicked.connect(lambda:self.stackedWidget.setCurrentIndex(0))
         self.btn_Confirm.setStyleSheet('QPushButton {background-color: #5B9BD5; color: #FFFFFF; font-size: 18px}')
         self.btn_Cancel.setStyleSheet('QPushButton {background-color: #40444B; color: #A6A6A6; font-size: 18px}')
-        self.stackedWidget.btn_Confirm.clicked.connect(lambda:self.stackedWidget.setCurrentIndex(0))
-        self.stackedWidget.btn_Cancel.clicked.connect(lambda:self.stackedWidget.setCurrentIndex(0))
 
     def addEntry(self):
         self.entry_UI()
-        
+        #add code here 6/march/2023
+
+
         print("Add Entry")
         return
     def confirmAddEntry(self):

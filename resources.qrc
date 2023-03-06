@@ -1,5 +1,6 @@
 <RCC>
   <qresource>
+    <file>Icons/Cross.svg</file>
     <file>Icons/Folder.svg</file>
     <file>Icons/Add.svg</file>
     <file>Icons/Copy Password.svg</file>
