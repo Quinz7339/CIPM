@@ -25,23 +25,15 @@ Markdown [Link](https://www.markdownguide.org/cheat-sheet/)
 - main.py --> ensure initializing of resources 
 - main.py --> include a requirement.txt to enable users to install required libraries
 - readme.md --> include an installation guide
-~~- design UI for database unlocking (unlockdb)~~
-- database.py --> call (unlockdb).ui and close original window
-- database.py --> decrypt db to be sent to interface.py 
-~~- password.py --> decryptor~~
-~~- load credentials dynamically into QTable~~ (done semi dynamically)
-~~- manager.py - track user selected credential, prompt info into the existing fields~~
-- manager.py --> sort list of creds based on value of dictionary
-- manager.py -if any fields are changed upon clicking "Confirm", update the dictionary
-- manager.py -if nothing is changed, set the "Confirm" button to be disabled
+- manager.py(Edit) -if any fields are changed upon clicking "Confirm", update the dictionary
+- manager.py(Edit) -if nothing is changed, set the "Confirm" button to be disabled
 - reflect changes correctly on the local database file
 - open file in 'w' mode to overwrite with the currently updated database
 - add password generating function
-- add show/hide password function
+- manager.py(Main) --> add show/hide password function
 - manager.py --> Add Credential and be reflected in table
 - manager.py --> fetch favicon based on entered domain
 - manager.py --> Edit Credential and be reflected in table
-~~- figure out whether when self.close is called, dashboard function can be called or not~~
 
 
 - extension: rss news site

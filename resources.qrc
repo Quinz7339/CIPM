@@ -1,5 +1,8 @@
 <RCC>
   <qresource>
+    <file>Icons/Hide.svg</file>
+    <file>Icons/Show.svg</file>
+    <file>Icons/Shuffle.svg</file>
     <file>Icons/Cross.svg</file>
     <file>Icons/Folder.svg</file>
     <file>Icons/Add.svg</file>

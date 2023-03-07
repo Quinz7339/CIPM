@@ -46,18 +46,20 @@ class Main(QWidget):
         self.opendb.btn_unlockDb.clicked.connect(self.Password_Manager)
         self.database = self.opendb.database
 
-        #logic to return the database done dy
 
     '''---------------------------------------------------------------
-    function to call dashboard UI - for displaying the main dashboard
+    function to call password_manager UI - main interface
     ------------------------------------------------------------------'''
     def Password_Manager(self):
         if self.database == None:
+            self.close()
+            self.dashboard = Manager()
             print("Database is empty")
         else:
             print("Database is not empty")
             self.close()
             self.dashboard = Manager()
+            
         
         #self.dashboard = 
         # inputText = self.input_masterpassword.text()

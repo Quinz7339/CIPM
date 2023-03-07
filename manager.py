@@ -1,6 +1,9 @@
-from PyQt6.QtWidgets import QApplication, QWidget,QMainWindow, QButtonGroup, QTableWidgetItem
+from PyQt6.QtWidgets import QApplication, QWidget,QMainWindow, QTableWidgetItem, QPushButton, QLineEdit
 from PyQt6 import uic
-from PyQt6.QtGui import QColor
+from PyQt6.QtGui import QColor, QIcon, QAction
+
+from datetime import date
+import Passwords
 import ast
 import sys
 
@@ -48,9 +51,12 @@ class Manager(QMainWindow):
         #estalishing connections for showing/hiding the frame displaying the specific entry details
         self.table_credentialList.cellClicked.connect(self.showCredentialDetails)
 
+        self.togglePwd_action =''
         self.show()
         
-
+    '''----------------------------------------------------------------
+    initial function to populate the QTableWidget with the credentials
+    ------------------------------------------------------------------'''
     def populateCredentials(self):
         with open ('D:\Studies\Degree Year 3\FYP\CIPM\dict.txt','r') as f:
             self.database = f.readlines()
@@ -79,12 +85,16 @@ class Manager(QMainWindow):
             self.table_credentialList.setItem(self.credList.index(creds),5,QTableWidgetItem(creds['dateMod']))
         return
     
+    '''----------------------------------------------------------------
+    function called when the user clicks on the "Add Entry" button
+    ------------------------------------------------------------------'''
     def showCredentialDetails(self):
-        self.btn_closeCredInfo.clicked.connect(self.hideCrendetialDetails)
+        self.btn_closeCredInfo.clicked.connect(self.hideCrendentialDetails)
         self.frame_credDetail.show()
 
         #populating labels based on selected credential (QTableWidget Row)
         self.lbl_credTitle.setText(self.credList[self.table_credentialList.currentRow()]['title']) #QTableWidget.currentRow() = returns the row number of the selected row
+        
         #self.lbl_credIcon.setPixmap(<insert part to fetch icon programitically>)
         self.lbl_Username.setText("Username: \t" + self.credList[self.table_credentialList.currentRow()]['username'])
         self.lbl_Password.setText("Password: \t" + self.credList[self.table_credentialList.currentRow()]['password'])
@@ -92,10 +102,17 @@ class Manager(QMainWindow):
         self.lbl_URL.setText("URL: \t\t" + self.credList[self.table_credentialList.currentRow()]['url'])
         self.lbl_dateExp.setText("Expiry Date: \t" + self.credList[self.table_credentialList.currentRow()]['dateExp'])
     
-    def hideCrendetialDetails(self):
+
+    '''----------------------------------------------------------------------
+    function to hide the detailed credential information when "X" is clicked
+    -------------------------------------------------------------------------'''
+    def hideCrendentialDetails(self):
         self.frame_credDetail.hide()
         return
 
+    '''----------------------------------------------------------------------
+    function called when the user clicks on the "Exit" button
+    -------------------------------------------------------------------------'''
     def exitManager(self):
         print("Exit Manager")
         self.lockDatabase()
@@ -105,20 +122,50 @@ class Manager(QMainWindow):
         print("Lock Database")
         return
     
+    '''-------------------------------------------------------------------------
+    function that initializes the UI for the "Add Entry" and "Edit Entry" pages
+    ----------------------------------------------------------------------------'''
     def entry_UI(self):
+        if self.togglePwd_action != '':
+            self.lineEdit_Password.removeAction(self.togglePwd_action)
+        self.togglePwd_action = QAction(QIcon(':/Icons/Show.svg'), 'Toggle Password visibility', self)
+        self.lineEdit_Password.addAction(self.togglePwd_action, QLineEdit.ActionPosition.TrailingPosition)
+        self.togglePwd_action.setCheckable(True)
+        self.togglePwd_action.toggled.connect(self.togglePassword)
+
+
         self.btn_Confirm.clicked.connect(lambda:self.stackedWidget.setCurrentIndex(1))
         self.btn_Cancel.clicked.connect(lambda:self.stackedWidget.setCurrentIndex(0))
-        self.btn_Confirm.setStyleSheet('QPushButton {background-color: #5B9BD5; color: #FFFFFF; font-size: 18px}')
-        self.btn_Cancel.setStyleSheet('QPushButton {background-color: #40444B; color: #A6A6A6; font-size: 18px}')
+        self.btn_Confirm.setStyleSheet('QPushButton {background-color: #5B9BD5; color: #FFFFFF; border: 1px #2F528F; border-radius: 5px; font-size: 18px}')
+        self.btn_Cancel.setStyleSheet('QPushButton {background-color: #40444B; color: #A6A6A6; border-radius: 5px; font-size: 18px}')
+    
+    def togglePassword(self):
+        if self.togglePwd_action.isChecked():
+            self.togglePwd_action.setIcon(QIcon(':/Icons/Hide.svg'))
+            self.lineEdit_Password.setEchoMode(QLineEdit.EchoMode.Normal)
+        else:
+            self.togglePwd_action.setIcon(QIcon(':/Icons/Show.svg'))
+            self.lineEdit_Password.setEchoMode(QLineEdit.EchoMode.Password)
 
     def addEntry(self):
+        self.btn_Confirm.clicked.connect(self.confirmAddEntry)
         self.entry_UI()
-        #add code here 6/march/2023
-
-
+         #add code here 6/march/2023
+        self.newCred = {
+            "title": self.lineEdit_Title.text(),
+            "username": self.lineEdit_Username.text(),
+            "password": self.lineEdit_Password.text(),
+            "url": self.lineEdit_URL.text(),
+            "remarks": self.textEdit_Remark.toPlainText(),
+            "dateExp": self.lineEdit_dateExp.text(),
+            "dateMod": date.today().strftime("%d/%m/%Y")
+        }
+        
+       
         print("Add Entry")
         return
     def confirmAddEntry(self):
+        self.credList.append(self.newCred)
         print("Confirm add Entry")
         return
     

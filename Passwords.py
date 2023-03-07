@@ -3,6 +3,10 @@ import base64
 import secrets
 from cryptography.fernet import Fernet
 
+##############################################################################################
+######################  functions that interacts with password fields  #######################
+##############################################################################################
+
 
 '''---------------------------------------------------------------
 function to establish the object to encrypt the password database
@@ -39,4 +43,3 @@ def salter():
     #code adapted from https://stackoverflow.com/questions/2257441/random-string-generation-with-upper-case-letters-and-digits-in-python
     salt = secrets.randbits(32)
     return salt
-
