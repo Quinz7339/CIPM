@@ -28,6 +28,15 @@ class Manager(QMainWindow):
         self.toolBar.layout().setContentsMargins(5,5,5,5) #left, top, right, bottom
 
         self.database = None
+        with open ('D:\Studies\Degree Year 3\FYP\CIPM\dict.txt','r') as f:
+            self.database = f.readlines()
+        self.credList=[]
+        try:
+            for lines in self.database:
+                cred = ast.literal_eval(lines) #literal_eval is used to convert the string to a dictionary
+                self.credList.append(cred)
+        except:
+            pass
         self.populateCredentials()
 
         #index 0 = main page
@@ -61,15 +70,6 @@ class Manager(QMainWindow):
     initial function to populate the QTableWidget with the credentials
     ------------------------------------------------------------------'''
     def populateCredentials(self):
-        with open ('D:\Studies\Degree Year 3\FYP\CIPM\dict.txt','r') as f:
-            self.database = f.readlines()
-        self.credList=[]
-        try:
-            for lines in self.database:
-                cred = ast.literal_eval(lines) #literal_eval is used to convert the string to a dictionary
-                self.credList.append(cred)
-        except:
-            pass
 
         #sorting the list of dictionaries by the title key
         self.credList = sorted(self.credList, key=lambda k: k['title']) 
@@ -154,7 +154,7 @@ class Manager(QMainWindow):
         self.genPwd_action.triggered.connect(self.generatePassword)
         
 
-        self.btn_Confirm.clicked.connect(lambda:self.stackedWidget.setCurrentIndex(1))
+        self.btn_Confirm.clicked.connect(lambda:self.stackedWidget.setCurrentIndex(0))
         self.btn_Cancel.clicked.connect(lambda:self.stackedWidget.setCurrentIndex(0))
         self.btn_Confirm.setStyleSheet('QPushButton {background-color: #5B9BD5; color: #FFFFFF; border: 1px #2F528F; border-radius: 5px; font-size: 18px}')
         self.btn_Cancel.setStyleSheet('QPushButton {background-color: #40444B; color: #A6A6A6; border-radius: 5px; font-size: 18px}')
@@ -175,11 +175,23 @@ class Manager(QMainWindow):
     ----------------------------------------------------------------------------'''
     def generatePassword(self):
         self.lineEdit_Password.setText(gen_password(self.pwdLength))
-        
+
+    '''-------------------------------------------------------------------------
+    function - called when user clicks on "Add Entry" button
+    ----------------------------------------------------------------------------'''    
     def addEntry(self):
+        self.newCred=''
+        self.entry_UI() 
         self.btn_Confirm.clicked.connect(self.confirmAddEntry)
-        self.entry_UI()
+        print("Add Entry")
+        return
+
+    '''-------------------------------------------------------------------------
+    function - called when user clicks "Confirm" upon adding a new entry
+    ----------------------------------------------------------------------------''' 
+    def confirmAddEntry(self):
         self.newCred = {
+            "icon": "default",
             "title": self.lineEdit_Title.text(),
             "username": self.lineEdit_Username.text(),
             "password": self.lineEdit_Password.text(),
@@ -187,10 +199,10 @@ class Manager(QMainWindow):
             "remarks": self.textEdit_Remark.toPlainText(),
             "dateExp": self.lineEdit_dateExp.text(),
             "dateMod": date.today().strftime("%d/%m/%Y")
-        }       
-        print("Add Entry")
-        return
-    def confirmAddEntry(self):
+        }
+        print (self.lineEdit_Password.text())
+        print(self.lineEdit_Title.text())
+
         if (len(self.lineEdit_Password.text()) < 8):
             info = QMessageBox(self)
             info.setIcon(QMessageBox.Icon.Information)
@@ -199,13 +211,16 @@ class Manager(QMainWindow):
             info.setInformativeText("Password longer than 8 characters is recommended.")
             info.setStandardButtons(QMessageBox.StandardButton.Ok)
             info.exec()
+        print (self.newCred)
         self.credList.append(self.newCred)
+        self.populateCredentials()
         print("Confirm add Entry")
         return
     
     def editEntry(self):
         self.entry_UI()
 
+        #initialize the fields with the values of the selected credential/row
         self.lineEdit_Title.setText(self.credList[self.table_credentialList.currentRow()]['title'])
         self.lineEdit_Username.setText(self.credList[self.table_credentialList.currentRow()]['username'])
         self.lineEdit_Password.setText(self.credList[self.table_credentialList.currentRow()]['password'])
@@ -216,6 +231,7 @@ class Manager(QMainWindow):
 
 
         print("Edit Entry")
+        self.populateCredentials()
         return
     
     

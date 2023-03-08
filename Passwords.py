@@ -17,7 +17,7 @@ def encryptor(input_password,input_salt):
     '''
     -------------------------------------------------------------------------
     |   Note:                                                               |
-    |   The developer is aware  that hashing and encryption are different.  |
+    |   The developer is aware that hashing and encryption are different.   |
     |   However, a hashed password is used to encrypt the password database.|
     -------------------------------------------------------------------------
     '''
@@ -46,6 +46,9 @@ def salter():
     salt = secrets.randbits(32)
     return salt
 
+'''------------------------------------------------------------------------
+function to generate a randomly generated password
+---------------------------------------------------------------------------''' 
 def gen_password(length):
     characters = string.ascii_letters + string.digits + string.punctuation
     password = ''.join(random.choice(characters) for i in range(length))

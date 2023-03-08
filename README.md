@@ -26,13 +26,14 @@ Markdown [Link](https://www.markdownguide.org/cheat-sheet/)
 - main.py --> include a requirement.txt to enable users to install required libraries
 - readme.md --> include an installation guide
 
-- manager.py(Main) --> add show/hide password function
+- manager.py(Main) --> add show/hide password function on QLabel
 - manager.py --> Add Credential and be reflected in table
 - manager.py --> fetch favicon based on entered domain
 - manager.py --> Edit Credential and be reflected in table
 ~~- manager.py(Add/Edit) - random password generator ~~
-- manager.py(Edit) -if any fields are changed upon clicking "Confirm", update the dictionary
+- manager.py(Edit) -if any fields are changed upon clicking "Confirm", update the dictionary, update date modified
 - manager.py(Edit) -if nothing is changed, set the "Confirm" button to be disabled
+- manager.py(Setting) - create UI
 - manager.py(Setting) - allow default length of generated password (use slider) --> self.password_length
 - reflect changes correctly on the local database file
 - open file in 'w' mode to overwrite with the currently updated database
@@ -40,6 +41,6 @@ Markdown [Link](https://www.markdownguide.org/cheat-sheet/)
 
 
 - extension: rss news site
-- extension: password integration
+- extension: password integration (extra)
 - extension: security tips (sendiri generate tips)
 - extension: malicious link detection (either thru webpage signature or virustotal)
