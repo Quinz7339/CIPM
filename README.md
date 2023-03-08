@@ -27,7 +27,7 @@ Markdown [Link](https://www.markdownguide.org/cheat-sheet/)
 - readme.md --> include an installation guide
 
 - manager.py(Main) --> add show/hide password function on QLabel
-- manager.py --> Add Credential and be reflected in table
+- manager.py --> Add Credential and be reflected in table (partially done, has a recursion problem. initialization of button connect might be the issue)
 - manager.py --> fetch favicon based on entered domain
 - manager.py --> Edit Credential and be reflected in table
 ~~- manager.py(Add/Edit) - random password generator ~~

@@ -60,7 +60,12 @@ class Manager(QMainWindow):
         #estalishing connections for showing/hiding the frame displaying the specific entry details
         self.table_credentialList.cellClicked.connect(self.showCredentialDetails)
 
-        #initialization of session variab;es
+
+        #establishing connections for the buttons in the credential entry pages
+        self.stackedWidget.widget(1).findChild(QPushButton,'btn_Cancel').clicked.connect(lambda:self.stackedWidget.setCurrentIndex(0))
+        self.stackedWidget.widget(1).findChild(QPushButton,'btn_Confirm').clicked.connect(lambda:self.stackedWidget.setCurrentIndex(0))
+        
+        #initialization of session variables
         self.togglePwd_action = ''
         self.genPwd_action = ''
         self.pwdLength = 8
@@ -70,6 +75,7 @@ class Manager(QMainWindow):
     initial function to populate the QTableWidget with the credentials
     ------------------------------------------------------------------'''
     def populateCredentials(self):
+        self.table_credentialList.clear()
 
         #sorting the list of dictionaries by the title key
         self.credList = sorted(self.credList, key=lambda k: k['title']) 
@@ -88,9 +94,9 @@ class Manager(QMainWindow):
             self.table_credentialList.setItem(self.credList.index(creds),5,QTableWidgetItem(creds['dateMod']))
         return
     
-    '''----------------------------------------------------------------
-    function called when the user clicks on the "Add Entry" button
-    ------------------------------------------------------------------'''
+    '''-----------------------------------------------------------------------------------------------------
+    function called when the user clicks any row on the QTableWidget - shows detailed credential information
+    --------------------------------------------------------------------------------------------------------'''
     def showCredentialDetails(self):
         self.btn_closeCredInfo.clicked.connect(self.hideCrendentialDetails)
         self.frame_credDetail.show()
@@ -104,6 +110,7 @@ class Manager(QMainWindow):
         self.lbl_Remarks.setText("Remarks: \t" + self.credList[self.table_credentialList.currentRow()]['remarks'])
         self.lbl_URL.setText("URL: \t\t" + self.credList[self.table_credentialList.currentRow()]['url'])
         self.lbl_dateExp.setText("Expiry Date: \t" + self.credList[self.table_credentialList.currentRow()]['dateExp'])
+        return
     
 
     '''----------------------------------------------------------------------
@@ -121,6 +128,10 @@ class Manager(QMainWindow):
         self.lockDatabase()
         self.close()
         return
+    
+    '''----------------------------------------------------------------------
+    function called when the user clicks on the "Lock" button
+    -------------------------------------------------------------------------'''
     def lockDatabase(self):
         print("Lock Database")
         return
@@ -137,7 +148,6 @@ class Manager(QMainWindow):
         self.textEdit_Remark.clear()
         self.lineEdit_dateExp.clear()
 
-
         #initializing the "Toggle Password Visibility" button 
         if self.togglePwd_action != '':
             self.lineEdit_Password.removeAction(self.togglePwd_action)
@@ -153,12 +163,14 @@ class Manager(QMainWindow):
         self.lineEdit_Password.addAction(self.genPwd_action, QLineEdit.ActionPosition.TrailingPosition)
         self.genPwd_action.triggered.connect(self.generatePassword)
         
-
-        self.btn_Confirm.clicked.connect(lambda:self.stackedWidget.setCurrentIndex(0))
-        self.btn_Cancel.clicked.connect(lambda:self.stackedWidget.setCurrentIndex(0))
         self.btn_Confirm.setStyleSheet('QPushButton {background-color: #5B9BD5; color: #FFFFFF; border: 1px #2F528F; border-radius: 5px; font-size: 18px}')
         self.btn_Cancel.setStyleSheet('QPushButton {background-color: #40444B; color: #A6A6A6; border-radius: 5px; font-size: 18px}')
-    
+
+        return
+
+        # self.btn_Confirm.clicked.connect(lambda:self.stackedWidget.setCurrentIndex(0))
+        # self.btn_Cancel.clicked.connect(lambda:self.stackedWidget.setCurrentIndex(0))
+        
     '''-------------------------------------------------------------------------
     helper function - logic of "Toggle Password Visibility" button
     ----------------------------------------------------------------------------'''
@@ -166,15 +178,18 @@ class Manager(QMainWindow):
         if self.togglePwd_action.isChecked():
             self.togglePwd_action.setIcon(QIcon(':/Icons/Hide.svg'))
             self.lineEdit_Password.setEchoMode(QLineEdit.EchoMode.Normal)
+            return
         else:
             self.togglePwd_action.setIcon(QIcon(':/Icons/Show.svg'))
             self.lineEdit_Password.setEchoMode(QLineEdit.EchoMode.Password)
+            return
 
     '''-------------------------------------------------------------------------
     helper function - populate password field with a random password
     ----------------------------------------------------------------------------'''
     def generatePassword(self):
         self.lineEdit_Password.setText(gen_password(self.pwdLength))
+        return
 
     '''-------------------------------------------------------------------------
     function - called when user clicks on "Add Entry" button
@@ -190,6 +205,7 @@ class Manager(QMainWindow):
     function - called when user clicks "Confirm" upon adding a new entry
     ----------------------------------------------------------------------------''' 
     def confirmAddEntry(self):
+        print ("a")
         self.newCred = {
             "icon": "default",
             "title": self.lineEdit_Title.text(),
@@ -200,8 +216,8 @@ class Manager(QMainWindow):
             "dateExp": self.lineEdit_dateExp.text(),
             "dateMod": date.today().strftime("%d/%m/%Y")
         }
-        print (self.lineEdit_Password.text())
-        print(self.lineEdit_Title.text())
+
+        print ("b")
 
         if (len(self.lineEdit_Password.text()) < 8):
             info = QMessageBox(self)
@@ -211,12 +227,14 @@ class Manager(QMainWindow):
             info.setInformativeText("Password longer than 8 characters is recommended.")
             info.setStandardButtons(QMessageBox.StandardButton.Ok)
             info.exec()
-        print (self.newCred)
         self.credList.append(self.newCred)
         self.populateCredentials()
-        print("Confirm add Entry")
-        return
+        self.btn_Confirm.disconnect()
+        self.btn_Confirm.clicked.connect(lambda:self.stackedWidget.setCurrentIndex(0))
+        return 
     
+
+
     def editEntry(self):
         self.entry_UI()
 
