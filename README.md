@@ -25,15 +25,18 @@ Markdown [Link](https://www.markdownguide.org/cheat-sheet/)
 - main.py --> ensure initializing of resources 
 - main.py --> include a requirement.txt to enable users to install required libraries
 - readme.md --> include an installation guide
-- manager.py(Edit) -if any fields are changed upon clicking "Confirm", update the dictionary
-- manager.py(Edit) -if nothing is changed, set the "Confirm" button to be disabled
-- reflect changes correctly on the local database file
-- open file in 'w' mode to overwrite with the currently updated database
-- add password generating function
+
 - manager.py(Main) --> add show/hide password function
 - manager.py --> Add Credential and be reflected in table
 - manager.py --> fetch favicon based on entered domain
 - manager.py --> Edit Credential and be reflected in table
+~~- manager.py(Add/Edit) - random password generator ~~
+- manager.py(Edit) -if any fields are changed upon clicking "Confirm", update the dictionary
+- manager.py(Edit) -if nothing is changed, set the "Confirm" button to be disabled
+- manager.py(Setting) - allow default length of generated password (use slider) --> self.password_length
+- reflect changes correctly on the local database file
+- open file in 'w' mode to overwrite with the currently updated database
+- add password generating function
 
 
 - extension: rss news site

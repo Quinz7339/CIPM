@@ -1,6 +1,8 @@
 import argon2
 import base64
 import secrets
+import random
+import string
 from cryptography.fernet import Fernet
 
 ##############################################################################################
@@ -13,9 +15,11 @@ function to establish the object to encrypt the password database
 ------------------------------------------------------------------'''   
 def encryptor(input_password,input_salt):
     '''
-    Note:
-    The developer is aware  that hashing and encryption are different.
-    However, a hashed password is used to encrypt the password database.
+    -------------------------------------------------------------------------
+    |   Note:                                                               |
+    |   The developer is aware  that hashing and encryption are different.  |
+    |   However, a hashed password is used to encrypt the password database.|
+    -------------------------------------------------------------------------
     '''
 
     #code adapted from https://stackoverflow.com/questions/49465692/is-it-possible-to-encrypt-then-decrypt-data-securely-against-a-password-in-pytho
@@ -39,7 +43,10 @@ def decryptor(input_password,input_salt):
 function to generate a randomly generated salt to hash the entered password
 ---------------------------------------------------------------------------''' 
 def salter():
-    '''salt generator'''
-    #code adapted from https://stackoverflow.com/questions/2257441/random-string-generation-with-upper-case-letters-and-digits-in-python
     salt = secrets.randbits(32)
     return salt
+
+def gen_password(length):
+    characters = string.ascii_letters + string.digits + string.punctuation
+    password = ''.join(random.choice(characters) for i in range(length))
+    return password

@@ -1,9 +1,9 @@
-from PyQt6.QtWidgets import QApplication, QWidget,QMainWindow, QTableWidgetItem, QPushButton, QLineEdit
+from PyQt6.QtWidgets import QApplication, QWidget,QMainWindow, QTableWidgetItem, QPushButton, QLineEdit, QMessageBox
 from PyQt6 import uic
 from PyQt6.QtGui import QColor, QIcon, QAction
 
 from datetime import date
-import Passwords
+from Passwords import gen_password
 import ast
 import sys
 
@@ -51,7 +51,10 @@ class Manager(QMainWindow):
         #estalishing connections for showing/hiding the frame displaying the specific entry details
         self.table_credentialList.cellClicked.connect(self.showCredentialDetails)
 
-        self.togglePwd_action =''
+        #initialization of session variab;es
+        self.togglePwd_action = ''
+        self.genPwd_action = ''
+        self.pwdLength = 8
         self.show()
         
     '''----------------------------------------------------------------
@@ -126,6 +129,16 @@ class Manager(QMainWindow):
     function that initializes the UI for the "Add Entry" and "Edit Entry" pages
     ----------------------------------------------------------------------------'''
     def entry_UI(self):
+        #clearing of fields
+        self.lineEdit_Title.clear()
+        self.lineEdit_Username.clear()
+        self.lineEdit_Password.clear()
+        self.lineEdit_URL.clear()
+        self.textEdit_Remark.clear()
+        self.lineEdit_dateExp.clear()
+
+
+        #initializing the "Toggle Password Visibility" button 
         if self.togglePwd_action != '':
             self.lineEdit_Password.removeAction(self.togglePwd_action)
         self.togglePwd_action = QAction(QIcon(':/Icons/Show.svg'), 'Toggle Password visibility', self)
@@ -133,12 +146,22 @@ class Manager(QMainWindow):
         self.togglePwd_action.setCheckable(True)
         self.togglePwd_action.toggled.connect(self.togglePassword)
 
+        #initializing the "Password Generator" button
+        if self.genPwd_action != '':
+            self.lineEdit_Password.removeAction(self.genPwd_action)
+        self.genPwd_action = QAction(QIcon(':/Icons/Shuffle.svg'), 'Generate Password', self)
+        self.lineEdit_Password.addAction(self.genPwd_action, QLineEdit.ActionPosition.TrailingPosition)
+        self.genPwd_action.triggered.connect(self.generatePassword)
+        
 
         self.btn_Confirm.clicked.connect(lambda:self.stackedWidget.setCurrentIndex(1))
         self.btn_Cancel.clicked.connect(lambda:self.stackedWidget.setCurrentIndex(0))
         self.btn_Confirm.setStyleSheet('QPushButton {background-color: #5B9BD5; color: #FFFFFF; border: 1px #2F528F; border-radius: 5px; font-size: 18px}')
         self.btn_Cancel.setStyleSheet('QPushButton {background-color: #40444B; color: #A6A6A6; border-radius: 5px; font-size: 18px}')
     
+    '''-------------------------------------------------------------------------
+    helper function - logic of "Toggle Password Visibility" button
+    ----------------------------------------------------------------------------'''
     def togglePassword(self):
         if self.togglePwd_action.isChecked():
             self.togglePwd_action.setIcon(QIcon(':/Icons/Hide.svg'))
@@ -147,10 +170,15 @@ class Manager(QMainWindow):
             self.togglePwd_action.setIcon(QIcon(':/Icons/Show.svg'))
             self.lineEdit_Password.setEchoMode(QLineEdit.EchoMode.Password)
 
+    '''-------------------------------------------------------------------------
+    helper function - populate password field with a random password
+    ----------------------------------------------------------------------------'''
+    def generatePassword(self):
+        self.lineEdit_Password.setText(gen_password(self.pwdLength))
+        
     def addEntry(self):
         self.btn_Confirm.clicked.connect(self.confirmAddEntry)
         self.entry_UI()
-         #add code here 6/march/2023
         self.newCred = {
             "title": self.lineEdit_Title.text(),
             "username": self.lineEdit_Username.text(),
@@ -159,18 +187,31 @@ class Manager(QMainWindow):
             "remarks": self.textEdit_Remark.toPlainText(),
             "dateExp": self.lineEdit_dateExp.text(),
             "dateMod": date.today().strftime("%d/%m/%Y")
-        }
-        
-       
+        }       
         print("Add Entry")
         return
     def confirmAddEntry(self):
+        if (len(self.lineEdit_Password.text()) < 8):
+            info = QMessageBox(self)
+            info.setIcon(QMessageBox.Icon.Information)
+            info.setWindowTitle("Weak Password.")
+            info.setText("Maybe considering using a stronger password or use the password generator after this.")
+            info.setInformativeText("Password longer than 8 characters is recommended.")
+            info.setStandardButtons(QMessageBox.StandardButton.Ok)
+            info.exec()
         self.credList.append(self.newCred)
         print("Confirm add Entry")
         return
     
     def editEntry(self):
         self.entry_UI()
+
+        self.lineEdit_Title.setText(self.credList[self.table_credentialList.currentRow()]['title'])
+        self.lineEdit_Username.setText(self.credList[self.table_credentialList.currentRow()]['username'])
+        self.lineEdit_Password.setText(self.credList[self.table_credentialList.currentRow()]['password'])
+        self.lineEdit_URL.setText(self.credList[self.table_credentialList.currentRow()]['url'])
+        self.lineEdit_dateExp.setText(self.credList[self.table_credentialList.currentRow()]['dateExp'])
+        self.textEdit_Remark.setText(self.credList[self.table_credentialList.currentRow()]['remarks'])
         #add code here 6/march/2023
 
 
