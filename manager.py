@@ -1,6 +1,8 @@
-from PyQt6.QtWidgets import QApplication, QWidget,QMainWindow, QTableWidgetItem, QPushButton, QLineEdit, QMessageBox
+from PyQt6.QtWidgets import QApplication,QMainWindow, QTableWidgetItem, QPushButton, QLineEdit, QMessageBox
 from PyQt6 import uic
-from PyQt6.QtGui import QColor, QIcon, QAction
+from PyQt6.QtGui import QColor, QIcon, QAction,QPixmap
+from PyQt6.QtNetwork import QNetworkAccessManager, QNetworkRequest
+from PyQt6.QtCore import QUrl
 
 from datetime import date
 from Passwords import gen_password
@@ -75,23 +77,24 @@ class Manager(QMainWindow):
     initial function to populate the QTableWidget with the credentials
     ------------------------------------------------------------------'''
     def populateCredentials(self):
-        self.table_credentialList.clear()
+        self.table_credentialList.clearContents()
 
         #sorting the list of dictionaries by the title key
         self.credList = sorted(self.credList, key=lambda k: k['title']) 
 
         #initializing the dimensions of the table
         self.table_credentialList.setRowCount(len(self.credList))
-        self.table_credentialList.setColumnCount(6)
+        self.table_credentialList.setColumnCount(5)
+        
+        self.iconItem = QTableWidgetItem()
 
         #populating the table with the details of the credentials
         for creds in self.credList:
-            #self.table_credentialList.setItem(self.credList.index(creds),0,QTableWidgetItem(<insert code to get favicon>)
-            self.table_credentialList.setItem(self.credList.index(creds),1,QTableWidgetItem(creds['title']))
-            self.table_credentialList.setItem(self.credList.index(creds),2,QTableWidgetItem(creds['username']))
-            self.table_credentialList.setItem(self.credList.index(creds),3,QTableWidgetItem(creds['url']))
-            self.table_credentialList.setItem(self.credList.index(creds),4,QTableWidgetItem(creds['remarks']))
-            self.table_credentialList.setItem(self.credList.index(creds),5,QTableWidgetItem(creds['dateMod']))
+            self.table_credentialList.setItem(self.credList.index(creds),0,QTableWidgetItem(creds['title']))
+            self.table_credentialList.setItem(self.credList.index(creds),1,QTableWidgetItem(creds['username']))
+            self.table_credentialList.setItem(self.credList.index(creds),2,QTableWidgetItem(creds['url']))
+            self.table_credentialList.setItem(self.credList.index(creds),3,QTableWidgetItem(creds['remarks']))
+            self.table_credentialList.setItem(self.credList.index(creds),4,QTableWidgetItem(creds['dateMod']))
         return
     
     '''-----------------------------------------------------------------------------------------------------
@@ -207,7 +210,6 @@ class Manager(QMainWindow):
     def confirmAddEntry(self):
         print ("a")
         self.newCred = {
-            "icon": "default",
             "title": self.lineEdit_Title.text(),
             "username": self.lineEdit_Username.text(),
             "password": self.lineEdit_Password.text(),

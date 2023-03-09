@@ -107,8 +107,8 @@ class Ui_MainWindow(object):
         self.verticalLayout = QVBoxLayout(self.frame_credList)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.table_credentialList = QTableWidget(self.frame_credList)
-        if (self.table_credentialList.columnCount() < 6):
-            self.table_credentialList.setColumnCount(6)
+        if (self.table_credentialList.columnCount() < 5):
+            self.table_credentialList.setColumnCount(5)
         __qtablewidgetitem = QTableWidgetItem()
         self.table_credentialList.setHorizontalHeaderItem(0, __qtablewidgetitem)
         __qtablewidgetitem1 = QTableWidgetItem()
@@ -119,24 +119,27 @@ class Ui_MainWindow(object):
         self.table_credentialList.setHorizontalHeaderItem(3, __qtablewidgetitem3)
         __qtablewidgetitem4 = QTableWidgetItem()
         self.table_credentialList.setHorizontalHeaderItem(4, __qtablewidgetitem4)
-        __qtablewidgetitem5 = QTableWidgetItem()
-        self.table_credentialList.setHorizontalHeaderItem(5, __qtablewidgetitem5)
         self.table_credentialList.setObjectName(u"table_credentialList")
         font = QFont()
         font.setFamilies([u"HYWenHei"])
         self.table_credentialList.setFont(font)
+        self.table_credentialList.setLayoutDirection(Qt.LeftToRight)
         self.table_credentialList.setAutoFillBackground(True)
         self.table_credentialList.setStyleSheet(u"selection-background-color: #2B96CB;\n"
 "background-color:#595959")
         self.table_credentialList.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.table_credentialList.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.table_credentialList.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.table_credentialList.setAlternatingRowColors(True)
         self.table_credentialList.setSelectionMode(QAbstractItemView.SingleSelection)
         self.table_credentialList.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.table_credentialList.setIconSize(QSize(52, 52))
         self.table_credentialList.setShowGrid(False)
         self.table_credentialList.setSortingEnabled(False)
         self.table_credentialList.setWordWrap(False)
+        self.table_credentialList.horizontalHeader().setVisible(True)
         self.table_credentialList.horizontalHeader().setCascadingSectionResizes(True)
+        self.table_credentialList.horizontalHeader().setDefaultSectionSize(80)
         self.table_credentialList.horizontalHeader().setProperty("showSortIndicator", False)
         self.table_credentialList.horizontalHeader().setStretchLastSection(True)
         self.table_credentialList.verticalHeader().setVisible(False)
@@ -170,21 +173,6 @@ class Ui_MainWindow(object):
         self.horizontalLayout_3 = QHBoxLayout(self.frame_headerCredInfo)
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
         self.horizontalLayout_3.setContentsMargins(0, -1, 0, -1)
-        self.lbl_credIcon = QLabel(self.frame_headerCredInfo)
-        self.lbl_credIcon.setObjectName(u"lbl_credIcon")
-        sizePolicy3 = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
-        sizePolicy3.setHorizontalStretch(0)
-        sizePolicy3.setVerticalStretch(0)
-        sizePolicy3.setHeightForWidth(self.lbl_credIcon.sizePolicy().hasHeightForWidth())
-        self.lbl_credIcon.setSizePolicy(sizePolicy3)
-        self.lbl_credIcon.setMinimumSize(QSize(50, 50))
-
-        self.horizontalLayout_3.addWidget(self.lbl_credIcon)
-
-        self.horizontalSpacer_2 = QSpacerItem(40, 10, QSizePolicy.Preferred, QSizePolicy.Minimum)
-
-        self.horizontalLayout_3.addItem(self.horizontalSpacer_2)
-
         self.lbl_credTitle = QLabel(self.frame_headerCredInfo)
         self.lbl_credTitle.setObjectName(u"lbl_credTitle")
         self.lbl_credTitle.setFont(font)
@@ -193,11 +181,11 @@ class Ui_MainWindow(object):
 
         self.btn_closeCredInfo = QPushButton(self.frame_headerCredInfo)
         self.btn_closeCredInfo.setObjectName(u"btn_closeCredInfo")
-        sizePolicy4 = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Preferred)
-        sizePolicy4.setHorizontalStretch(0)
-        sizePolicy4.setVerticalStretch(0)
-        sizePolicy4.setHeightForWidth(self.btn_closeCredInfo.sizePolicy().hasHeightForWidth())
-        self.btn_closeCredInfo.setSizePolicy(sizePolicy4)
+        sizePolicy3 = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Preferred)
+        sizePolicy3.setHorizontalStretch(0)
+        sizePolicy3.setVerticalStretch(0)
+        sizePolicy3.setHeightForWidth(self.btn_closeCredInfo.sizePolicy().hasHeightForWidth())
+        self.btn_closeCredInfo.setSizePolicy(sizePolicy3)
         self.btn_closeCredInfo.setStyleSheet(u"border: 1px solid #BFBFBF;\n"
 "border-radius: 5px;")
         icon7 = QIcon()
@@ -341,11 +329,11 @@ class Ui_MainWindow(object):
 
         self.textEdit_Remark = QTextEdit(self.page_credEntry)
         self.textEdit_Remark.setObjectName(u"textEdit_Remark")
-        sizePolicy5 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Maximum)
-        sizePolicy5.setHorizontalStretch(0)
-        sizePolicy5.setVerticalStretch(0)
-        sizePolicy5.setHeightForWidth(self.textEdit_Remark.sizePolicy().hasHeightForWidth())
-        self.textEdit_Remark.setSizePolicy(sizePolicy5)
+        sizePolicy4 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Maximum)
+        sizePolicy4.setHorizontalStretch(0)
+        sizePolicy4.setVerticalStretch(0)
+        sizePolicy4.setHeightForWidth(self.textEdit_Remark.sizePolicy().hasHeightForWidth())
+        self.textEdit_Remark.setSizePolicy(sizePolicy4)
         self.textEdit_Remark.setStyleSheet(u"background-color: #595959; \n"
 "color: #FFFFFF;\n"
 "border: 1px #7F7F7F;\n"
@@ -362,11 +350,11 @@ class Ui_MainWindow(object):
 
         self.frame = QFrame(self.page_credEntry)
         self.frame.setObjectName(u"frame")
-        sizePolicy6 = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy6.setHorizontalStretch(0)
-        sizePolicy6.setVerticalStretch(0)
-        sizePolicy6.setHeightForWidth(self.frame.sizePolicy().hasHeightForWidth())
-        self.frame.setSizePolicy(sizePolicy6)
+        sizePolicy5 = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy5.setHorizontalStretch(0)
+        sizePolicy5.setVerticalStretch(0)
+        sizePolicy5.setHeightForWidth(self.frame.sizePolicy().hasHeightForWidth())
+        self.frame.setSizePolicy(sizePolicy5)
         self.frame.setLayoutDirection(Qt.RightToLeft)
         self.frame.setFrameShape(QFrame.StyledPanel)
         self.frame.setFrameShadow(QFrame.Raised)
@@ -375,11 +363,11 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.setContentsMargins(480, -1, -1, -1)
         self.btn_Cancel = QPushButton(self.frame)
         self.btn_Cancel.setObjectName(u"btn_Cancel")
-        sizePolicy7 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
-        sizePolicy7.setHorizontalStretch(0)
-        sizePolicy7.setVerticalStretch(0)
-        sizePolicy7.setHeightForWidth(self.btn_Cancel.sizePolicy().hasHeightForWidth())
-        self.btn_Cancel.setSizePolicy(sizePolicy7)
+        sizePolicy6 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        sizePolicy6.setHorizontalStretch(0)
+        sizePolicy6.setVerticalStretch(0)
+        sizePolicy6.setHeightForWidth(self.btn_Cancel.sizePolicy().hasHeightForWidth())
+        self.btn_Cancel.setSizePolicy(sizePolicy6)
         self.btn_Cancel.setMinimumSize(QSize(70, 30))
         self.btn_Cancel.setFont(font)
         self.btn_Cancel.setStyleSheet(u"")
@@ -388,8 +376,8 @@ class Ui_MainWindow(object):
 
         self.btn_Confirm = QPushButton(self.frame)
         self.btn_Confirm.setObjectName(u"btn_Confirm")
-        sizePolicy7.setHeightForWidth(self.btn_Confirm.sizePolicy().hasHeightForWidth())
-        self.btn_Confirm.setSizePolicy(sizePolicy7)
+        sizePolicy6.setHeightForWidth(self.btn_Confirm.sizePolicy().hasHeightForWidth())
+        self.btn_Confirm.setSizePolicy(sizePolicy6)
         self.btn_Confirm.setMinimumSize(QSize(70, 30))
         self.btn_Confirm.setBaseSize(QSize(1, 0))
         self.btn_Confirm.setFont(font)
@@ -447,11 +435,11 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
         self.toolBar = QToolBar(MainWindow)
         self.toolBar.setObjectName(u"toolBar")
-        sizePolicy8 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.MinimumExpanding)
-        sizePolicy8.setHorizontalStretch(50)
-        sizePolicy8.setVerticalStretch(50)
-        sizePolicy8.setHeightForWidth(self.toolBar.sizePolicy().hasHeightForWidth())
-        self.toolBar.setSizePolicy(sizePolicy8)
+        sizePolicy7 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.MinimumExpanding)
+        sizePolicy7.setHorizontalStretch(50)
+        sizePolicy7.setVerticalStretch(50)
+        sizePolicy7.setHeightForWidth(self.toolBar.sizePolicy().hasHeightForWidth())
+        self.toolBar.setSizePolicy(sizePolicy7)
         self.toolBar.setMinimumSize(QSize(0, 0))
         self.toolBar.setMovable(False)
         self.toolBar.setIconSize(QSize(60, 60))
@@ -478,7 +466,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(1)
+        self.stackedWidget.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -494,18 +482,15 @@ class Ui_MainWindow(object):
         self.actionSettings.setText(QCoreApplication.translate("MainWindow", u"Settings", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"<insert security tip here ", None))
         ___qtablewidgetitem = self.table_credentialList.horizontalHeaderItem(0)
-        ___qtablewidgetitem.setText(QCoreApplication.translate("MainWindow", u"Icon", None));
+        ___qtablewidgetitem.setText(QCoreApplication.translate("MainWindow", u"Title", None));
         ___qtablewidgetitem1 = self.table_credentialList.horizontalHeaderItem(1)
-        ___qtablewidgetitem1.setText(QCoreApplication.translate("MainWindow", u"Title", None));
+        ___qtablewidgetitem1.setText(QCoreApplication.translate("MainWindow", u"Username", None));
         ___qtablewidgetitem2 = self.table_credentialList.horizontalHeaderItem(2)
-        ___qtablewidgetitem2.setText(QCoreApplication.translate("MainWindow", u"Username", None));
+        ___qtablewidgetitem2.setText(QCoreApplication.translate("MainWindow", u"URL", None));
         ___qtablewidgetitem3 = self.table_credentialList.horizontalHeaderItem(3)
-        ___qtablewidgetitem3.setText(QCoreApplication.translate("MainWindow", u"URL", None));
+        ___qtablewidgetitem3.setText(QCoreApplication.translate("MainWindow", u"Remarks", None));
         ___qtablewidgetitem4 = self.table_credentialList.horizontalHeaderItem(4)
-        ___qtablewidgetitem4.setText(QCoreApplication.translate("MainWindow", u"Remarks", None));
-        ___qtablewidgetitem5 = self.table_credentialList.horizontalHeaderItem(5)
-        ___qtablewidgetitem5.setText(QCoreApplication.translate("MainWindow", u"Modified", None));
-        self.lbl_credIcon.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        ___qtablewidgetitem4.setText(QCoreApplication.translate("MainWindow", u"Modified", None));
         self.lbl_credTitle.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.btn_closeCredInfo.setText("")
         self.lbl_Username.setText(QCoreApplication.translate("MainWindow", u"username", None))
