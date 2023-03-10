@@ -1,8 +1,7 @@
 from PyQt6.QtWidgets import QApplication,QMainWindow, QTableWidgetItem, QPushButton, QLineEdit, QMessageBox
 from PyQt6 import uic
-from PyQt6.QtGui import QColor, QIcon, QAction,QPixmap
-from PyQt6.QtNetwork import QNetworkAccessManager, QNetworkRequest
-from PyQt6.QtCore import QUrl
+from PyQt6.QtGui import QColor, QIcon, QAction
+from PyQt6.QtCore import QDate
 
 from datetime import date
 from Passwords import gen_password
@@ -10,16 +9,7 @@ import ast
 import sys
 
 import resource_rc
-'''import re
 
-from bs4 import BeautifulSoup
-
-html_code = "<Some HTML code you get from somewhere>"
-
-soup = BeautifulSoup(html_code, features="lxml")
-
-for item in soup.find_all('link', attrs={'rel': re.compile("^(shortcut icon|icon)$", re.I)}):
-    print(item.get('href'))'''
 
 class Manager(QMainWindow): 
     def __init__(self):
@@ -56,19 +46,20 @@ class Manager(QMainWindow):
         self.actionDelete_Entry.triggered.connect(self.deleteEntry)
         self.actionExit.triggered.connect(self.exitManager)
 
+        #estalishing connections for the stacked widget -- called to change the page
         self.actionAdd_Entry.triggered.connect(lambda:self.stackedWidget.setCurrentIndex(1))
         self.actionEdit_Entry.triggered.connect(lambda:self.stackedWidget.setCurrentIndex(1))
         
         #estalishing connections for showing/hiding the frame displaying the specific entry details
         self.table_credentialList.cellClicked.connect(self.showCredentialDetails)
 
-
         #establishing connections for the buttons in the credential entry pages
         self.stackedWidget.widget(1).findChild(QPushButton,'btn_Cancel').clicked.connect(lambda:self.stackedWidget.setCurrentIndex(0))
         self.stackedWidget.widget(1).findChild(QPushButton,'btn_Confirm').clicked.connect(lambda:self.stackedWidget.setCurrentIndex(0))
         
         #initialization of session variables
-        self.togglePwd_action = ''
+        self.togglePwd_action_Entry = ''
+        self.togglePwd_action_Frame = ''
         self.genPwd_action = ''
         self.pwdLength = 8
         self.show()
@@ -90,8 +81,6 @@ class Manager(QMainWindow):
         #populating the table with the details of the credentials
         #for creds in self.credList:
         for index, creds in enumerate(self.credList):
-            print("Top:",self.credList.index(creds))
-            print("Index",index)
             self.table_credentialList.setItem(index,0,QTableWidgetItem(creds['title']))
             self.table_credentialList.setItem(index,1,QTableWidgetItem(creds['username']))
             self.table_credentialList.setItem(index,2,QTableWidgetItem(creds['url']))
@@ -106,13 +95,18 @@ class Manager(QMainWindow):
         self.btn_closeCredInfo.clicked.connect(self.hideCrendentialDetails)
         self.frame_credDetail.show()
 
+        #setting the "Toggle Password Visibility" button
+        if self.togglePwd_action_Frame !="":
+            self.lineEdit_lblPassword.removeAction(self.togglePwd_action_Frame)
+        self.togglePwd_action_Frame = QAction(QIcon(':/Icons/Show.svg'), 'Toggle Password visibility', self)
+        self.lineEdit_lblPassword.addAction(self.togglePwd_action_Frame, QLineEdit.ActionPosition.TrailingPosition)
+        self.togglePwd_action_Frame.setCheckable(True)
+        self.togglePwd_action_Frame.toggled.connect(self.togglePassword_Frame)
+
         #populating labels based on selected credential (QTableWidget Row)
         self.lbl_credTitle.setText(self.credList[self.table_credentialList.currentRow()]['title']) #QTableWidget.currentRow() = returns the row number of the selected row
-        
-        
         self.lbl_Username.setText("Username: \t" + self.credList[self.table_credentialList.currentRow()]['username'])
-        self.lineEdit_lblPassword.setEchoMode(QLineEdit.EchoMode.Password)
-        #figure out
+        self.lineEdit_lblPassword.setEchoMode(QLineEdit.EchoMode.Password)         
         self.lineEdit_lblPassword.setText(self.credList[self.table_credentialList.currentRow()]['password'])
         self.lbl_Remarks.setText("Remarks: \t" + self.credList[self.table_credentialList.currentRow()]['remarks'])
         self.lbl_URL.setText("URL: \t\t" + self.credList[self.table_credentialList.currentRow()]['url'])
@@ -153,15 +147,17 @@ class Manager(QMainWindow):
         self.lineEdit_Password.clear()
         self.lineEdit_URL.clear()
         self.textEdit_Remark.clear()
-        self.lineEdit_dateExp.clear()
+
+        #set current date as default for the "Expiry Date" field
+        self.dateEdit_dateExp.setDate(QDate().currentDate())
 
         #initializing the "Toggle Password Visibility" button 
-        if self.togglePwd_action != '':
-            self.lineEdit_Password.removeAction(self.togglePwd_action)
-        self.togglePwd_action = QAction(QIcon(':/Icons/Show.svg'), 'Toggle Password visibility', self)
-        self.lineEdit_Password.addAction(self.togglePwd_action, QLineEdit.ActionPosition.TrailingPosition)
-        self.togglePwd_action.setCheckable(True)
-        self.togglePwd_action.toggled.connect(self.togglePassword)
+        if self.togglePwd_action_Entry != '':
+            self.lineEdit_Password.removeAction(self.togglePwd_action_Entry)
+        self.togglePwd_action_Entry = QAction(QIcon(':/Icons/Show.svg'), 'Toggle Password visibility', self)
+        self.lineEdit_Password.addAction(self.togglePwd_action_Entry, QLineEdit.ActionPosition.TrailingPosition)
+        self.togglePwd_action_Entry.setCheckable(True)
+        self.togglePwd_action_Entry.toggled.connect(self.togglePassword_Entry)
 
         #initializing the "Password Generator" button
         if self.genPwd_action != '':
@@ -176,18 +172,29 @@ class Manager(QMainWindow):
         return
         
     '''-------------------------------------------------------------------------
-    helper function - logic of "Toggle Password Visibility" button
+    helper function - logic of the "Toggle Password Visibility" buttons
     ----------------------------------------------------------------------------'''
-    def togglePassword(self):
-        if self.togglePwd_action.isChecked():
-            self.togglePwd_action.setIcon(QIcon(':/Icons/Hide.svg'))
+    #for the credential entry page
+    def togglePassword_Entry(self):
+        if self.togglePwd_action_Entry.isChecked():
+            self.togglePwd_action_Entry.setIcon(QIcon(':/Icons/Hide.svg'))
             self.lineEdit_Password.setEchoMode(QLineEdit.EchoMode.Normal)
             return
         else:
-            self.togglePwd_action.setIcon(QIcon(':/Icons/Show.svg'))
+            self.togglePwd_action_Entry.setIcon(QIcon(':/Icons/Show.svg'))
             self.lineEdit_Password.setEchoMode(QLineEdit.EchoMode.Password)
             return
 
+    #for the credential detail frame
+    def togglePassword_Frame(self):
+        if self.togglePwd_action_Frame.isChecked():
+            self.togglePwd_action_Frame.setIcon(QIcon(':/Icons/Hide.svg'))
+            self.lineEdit_lblPassword.setEchoMode(QLineEdit.EchoMode.Normal)
+            return
+        else:
+            self.togglePwd_action_Frame.setIcon(QIcon(':/Icons/Show.svg'))
+            self.lineEdit_lblPassword.setEchoMode(QLineEdit.EchoMode.Password)
+            return
     '''-------------------------------------------------------------------------
     helper function - populate password field with a random password
     ----------------------------------------------------------------------------'''
@@ -200,7 +207,8 @@ class Manager(QMainWindow):
     ----------------------------------------------------------------------------'''    
     def addEntry(self):
         self.newCred=''
-        self.entry_UI() 
+        self.entry_UI()
+        self.dateEdit_dateExp.setMinimumDate(QDate().currentDate())
         self.btn_Confirm.clicked.connect(self.confirmAddEntry)
         print("Add Entry")
         return
@@ -215,7 +223,7 @@ class Manager(QMainWindow):
             "password": self.lineEdit_Password.text(),
             "url": self.lineEdit_URL.text(),
             "remarks": self.textEdit_Remark.toPlainText(),
-            "dateExp": self.lineEdit_dateExp.text(),
+            "dateExp": QDate(self.dateEdit_dateExp.date()).toString("dd/MM/yyyy"),
             "dateMod": date.today().strftime("%d/%m/%Y")
         }
         if (len(self.lineEdit_Password.text()) < 8):
@@ -228,33 +236,85 @@ class Manager(QMainWindow):
             info.exec()
             
         self.credList.append(self.newCred)
-        #print(self.credList)
         self.populateCredentials()
         self.btn_Confirm.disconnect()
         self.btn_Confirm.clicked.connect(lambda:self.stackedWidget.setCurrentIndex(0))
         return 
 
-
+    '''-------------------------------------------------------------------------
+    function - called when user clicks on "Edit Entry" button
+    ----------------------------------------------------------------------------''' 
     def editEntry(self):
         self.entry_UI()
+        self.dateEdit_dateExp.setMinimumDate(QDate().currentDate())
+
+        #initialize the "Confirm" button
         self.btn_Confirm.setEnabled(False)
+        self.btn_Confirm.setStyleSheet('QPushButton {background-color: #BFBFBF; color: #2B96CB; border: 1px #2F528F; border-radius: 5px; font-size: 18px;}')
+        self.btn_Confirm.setToolTip('No changes were made. Make some changes to enable this button.')
+
         #initialize the fields with the values of the selected credential/row
         self.lineEdit_Title.setText(self.credList[self.table_credentialList.currentRow()]['title'])
         self.lineEdit_Username.setText(self.credList[self.table_credentialList.currentRow()]['username'])
         self.lineEdit_Password.setText(self.credList[self.table_credentialList.currentRow()]['password'])
         self.lineEdit_URL.setText(self.credList[self.table_credentialList.currentRow()]['url'])
-        self.lineEdit_dateExp.setText(self.credList[self.table_credentialList.currentRow()]['dateExp'])
+        self.dateEdit_dateExp.setDate(QDate.fromString(self.credList[self.table_credentialList.currentRow()]['dateExp'], "dd/MM/yyyy"))
         self.textEdit_Remark.setText(self.credList[self.table_credentialList.currentRow()]['remarks'])
         
-        #add code here 6/march/2023
+        #connect the textChanged signal of the fields to the enableConfirm function
+        # - ensures that the "Confirm" button is only enabled when there are changes made to the fields
+        self.lineEdit_Title.textChanged.connect(self.enableConfirm)
+        self.lineEdit_Username.textChanged.connect(self.enableConfirm)
+        self.lineEdit_Password.textChanged.connect(self.enableConfirm)
+        self.lineEdit_URL.textChanged.connect(self.enableConfirm)
+        self.dateEdit_dateExp.dateChanged.connect(self.enableConfirm)
+        self.textEdit_Remark.textChanged.connect(self.enableConfirm)
+        
+        self.btn_Confirm.clicked.connect(self.confirmEditEntry)
+        return
+    
+    '''----------------------------------------------------------------------------------------------------------------------
+    helper function - called when lineEdit fields are changed, ensure fields are changed prior to enabling "Confirm" button
+    ------------------------------------------------------------------------------------------------------------------------'''
+    def enableConfirm(self):
+        #enables the "Confirm" button if there are changes made to the fields
+        if((self.lineEdit_Title.text() != self.credList[self.table_credentialList.currentRow()]['title']) or 
+            (self.lineEdit_Username.text() != self.credList[self.table_credentialList.currentRow()]['username']) or
+            (self.lineEdit_Password.text() != self.credList[self.table_credentialList.currentRow()]['password']) or
+            (self.lineEdit_URL.text() != self.credList[self.table_credentialList.currentRow()]['url']) or
+            (QDate(self.dateEdit_dateExp.date()).toString("dd/MM/yyyy") != self.credList[self.table_credentialList.currentRow()]['dateExp']) or
+            (self.textEdit_Remark.toPlainText() != self.credList[self.table_credentialList.currentRow()]['remarks'])):
+            self.btn_Confirm.setEnabled(True)
+            
+            self.btn_Confirm.setStyleSheet('QPushButton {background-color: #5B9BD5; color: #FFFFFF; border: 1px #2F528F; border-radius: 5px; font-size: 18px}')
+            return
+        
+        #disables the "Confirm" button if there are no changes made to the fields
+        self.btn_Confirm.setToolTip("")
+        self.btn_Confirm.setEnabled(False)
+        self.btn_Confirm.setStyleSheet('QPushButton {background-color: #BFBFBF; color: #2B96CB; border: 1px #2F528F; border-radius: 5px; font-size: 18px;}')
 
+    '''-------------------------------------------------------------------------
+    function - called when user clicks on "Confirm" during editing of an entry
+    ----------------------------------------------------------------------------'''
+    def confirmEditEntry(self):
+        #update the selected credential with the entered new values
+        self.credList[self.table_credentialList.currentRow()]['title'] = self.lineEdit_Title.text()
+        self.credList[self.table_credentialList.currentRow()]['username'] = self.lineEdit_Username.text()
+        self.credList[self.table_credentialList.currentRow()]['password'] = self.lineEdit_Password.text()
+        self.credList[self.table_credentialList.currentRow()]['url'] = self.lineEdit_URL.text()
+        self.credList[self.table_credentialList.currentRow()]['dateExp'] = QDate(self.dateEdit_dateExp.date()).toString("dd/MM/yyyy")
+        self.credList[self.table_credentialList.currentRow()]['remarks'] = self.textEdit_Remark.toPlainText()
+        self.credList[self.table_credentialList.currentRow()]['dateMod'] = date.today().strftime("%d/%m/%Y")
 
-        print("Edit Entry")
+        print (self.credList[self.table_credentialList.currentRow()]['dateExp'])
+        self.btn_Confirm.disconnect()
+        self.btn_Confirm.clicked.connect(lambda:self.stackedWidget.setCurrentIndex(0))
         self.populateCredentials()
         return
     
-    
     def deleteEntry(self):
+        
         print("Delete Entry")
         return
 

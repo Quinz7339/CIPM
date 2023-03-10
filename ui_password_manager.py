@@ -16,19 +16,19 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QIcon, QImage, QKeySequence, QLinearGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
-from PySide6.QtWidgets import (QAbstractItemView, QApplication, QFrame, QGridLayout,
-    QHBoxLayout, QHeaderView, QLabel, QLayout,
-    QLineEdit, QMainWindow, QPushButton, QSizePolicy,
-    QSpacerItem, QStackedWidget, QStatusBar, QTableWidget,
-    QTableWidgetItem, QTextEdit, QToolBar, QVBoxLayout,
-    QWidget)
+from PySide6.QtWidgets import (QAbstractItemView, QApplication, QDateEdit, QDateTimeEdit,
+    QFrame, QGridLayout, QHBoxLayout, QHeaderView,
+    QLabel, QLayout, QLineEdit, QMainWindow,
+    QPushButton, QSizePolicy, QSpacerItem, QStackedWidget,
+    QStatusBar, QTableWidget, QTableWidgetItem, QTextEdit,
+    QToolBar, QVBoxLayout, QWidget)
 import resources_rc
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(833, 604)
+        MainWindow.resize(833, 603)
         icon = QIcon()
         icon.addFile(u":/Icons/Logo.svg", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)
@@ -222,6 +222,8 @@ class Ui_MainWindow(object):
 
         self.frame_2 = QFrame(self.frame_leftCredDetail)
         self.frame_2.setObjectName(u"frame_2")
+        sizePolicy.setHeightForWidth(self.frame_2.sizePolicy().hasHeightForWidth())
+        self.frame_2.setSizePolicy(sizePolicy)
         self.frame_2.setFrameShape(QFrame.StyledPanel)
         self.frame_2.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_5 = QHBoxLayout(self.frame_2)
@@ -233,20 +235,20 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_5.addWidget(self.label_8)
 
-        self.horizontalSpacer_2 = QSpacerItem(38, 20, QSizePolicy.Maximum, QSizePolicy.Minimum)
+        self.horizontalSpacer_2 = QSpacerItem(39, 20, QSizePolicy.Maximum, QSizePolicy.Minimum)
 
         self.horizontalLayout_5.addItem(self.horizontalSpacer_2)
 
         self.lineEdit_lblPassword = QLineEdit(self.frame_2)
         self.lineEdit_lblPassword.setObjectName(u"lineEdit_lblPassword")
-        sizePolicy4 = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Fixed)
+        sizePolicy4 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy4.setHorizontalStretch(0)
         sizePolicy4.setVerticalStretch(0)
         sizePolicy4.setHeightForWidth(self.lineEdit_lblPassword.sizePolicy().hasHeightForWidth())
         self.lineEdit_lblPassword.setSizePolicy(sizePolicy4)
         self.lineEdit_lblPassword.setStyleSheet(u"border: none;\n"
 "background-color:transparent;")
-        self.lineEdit_lblPassword.setAlignment(Qt.AlignCenter)
+        self.lineEdit_lblPassword.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
         self.lineEdit_lblPassword.setReadOnly(True)
 
         self.horizontalLayout_5.addWidget(self.lineEdit_lblPassword)
@@ -262,6 +264,10 @@ class Ui_MainWindow(object):
 
 
         self.horizontalLayout_4.addWidget(self.frame_leftCredDetail)
+
+        self.horizontalSpacer_4 = QSpacerItem(45, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_4.addItem(self.horizontalSpacer_4)
 
         self.frame_rightCredInfo = QFrame(self.frame_bodyCredDetail)
         self.frame_rightCredInfo.setObjectName(u"frame_rightCredInfo")
@@ -307,27 +313,11 @@ class Ui_MainWindow(object):
         self.grid_credEntry = QGridLayout()
         self.grid_credEntry.setObjectName(u"grid_credEntry")
         self.grid_credEntry.setVerticalSpacing(15)
-        self.lineEdit_Username = QLineEdit(self.page_credEntry)
-        self.lineEdit_Username.setObjectName(u"lineEdit_Username")
-        font1 = QFont()
-        font1.setPointSize(20)
-        self.lineEdit_Username.setFont(font1)
-        self.lineEdit_Username.setStyleSheet(u"background-color: #595959; \n"
-"color: #FFFFFF;\n"
-"border: 1px #7F7F7F;\n"
-"")
+        self.label_7 = QLabel(self.page_credEntry)
+        self.label_7.setObjectName(u"label_7")
+        self.label_7.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
-        self.grid_credEntry.addWidget(self.lineEdit_Username, 1, 2, 1, 1)
-
-        self.lineEdit_Title = QLineEdit(self.page_credEntry)
-        self.lineEdit_Title.setObjectName(u"lineEdit_Title")
-        self.lineEdit_Title.setFont(font1)
-        self.lineEdit_Title.setStyleSheet(u"background-color: #595959; \n"
-"color: #FFFFFF;\n"
-"border: 1px #7F7F7F;\n"
-"")
-
-        self.grid_credEntry.addWidget(self.lineEdit_Title, 0, 2, 1, 1)
+        self.grid_credEntry.addWidget(self.label_7, 3, 1, 1, 1)
 
         self.label_3 = QLabel(self.page_credEntry)
         self.label_3.setObjectName(u"label_3")
@@ -335,42 +325,17 @@ class Ui_MainWindow(object):
 
         self.grid_credEntry.addWidget(self.label_3, 2, 1, 1, 1)
 
-        self.label_2 = QLabel(self.page_credEntry)
-        self.label_2.setObjectName(u"label_2")
-        self.label_2.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
-
-        self.grid_credEntry.addWidget(self.label_2, 0, 1, 1, 1)
-
-        self.label_7 = QLabel(self.page_credEntry)
-        self.label_7.setObjectName(u"label_7")
-        self.label_7.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
-
-        self.grid_credEntry.addWidget(self.label_7, 3, 1, 1, 1)
-
-        self.lineEdit_URL = QLineEdit(self.page_credEntry)
-        self.lineEdit_URL.setObjectName(u"lineEdit_URL")
-        self.lineEdit_URL.setFont(font1)
-        self.lineEdit_URL.setStyleSheet(u"background-color: #595959; \n"
+        self.lineEdit_Title = QLineEdit(self.page_credEntry)
+        self.lineEdit_Title.setObjectName(u"lineEdit_Title")
+        font1 = QFont()
+        font1.setPointSize(20)
+        self.lineEdit_Title.setFont(font1)
+        self.lineEdit_Title.setStyleSheet(u"background-color: #595959; \n"
 "color: #FFFFFF;\n"
 "border: 1px #7F7F7F;\n"
 "")
 
-        self.grid_credEntry.addWidget(self.lineEdit_URL, 3, 2, 1, 1)
-
-        self.textEdit_Remark = QTextEdit(self.page_credEntry)
-        self.textEdit_Remark.setObjectName(u"textEdit_Remark")
-        sizePolicy5 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Maximum)
-        sizePolicy5.setHorizontalStretch(0)
-        sizePolicy5.setVerticalStretch(0)
-        sizePolicy5.setHeightForWidth(self.textEdit_Remark.sizePolicy().hasHeightForWidth())
-        self.textEdit_Remark.setSizePolicy(sizePolicy5)
-        self.textEdit_Remark.setStyleSheet(u"background-color: #595959; \n"
-"color: #FFFFFF;\n"
-"border: 1px #7F7F7F;\n"
-"font-size: 18px;\n"
-"")
-
-        self.grid_credEntry.addWidget(self.textEdit_Remark, 5, 2, 1, 2)
+        self.grid_credEntry.addWidget(self.lineEdit_Title, 0, 4, 1, 1)
 
         self.label_4 = QLabel(self.page_credEntry)
         self.label_4.setObjectName(u"label_4")
@@ -378,61 +343,21 @@ class Ui_MainWindow(object):
 
         self.grid_credEntry.addWidget(self.label_4, 1, 1, 1, 1)
 
-        self.frame = QFrame(self.page_credEntry)
-        self.frame.setObjectName(u"frame")
-        sizePolicy6 = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy6.setHorizontalStretch(0)
-        sizePolicy6.setVerticalStretch(0)
-        sizePolicy6.setHeightForWidth(self.frame.sizePolicy().hasHeightForWidth())
-        self.frame.setSizePolicy(sizePolicy6)
-        self.frame.setLayoutDirection(Qt.RightToLeft)
-        self.frame.setFrameShape(QFrame.StyledPanel)
-        self.frame.setFrameShadow(QFrame.Raised)
-        self.horizontalLayout_2 = QHBoxLayout(self.frame)
-        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.horizontalLayout_2.setContentsMargins(480, -1, -1, -1)
-        self.btn_Cancel = QPushButton(self.frame)
-        self.btn_Cancel.setObjectName(u"btn_Cancel")
-        sizePolicy7 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
-        sizePolicy7.setHorizontalStretch(0)
-        sizePolicy7.setVerticalStretch(0)
-        sizePolicy7.setHeightForWidth(self.btn_Cancel.sizePolicy().hasHeightForWidth())
-        self.btn_Cancel.setSizePolicy(sizePolicy7)
-        self.btn_Cancel.setMinimumSize(QSize(70, 30))
-        self.btn_Cancel.setFont(font)
-        self.btn_Cancel.setStyleSheet(u"")
+        self.label_5 = QLabel(self.page_credEntry)
+        self.label_5.setObjectName(u"label_5")
+        self.label_5.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
-        self.horizontalLayout_2.addWidget(self.btn_Cancel)
+        self.grid_credEntry.addWidget(self.label_5, 4, 1, 1, 1)
 
-        self.btn_Confirm = QPushButton(self.frame)
-        self.btn_Confirm.setObjectName(u"btn_Confirm")
-        sizePolicy7.setHeightForWidth(self.btn_Confirm.sizePolicy().hasHeightForWidth())
-        self.btn_Confirm.setSizePolicy(sizePolicy7)
-        self.btn_Confirm.setMinimumSize(QSize(70, 30))
-        self.btn_Confirm.setBaseSize(QSize(1, 0))
-        self.btn_Confirm.setFont(font)
-        self.btn_Confirm.setStyleSheet(u"")
-
-        self.horizontalLayout_2.addWidget(self.btn_Confirm)
-
-
-        self.grid_credEntry.addWidget(self.frame, 6, 2, 1, 1)
-
-        self.lineEdit_dateExp = QLineEdit(self.page_credEntry)
-        self.lineEdit_dateExp.setObjectName(u"lineEdit_dateExp")
-        self.lineEdit_dateExp.setFont(font1)
-        self.lineEdit_dateExp.setStyleSheet(u"background-color: #595959; \n"
+        self.lineEdit_Username = QLineEdit(self.page_credEntry)
+        self.lineEdit_Username.setObjectName(u"lineEdit_Username")
+        self.lineEdit_Username.setFont(font1)
+        self.lineEdit_Username.setStyleSheet(u"background-color: #595959; \n"
 "color: #FFFFFF;\n"
-"border: 1px #7F7F7F\n"
+"border: 1px #7F7F7F;\n"
 "")
 
-        self.grid_credEntry.addWidget(self.lineEdit_dateExp, 4, 2, 1, 1)
-
-        self.label_6 = QLabel(self.page_credEntry)
-        self.label_6.setObjectName(u"label_6")
-        self.label_6.setAlignment(Qt.AlignRight|Qt.AlignTop|Qt.AlignTrailing)
-
-        self.grid_credEntry.addWidget(self.label_6, 5, 1, 1, 1)
+        self.grid_credEntry.addWidget(self.lineEdit_Username, 1, 4, 1, 1)
 
         self.lineEdit_Password = QLineEdit(self.page_credEntry)
         self.lineEdit_Password.setObjectName(u"lineEdit_Password")
@@ -444,13 +369,96 @@ class Ui_MainWindow(object):
 "")
         self.lineEdit_Password.setEchoMode(QLineEdit.Password)
 
-        self.grid_credEntry.addWidget(self.lineEdit_Password, 2, 2, 1, 1)
+        self.grid_credEntry.addWidget(self.lineEdit_Password, 2, 4, 1, 1)
 
-        self.label_5 = QLabel(self.page_credEntry)
-        self.label_5.setObjectName(u"label_5")
-        self.label_5.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+        self.lineEdit_URL = QLineEdit(self.page_credEntry)
+        self.lineEdit_URL.setObjectName(u"lineEdit_URL")
+        self.lineEdit_URL.setFont(font1)
+        self.lineEdit_URL.setStyleSheet(u"background-color: #595959; \n"
+"color: #FFFFFF;\n"
+"border: 1px #7F7F7F;\n"
+"")
 
-        self.grid_credEntry.addWidget(self.label_5, 4, 1, 1, 1)
+        self.grid_credEntry.addWidget(self.lineEdit_URL, 3, 4, 1, 1)
+
+        self.label_6 = QLabel(self.page_credEntry)
+        self.label_6.setObjectName(u"label_6")
+        self.label_6.setAlignment(Qt.AlignRight|Qt.AlignTop|Qt.AlignTrailing)
+
+        self.grid_credEntry.addWidget(self.label_6, 5, 1, 1, 1)
+
+        self.frame = QFrame(self.page_credEntry)
+        self.frame.setObjectName(u"frame")
+        sizePolicy5 = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy5.setHorizontalStretch(0)
+        sizePolicy5.setVerticalStretch(0)
+        sizePolicy5.setHeightForWidth(self.frame.sizePolicy().hasHeightForWidth())
+        self.frame.setSizePolicy(sizePolicy5)
+        self.frame.setLayoutDirection(Qt.RightToLeft)
+        self.frame.setFrameShape(QFrame.StyledPanel)
+        self.frame.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_2 = QHBoxLayout(self.frame)
+        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+        self.horizontalLayout_2.setContentsMargins(480, -1, -1, -1)
+        self.btn_Cancel = QPushButton(self.frame)
+        self.btn_Cancel.setObjectName(u"btn_Cancel")
+        sizePolicy6 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        sizePolicy6.setHorizontalStretch(0)
+        sizePolicy6.setVerticalStretch(0)
+        sizePolicy6.setHeightForWidth(self.btn_Cancel.sizePolicy().hasHeightForWidth())
+        self.btn_Cancel.setSizePolicy(sizePolicy6)
+        self.btn_Cancel.setMinimumSize(QSize(70, 30))
+        self.btn_Cancel.setFont(font)
+        self.btn_Cancel.setStyleSheet(u"")
+
+        self.horizontalLayout_2.addWidget(self.btn_Cancel)
+
+        self.btn_Confirm = QPushButton(self.frame)
+        self.btn_Confirm.setObjectName(u"btn_Confirm")
+        sizePolicy6.setHeightForWidth(self.btn_Confirm.sizePolicy().hasHeightForWidth())
+        self.btn_Confirm.setSizePolicy(sizePolicy6)
+        self.btn_Confirm.setMinimumSize(QSize(70, 30))
+        self.btn_Confirm.setBaseSize(QSize(1, 0))
+        self.btn_Confirm.setFont(font)
+        self.btn_Confirm.setStyleSheet(u"")
+
+        self.horizontalLayout_2.addWidget(self.btn_Confirm)
+
+
+        self.grid_credEntry.addWidget(self.frame, 6, 4, 1, 1)
+
+        self.label_2 = QLabel(self.page_credEntry)
+        self.label_2.setObjectName(u"label_2")
+        self.label_2.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.grid_credEntry.addWidget(self.label_2, 0, 1, 1, 1)
+
+        self.textEdit_Remark = QTextEdit(self.page_credEntry)
+        self.textEdit_Remark.setObjectName(u"textEdit_Remark")
+        sizePolicy7 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Maximum)
+        sizePolicy7.setHorizontalStretch(0)
+        sizePolicy7.setVerticalStretch(0)
+        sizePolicy7.setHeightForWidth(self.textEdit_Remark.sizePolicy().hasHeightForWidth())
+        self.textEdit_Remark.setSizePolicy(sizePolicy7)
+        self.textEdit_Remark.setStyleSheet(u"background-color: #595959; \n"
+"color: #FFFFFF;\n"
+"border: 1px #7F7F7F;\n"
+"font-size: 18px;\n"
+"")
+
+        self.grid_credEntry.addWidget(self.textEdit_Remark, 5, 4, 1, 2)
+
+        self.dateEdit_dateExp = QDateEdit(self.page_credEntry)
+        self.dateEdit_dateExp.setObjectName(u"dateEdit_dateExp")
+        self.dateEdit_dateExp.setFont(font)
+        self.dateEdit_dateExp.setStyleSheet(u"background-color: #595959; \n"
+"color: #FFFFFF;\n"
+"border: 1px #7F7F7F;\n"
+"")
+        self.dateEdit_dateExp.setCurrentSection(QDateTimeEdit.DaySection)
+        self.dateEdit_dateExp.setTimeSpec(Qt.LocalTime)
+
+        self.grid_credEntry.addWidget(self.dateEdit_dateExp, 4, 4, 1, 1)
 
 
         self.verticalLayout_5.addLayout(self.grid_credEntry)
@@ -478,8 +486,7 @@ class Ui_MainWindow(object):
         QWidget.setTabOrder(self.lineEdit_Title, self.lineEdit_Username)
         QWidget.setTabOrder(self.lineEdit_Username, self.lineEdit_Password)
         QWidget.setTabOrder(self.lineEdit_Password, self.lineEdit_URL)
-        QWidget.setTabOrder(self.lineEdit_URL, self.lineEdit_dateExp)
-        QWidget.setTabOrder(self.lineEdit_dateExp, self.textEdit_Remark)
+        QWidget.setTabOrder(self.lineEdit_URL, self.textEdit_Remark)
         QWidget.setTabOrder(self.textEdit_Remark, self.btn_Confirm)
         QWidget.setTabOrder(self.btn_Confirm, self.btn_Cancel)
         QWidget.setTabOrder(self.btn_Cancel, self.table_credentialList)
@@ -529,14 +536,14 @@ class Ui_MainWindow(object):
         self.lbl_Remarks.setText(QCoreApplication.translate("MainWindow", u"remarks", None))
         self.lbl_URL.setText(QCoreApplication.translate("MainWindow", u"url", None))
         self.lbl_dateExp.setText(QCoreApplication.translate("MainWindow", u"expiry", None))
-        self.label_3.setText(QCoreApplication.translate("MainWindow", u"Password:", None))
-        self.label_2.setText(QCoreApplication.translate("MainWindow", u"Title:", None))
         self.label_7.setText(QCoreApplication.translate("MainWindow", u"URL:", None))
+        self.label_3.setText(QCoreApplication.translate("MainWindow", u"Password:", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"Username:", None))
+        self.label_5.setText(QCoreApplication.translate("MainWindow", u"Expiry Date:", None))
+        self.label_6.setText(QCoreApplication.translate("MainWindow", u"Remark:", None))
         self.btn_Cancel.setText(QCoreApplication.translate("MainWindow", u"Cancel", None))
         self.btn_Confirm.setText(QCoreApplication.translate("MainWindow", u"Confirm", None))
-        self.label_6.setText(QCoreApplication.translate("MainWindow", u"Remark:", None))
-        self.label_5.setText(QCoreApplication.translate("MainWindow", u"Expiry Date:", None))
+        self.label_2.setText(QCoreApplication.translate("MainWindow", u"Title:", None))
         self.toolBar.setWindowTitle(QCoreApplication.translate("MainWindow", u"toolBar", None))
 #if QT_CONFIG(tooltip)
         self.toolBar.setToolTip(QCoreApplication.translate("MainWindow", u"Add Entry", None))

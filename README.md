@@ -21,13 +21,19 @@ Markdown [Link](https://www.markdownguide.org/cheat-sheet/)
 <br>Argon2 [Repo](https://github.com/p-h-c/phc-winner-argon2#bindings)
 <br> Visual C++ 14.0 to build Argon2 Library [Link](https://answers.microsoft.com/en-us/windows/forum/all/microsoft-visual-c-140/6f0726e2-6c32-4719-9fe5-aa68b5ad8e6d)
 
+## Notable obstacles
+1. File encryption
+2. QPushButton.disconnect() -> causes recursions
+3. 
+
+
 ## To-do
 - main.py --> ensure initializing of resources 
 - main.py --> include a requirement.txt to enable users to install required libraries
 - readme.md --> include an installation guide
 
 ~~- manager.py (Main) --> visual bug whr new duplicated entries are hidden~~ (solved by using var enumerating the credList for table population instead)
-- manager.py(Main) --> add show/hide password function on QLabel (line 111)
+~~- manager.py(Main) --> add show/hide password function on QLabel (line 111)~~
 ~~- manager.py --> Add Credential and be reflected in table (partially done, has a recursion problem. initialization of button connect might be the issue)~~
 ~~- manager.py --> fetch favicon based on entered domain~~ (scrapped)
 - manager.py --> Edit Credential and be reflected in table
