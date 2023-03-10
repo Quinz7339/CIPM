@@ -26,8 +26,9 @@ Markdown [Link](https://www.markdownguide.org/cheat-sheet/)
 - main.py --> include a requirement.txt to enable users to install required libraries
 - readme.md --> include an installation guide
 
-- manager.py(Main) --> add show/hide password function on QLabel
-- manager.py --> Add Credential and be reflected in table (partially done, has a recursion problem. initialization of button connect might be the issue)
+~~- manager.py (Main) --> visual bug whr new duplicated entries are hidden~~ (solved by using var enumerating the credList for table population instead)
+- manager.py(Main) --> add show/hide password function on QLabel (line 111)
+~~- manager.py --> Add Credential and be reflected in table (partially done, has a recursion problem. initialization of button connect might be the issue)~~
 ~~- manager.py --> fetch favicon based on entered domain~~ (scrapped)
 - manager.py --> Edit Credential and be reflected in table
 ~~- manager.py(Add/Edit) - random password generator ~~
@@ -36,7 +37,7 @@ Markdown [Link](https://www.markdownguide.org/cheat-sheet/)
 - manager.py(Setting) - create UI
 - manager.py(Setting) - allow default length of generated password (use slider) --> self.password_length
 - reflect changes correctly on the local database file
-- open file in 'w' mode to overwrite with the currently updated database
+- open file in 'w' mode to overwrite with the currently updated database (do it when then are changes OR at the end of the program execution)
 - add password generating function
 
 
