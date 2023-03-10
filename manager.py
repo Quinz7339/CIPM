@@ -44,6 +44,7 @@ class Manager(QMainWindow):
         self.actionAdd_Entry.triggered.connect(self.addEntry)
         self.actionEdit_Entry.triggered.connect(self.editEntry)
         self.actionDelete_Entry.triggered.connect(self.deleteEntry)
+        self.actionSettings.triggered.connect(self.settings)
         self.actionExit.triggered.connect(self.exitManager)
 
         #estalishing connections for the stacked widget -- called to change the page
@@ -313,6 +314,9 @@ class Manager(QMainWindow):
         self.populateCredentials()
         return
     
+    '''-------------------------------------------------------------------------
+    function - called when user clicks on "Delete Entry" button
+    ----------------------------------------------------------------------------'''
     def deleteEntry(self):
         try:
             self.deleteMsg = QMessageBox()
@@ -329,16 +333,21 @@ class Manager(QMainWindow):
             self.deleteMsg.exec()
         except:
             QMessageBox.information(self, "Error", "The database is either blank or no entry is selected.")
-        print("Delete Entry")
         return
     
+    '''---------------------------------------------------------------------------------
+    helper function - called when user clicks on "Yes" or "No" upon delete confirmation
+    ------------------------------------------------------------------------------------'''
     def deleteEntryConfirm(self):
         if self.deleteMsg.clickedButton() == self.deleteMsg.button(QMessageBox.StandardButton.Yes):
             self.credList.pop(self.table_credentialList.currentRow())
-            print("Delete Entry x2")
             self.populateCredentials()
         else:
             print("Cancel Delete")
+        return
+    
+    def settings(self):
+        print("Settings")
         return
 
 '''comment the code block below after testing'''

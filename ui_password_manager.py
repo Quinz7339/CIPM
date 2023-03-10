@@ -19,16 +19,16 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
 from PySide6.QtWidgets import (QAbstractItemView, QApplication, QDateEdit, QDateTimeEdit,
     QFrame, QGridLayout, QHBoxLayout, QHeaderView,
     QLabel, QLayout, QLineEdit, QMainWindow,
-    QPushButton, QSizePolicy, QSpacerItem, QStackedWidget,
-    QStatusBar, QTableWidget, QTableWidgetItem, QTextEdit,
-    QToolBar, QVBoxLayout, QWidget)
+    QPushButton, QSizePolicy, QSlider, QSpacerItem,
+    QStackedWidget, QStatusBar, QTableWidget, QTableWidgetItem,
+    QTextEdit, QToolBar, QVBoxLayout, QWidget)
 import resources_rc
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(833, 603)
+        MainWindow.resize(841, 603)
         icon = QIcon()
         icon.addFile(u":/Icons/Logo.svg", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)
@@ -305,6 +305,62 @@ class Ui_MainWindow(object):
         self.horizontalLayout.addWidget(self.frame_credList)
 
         self.stackedWidget.addWidget(self.page_Manager)
+        self.page_Settings = QWidget()
+        self.page_Settings.setObjectName(u"page_Settings")
+        self.verticalLayout_7 = QVBoxLayout(self.page_Settings)
+        self.verticalLayout_7.setObjectName(u"verticalLayout_7")
+        self.verticalLayout_7.setContentsMargins(15, 65, 0, 15)
+        self.label_9 = QLabel(self.page_Settings)
+        self.label_9.setObjectName(u"label_9")
+        sizePolicy2.setHeightForWidth(self.label_9.sizePolicy().hasHeightForWidth())
+        self.label_9.setSizePolicy(sizePolicy2)
+        font1 = QFont()
+        font1.setFamilies([u"HYWenHei"])
+        font1.setPointSize(17)
+        self.label_9.setFont(font1)
+
+        self.verticalLayout_7.addWidget(self.label_9)
+
+        self.label_10 = QLabel(self.page_Settings)
+        self.label_10.setObjectName(u"label_10")
+        sizePolicy2.setHeightForWidth(self.label_10.sizePolicy().hasHeightForWidth())
+        self.label_10.setSizePolicy(sizePolicy2)
+        font2 = QFont()
+        font2.setFamilies([u"HYWenHei"])
+        font2.setPointSize(10)
+        self.label_10.setFont(font2)
+
+        self.verticalLayout_7.addWidget(self.label_10)
+
+        self.frame_3 = QFrame(self.page_Settings)
+        self.frame_3.setObjectName(u"frame_3")
+        self.frame_3.setFrameShape(QFrame.StyledPanel)
+        self.frame_3.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_6 = QHBoxLayout(self.frame_3)
+        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
+        self.horizontalLayout_6.setContentsMargins(0, -1, -1, 88)
+        self.label_11 = QLabel(self.frame_3)
+        self.label_11.setObjectName(u"label_11")
+        self.label_11.setFont(font2)
+
+        self.horizontalLayout_6.addWidget(self.label_11)
+
+        self.slider_PasswordLength = QSlider(self.frame_3)
+        self.slider_PasswordLength.setObjectName(u"slider_PasswordLength")
+        self.slider_PasswordLength.setOrientation(Qt.Horizontal)
+
+        self.horizontalLayout_6.addWidget(self.slider_PasswordLength)
+
+        self.lbl_sliderPasswdLength = QLabel(self.frame_3)
+        self.lbl_sliderPasswdLength.setObjectName(u"lbl_sliderPasswdLength")
+        self.lbl_sliderPasswdLength.setFont(font)
+
+        self.horizontalLayout_6.addWidget(self.lbl_sliderPasswdLength)
+
+
+        self.verticalLayout_7.addWidget(self.frame_3)
+
+        self.stackedWidget.addWidget(self.page_Settings)
         self.page_credEntry = QWidget()
         self.page_credEntry.setObjectName(u"page_credEntry")
         self.verticalLayout_5 = QVBoxLayout(self.page_credEntry)
@@ -327,9 +383,9 @@ class Ui_MainWindow(object):
 
         self.lineEdit_Title = QLineEdit(self.page_credEntry)
         self.lineEdit_Title.setObjectName(u"lineEdit_Title")
-        font1 = QFont()
-        font1.setPointSize(20)
-        self.lineEdit_Title.setFont(font1)
+        font3 = QFont()
+        font3.setPointSize(20)
+        self.lineEdit_Title.setFont(font3)
         self.lineEdit_Title.setStyleSheet(u"background-color: #595959; \n"
 "color: #FFFFFF;\n"
 "border: 1px #7F7F7F;\n"
@@ -351,7 +407,7 @@ class Ui_MainWindow(object):
 
         self.lineEdit_Username = QLineEdit(self.page_credEntry)
         self.lineEdit_Username.setObjectName(u"lineEdit_Username")
-        self.lineEdit_Username.setFont(font1)
+        self.lineEdit_Username.setFont(font3)
         self.lineEdit_Username.setStyleSheet(u"background-color: #595959; \n"
 "color: #FFFFFF;\n"
 "border: 1px #7F7F7F;\n"
@@ -361,7 +417,7 @@ class Ui_MainWindow(object):
 
         self.lineEdit_Password = QLineEdit(self.page_credEntry)
         self.lineEdit_Password.setObjectName(u"lineEdit_Password")
-        self.lineEdit_Password.setFont(font1)
+        self.lineEdit_Password.setFont(font3)
         self.lineEdit_Password.setStyleSheet(u"background-color: #595959; \n"
 "color: #FFFFFF;\n"
 "border: 1px #7F7F7F;\n"
@@ -373,7 +429,7 @@ class Ui_MainWindow(object):
 
         self.lineEdit_URL = QLineEdit(self.page_credEntry)
         self.lineEdit_URL.setObjectName(u"lineEdit_URL")
-        self.lineEdit_URL.setFont(font1)
+        self.lineEdit_URL.setFont(font3)
         self.lineEdit_URL.setStyleSheet(u"background-color: #595959; \n"
 "color: #FFFFFF;\n"
 "border: 1px #7F7F7F;\n"
@@ -503,7 +559,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -536,6 +592,10 @@ class Ui_MainWindow(object):
         self.lbl_Remarks.setText(QCoreApplication.translate("MainWindow", u"remarks", None))
         self.lbl_URL.setText(QCoreApplication.translate("MainWindow", u"url", None))
         self.lbl_dateExp.setText(QCoreApplication.translate("MainWindow", u"expiry", None))
+        self.label_9.setText(QCoreApplication.translate("MainWindow", u"Settings", None))
+        self.label_10.setText(QCoreApplication.translate("MainWindow", u"Configure your desired randomly generated password length", None))
+        self.label_11.setText(QCoreApplication.translate("MainWindow", u"Password length:", None))
+        self.lbl_sliderPasswdLength.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.label_7.setText(QCoreApplication.translate("MainWindow", u"URL:", None))
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"Password:", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"Username:", None))

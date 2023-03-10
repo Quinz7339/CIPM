@@ -137,10 +137,8 @@ class CreateDb(QWidget):
             #establishing the parameters for the encryptor function    
             encryptor = Passwords.encryptor(bytes(db_master_passwd,'utf-8'), bytes(salt,'utf-8'))
             
-            
-            db_filename = folderPath + "//" + db_name + ".cipm"
-
-            #creates a blank database file
+            #creates a blank database file with the name entered by the user and the .cipm extension
+            db_filename = folderPath + "//" + db_name + ".cipm"            
             with open(db_filename,'w') as db:
                 pass
             
