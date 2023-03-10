@@ -314,10 +314,32 @@ class Manager(QMainWindow):
         return
     
     def deleteEntry(self):
-        
+        try:
+            self.deleteMsg = QMessageBox()
+            self.deleteMsg.setIcon(QMessageBox.Icon.Warning)
+            self.deleteMsg.setWindowIcon(QIcon(":Icons/Delete.svg"))
+            self.deleteMsg.setWindowTitle("Delete Entry")
+            self.deleteMsg.setText("Are you sure you want to delete this entry?\n Title: " + self.credList[self.table_credentialList.currentRow()]['title'] + "\n Username: " + self.credList[self.table_credentialList.currentRow()]['username'] +"\n Remarks: " + self.credList[self.table_credentialList.currentRow()]['remarks'])
+            self.deleteMsg.setInformativeText("This action cannot be undone.")
+            self.deleteMsg.setStandardButtons(QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+            self.deleteMsg.button(QMessageBox.StandardButton.Yes).setStyleSheet("background-color: #961212; color: #FFFFFF; border: 1px #2F528F; border-radius: 5px; font-size: 18px")
+            self.deleteMsg.button(QMessageBox.StandardButton.No).setStyleSheet("background-color: #5B9BD5; color: #FFFFFF; border: 1px #2F528F; border-radius: 5px; font-size: 18px")
+            self.deleteMsg.setDefaultButton(QMessageBox.StandardButton.No)
+            self.deleteMsg.buttonClicked.connect(self.deleteEntryConfirm)
+            self.deleteMsg.exec()
+        except:
+            QMessageBox.information(self, "Error", "The database is either blank or no entry is selected.")
         print("Delete Entry")
         return
-
+    
+    def deleteEntryConfirm(self):
+        if self.deleteMsg.clickedButton() == self.deleteMsg.button(QMessageBox.StandardButton.Yes):
+            self.credList.pop(self.table_credentialList.currentRow())
+            print("Delete Entry x2")
+            self.populateCredentials()
+        else:
+            print("Cancel Delete")
+        return
 
 '''comment the code block below after testing'''
 if __name__ == "__main__":
