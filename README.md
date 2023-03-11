@@ -40,11 +40,11 @@ Markdown [Link](https://www.markdownguide.org/cheat-sheet/)
 ~~- manager.py(Add/Edit) - random password generator ~~
 ~~- manager.py(Edit) -if any fields are changed upon clicking "Confirm", update the dictionary, update date modified~~
 ~~- manager.py(Edit) -if nothing is changed, set the "Confirm" button to be disabled~~
-- manager.py(Setting) - create UI
-- manager.py(Setting) - allow default length of generated password (use slider) --> self.password_length
+~~- manager.py(Setting) - create UI~~
+~~- manager.py(Setting) - allow default length of generated password (use slider) --> self.password_length~~
 - reflect changes correctly on the local database file
 - open file in 'w' mode to overwrite with the currently updated database (do it when then are changes OR at the end of the program execution)
-- add password generating function
+
 
 
 - extension: rss news site

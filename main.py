@@ -5,7 +5,7 @@ from PyQt6 import uic
 
 import sys
 import resource_rc
-from database import CreateDb, OpenDb
+from database import CreateDb, OpenDb, EncryptDb
 from manager import Manager
 
 #main class to initialize the landing page
@@ -42,23 +42,36 @@ class Main(QWidget):
         print ("\nOpen Database function is called in main.py")
         self.opendb = OpenDb()
 
-        #triggers the password manager UI when the unlock button is clicked
-        self.opendb.btn_unlockDb.clicked.connect(self.Password_Manager)
-        self.database = self.opendb.database
+        #need to make sure the child can trigger the parent's function
+        #which the password manager function
+        #self.opendb.btn_unlockDb.clicked.connect(self.Password_Manager)
 
-
+        
     '''---------------------------------------------------------------
     function to call password_manager UI - main interface
     ------------------------------------------------------------------'''
     def Password_Manager(self):
-        if self.database == None:
-            self.close()
-            self.dashboard = Manager()
-            print("Database is empty")
+        #self.opendb.btn_unlockDb.clicked.disconnect()
+        if self.opendb.decrypted_flag == False:
+            print ("Decryption failed")
         else:
-            print("Database is not empty")
-            self.close()
+            print ("Database is: ", self.opendb.database)
+            self.hide()
             self.dashboard = Manager()
+            self.dashboard.actionLock.triggered.connect(self.Lock)
+        
+    def Lock(self):
+        print ("Lock function is called in main.py")
+        self.dashboard.close() #closes the password manager UI
+        self.encryptdb = EncryptDb()
+        self.encryptdb.database = self.opendb.database
+        self.encryptdb.db_master_password = self.opendb.db_master_passwd
+        self.encryptdb.dir_name = self.opendb.dir_name
+        self.encryptdb.file_name = self.opendb.file_name
+        self.encryptdb.salt = self.opendb.salt
+        self.encryptdb.encrypt()
+        self.show() #shows the landing page UI
+    
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

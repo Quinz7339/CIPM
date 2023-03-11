@@ -109,7 +109,7 @@ class CreateDb(QWidget):
             options=QFileDialog.Option.DontUseNativeDialog
             )
             if folderPath == '':
-                print ("No file selected. Closing file dialog.")
+                print ("No folder selected. Closing file dialog.")
                 raise Exception("No directories/folders were selected.")
             folderPath = folderPath + "/" + db_name
             os.mkdir(folderPath)
@@ -160,8 +160,8 @@ class CreateDb(QWidget):
 ################             Class to unlock selected database      ########################################
 ############################################################################################################
 class OpenDb(QWidget):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent=None):
+        super(OpenDb,self).__init__(parent=parent)
         self.user_path = os.path.expanduser('~')            #'C:\Users\<username>'
         self.default_dir = self.user_path+"\\Documents"     #'C:\Users\<username>\Documents'
         
@@ -208,6 +208,8 @@ class OpenDb(QWidget):
             error.setStandardButtons(QMessageBox.StandardButton.Ok)
             error.exec()
             print ("Exception message closed.")
+            self.close()
+            return
         
         self.file_path = file_path
         self.dir_name = os.path.dirname(file_path)
@@ -260,7 +262,8 @@ class OpenDb(QWidget):
             return
         
         if self.decrypted_flag == True:
-            print            
+            self.btn_unlockDb.clicked.disconnect()
+            #self.btn_unlockDb.clicked.connect(self.parent)            
             self.destroy() 
 
 

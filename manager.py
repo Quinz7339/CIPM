@@ -24,9 +24,9 @@ class Manager(QMainWindow):
         self.genPwd_action = ''
         self.pwdLength = 8
 
-        self.database = None
-        with open ('D:\Studies\Degree Year 3\FYP\CIPM\dict.txt','r') as f:
-            self.database = f.readlines()
+        # self.database = None
+        # with open ('D:\Studies\Degree Year 3\FYP\CIPM\dict.txt','r') as f:
+        #     self.database = f.readlines()
         self.credList=[]
         try:
             for lines in self.database:
@@ -90,7 +90,6 @@ class Manager(QMainWindow):
 
         creds =''
         #populating the table with the details of the credentials
-        #for creds in self.credList:
         for index, creds in enumerate(self.credList):
             self.table_credentialList.setItem(index,0,QTableWidgetItem(creds['title']))
             self.table_credentialList.setItem(index,1,QTableWidgetItem(creds['username']))
@@ -146,6 +145,7 @@ class Manager(QMainWindow):
     -------------------------------------------------------------------------'''
     def lockDatabase(self):
         print("Lock Database")
+        #self.close()
         return
     
     '''-------------------------------------------------------------------------
@@ -256,32 +256,40 @@ class Manager(QMainWindow):
     function - called when user clicks on "Edit Entry" button
     ----------------------------------------------------------------------------''' 
     def editEntry(self):
-        self.entry_UI()
-        self.dateEdit_dateExp.setMinimumDate(QDate().currentDate())
+        self.actionEdit_Entry.triggered.disconnect()
+        try:
+            self.entry_UI()
+            self.dateEdit_dateExp.setMinimumDate(QDate().currentDate())
 
-        #initialize the "Confirm" button
-        self.btn_Confirm.setEnabled(False)
-        self.btn_Confirm.setStyleSheet('QPushButton {background-color: #BFBFBF; color: #2B96CB; border: 1px #2F528F; border-radius: 5px; font-size: 18px;}')
-        self.btn_Confirm.setToolTip('No changes were made. Make some changes to enable this button.')
-
-        #initialize the fields with the values of the selected credential/row
-        self.lineEdit_Title.setText(self.credList[self.table_credentialList.currentRow()]['title'])
-        self.lineEdit_Username.setText(self.credList[self.table_credentialList.currentRow()]['username'])
-        self.lineEdit_Password.setText(self.credList[self.table_credentialList.currentRow()]['password'])
-        self.lineEdit_URL.setText(self.credList[self.table_credentialList.currentRow()]['url'])
-        self.dateEdit_dateExp.setDate(QDate.fromString(self.credList[self.table_credentialList.currentRow()]['dateExp'], "dd/MM/yyyy"))
-        self.textEdit_Remark.setText(self.credList[self.table_credentialList.currentRow()]['remarks'])
+            #initialize the "Confirm" button
+            self.btn_Confirm.setEnabled(False)
+            self.btn_Confirm.setStyleSheet('QPushButton {background-color: #BFBFBF; color: #2B96CB; border: 1px #2F528F; border-radius: 5px; font-size: 18px;}')
+            self.btn_Confirm.setToolTip('No changes were made. Make some changes to enable this button.')
         
-        #connect the textChanged signal of the fields to the enableConfirm function
-        # - ensures that the "Confirm" button is only enabled when there are changes made to the fields
-        self.lineEdit_Title.textChanged.connect(self.enableConfirm)
-        self.lineEdit_Username.textChanged.connect(self.enableConfirm)
-        self.lineEdit_Password.textChanged.connect(self.enableConfirm)
-        self.lineEdit_URL.textChanged.connect(self.enableConfirm)
-        self.dateEdit_dateExp.dateChanged.connect(self.enableConfirm)
-        self.textEdit_Remark.textChanged.connect(self.enableConfirm)
-        
-        self.btn_Confirm.clicked.connect(self.confirmEditEntry)
+            #initialize the fields with the values of the selected credential/row
+            self.lineEdit_Title.setText(self.credList[self.table_credentialList.currentRow()]['title'])
+            self.lineEdit_Username.setText(self.credList[self.table_credentialList.currentRow()]['username'])
+            self.lineEdit_Password.setText(self.credList[self.table_credentialList.currentRow()]['password'])
+            self.lineEdit_URL.setText(self.credList[self.table_credentialList.currentRow()]['url'])
+            self.dateEdit_dateExp.setDate(QDate.fromString(self.credList[self.table_credentialList.currentRow()]['dateExp'], "dd/MM/yyyy"))
+            self.textEdit_Remark.setText(self.credList[self.table_credentialList.currentRow()]['remarks'])
+            
+            #connect the textChanged signal of the fields to the enableConfirm function
+            # - ensures that the "Confirm" button is only enabled when there are changes made to the fields
+            self.lineEdit_Title.textChanged.connect(self.enableConfirm)
+            self.lineEdit_Username.textChanged.connect(self.enableConfirm)
+            self.lineEdit_Password.textChanged.connect(self.enableConfirm)
+            self.lineEdit_URL.textChanged.connect(self.enableConfirm)
+            self.dateEdit_dateExp.dateChanged.connect(self.enableConfirm)
+            self.textEdit_Remark.textChanged.connect(self.enableConfirm)
+            
+            self.btn_Confirm.clicked.connect(self.confirmEditEntry)
+        except:
+            QMessageBox.information(self, "Error", "The database is either blank or no entry is selected.")
+            self.stackedWidget.setCurrentIndex(0)
+            self.btn_Confirm.setEnabled(True)
+            self.populateCredentials()
+            self.actionEdit_Entry.triggered.connect(self.editEntry)
         return
     
     '''----------------------------------------------------------------------------------------------------------------------
@@ -398,38 +406,41 @@ class Manager(QMainWindow):
         else:
             self.passwordConfirm.close()
         return
+    
+    def hi(self):
+        print (self.opendb.database)
 
 
 
 
 '''comment the code block below after testing'''
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    app.setStyleSheet('''
-        QWidget {
-            background-color: #40444B;
-            font-size: 18px;  
-        }
-        QPushButton {
-            font-size: 25px;
-        }
-        QLabel {
-            color: #FFFFFF;
-        }
-        QToolButton{
-            background-color: #BFBFBF;
-            border-radius: 15px;
-        }
-        QTextEdit{
-            background-color: #BFBFBF;
-            border-radius: 15px;
-        }    
-    ''')
-    window = Manager()
-    window.show()
+# if __name__ == "__main__":
+#     app = QApplication(sys.argv)
+#     app.setStyleSheet('''
+#         QWidget {
+#             background-color: #40444B;
+#             font-size: 18px;  
+#         }
+#         QPushButton {
+#             font-size: 25px;
+#         }
+#         QLabel {
+#             color: #FFFFFF;
+#         }
+#         QToolButton{
+#             background-color: #BFBFBF;
+#             border-radius: 15px;
+#         }
+#         QTextEdit{
+#             background-color: #BFBFBF;
+#             border-radius: 15px;
+#         }    
+#     ''')
+#     window = Manager()
+#     window.show()
 
-    #wraps QApplication with sys.exit() to ensure the application is closed properly
-    try:
-        sys.exit(app.exec())
-    except SystemExit:
-        print("Closing Window...")
+#     #wraps QApplication with sys.exit() to ensure the application is closed properly
+#     try:
+#         sys.exit(app.exec())
+#     except SystemExit:
+#         print("Closing Window...")
