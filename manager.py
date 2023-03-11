@@ -367,6 +367,7 @@ class Manager(QMainWindow):
         print("Settings")
         return
     
+    #called when the slider is moved to change the length of generated password
     def changePwdLength(self):
         self.lbl_sliderPasswdLength.setText(str(self.slider_PasswordLength.value()))
         return
@@ -387,6 +388,7 @@ class Manager(QMainWindow):
         print("Confirm Settings")
         return
 
+    #called when user clicks on "Yes" or "No" upon confirmation of changing length of generated password
     def completeSettings(self):
         if self.passwordConfirm.clickedButton() == self.passwordConfirm.button(QMessageBox.StandardButton.Yes):
             self.pwdLength = self.slider_PasswordLength.value()
@@ -395,12 +397,7 @@ class Manager(QMainWindow):
             return
         else:
             self.passwordConfirm.close()
-            self.stackedWidget.widget(2).findChild(QSlider,'slider_PasswordLength').setValue(self.pwdLength)
-            self.stackedWidget.widget(2).findChild(QLabel,'lbl_sliderPasswdLength').setText(str(self.pwdLength))
-          
         return
-
-
 
 
 
