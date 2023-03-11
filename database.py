@@ -228,25 +228,28 @@ class OpenDb(QWidget):
     -------------------------------------------------------------''' 
     def has_decrypted(self):
         return True if self.decrypted_flag == True else False
+    
+    '''-------------------------------------------------------------
+    function to decrypt the selected database file
+    -------------------------------------------------------------'''
     def DecryptDb(self):
-        db_master_passwd = self.lineEdit_MasterPasswd.text()
-        file_name = os.path.basename(self.file_path).split(".")[0]
-        with open (self.dir_name + "//" + file_name + "_salt.txt", 'r') as salt_file:
-            salt = salt_file.read()
+        self.file_name = os.path.basename(self.file_path).split(".")[0]
+        with open (self.dir_name + "//" + self.file_name + "_salt.txt", 'r') as salt_file:
+           self.salt = salt_file.read()
         with open (self.file_path, 'rb') as db:
             encrypted_db = db.read()
            
         self.db_master_passwd = self.lineEdit_MasterPasswd.text()
         try:
-            decryptor = Passwords.decryptor(bytes(db_master_passwd,'utf-8'), bytes(salt,'utf-8'))
+            decryptor = Passwords.decryptor(bytes(self.db_master_passwd,'utf-8'), bytes(self.salt,'utf-8'))
             decrypted_db = decryptor.decrypt(encrypted_db)
             print ("Decrypt db " + self.dir_name)
             print ("Content of db : " + decrypted_db.decode())
             self.close()
-            self.database = decrypted_db
-            #self.decrypted_flag = True
-            #print(str(self.decrypted_flag))
+            self.database = decrypted_db.decode()
+            self.decrypted_flag = True
         except: 
+            self.decrypted_flag = False
             error = QMessageBox(self)
             error.setIcon(QMessageBox.Icon.Critical)
             error.setWindowTitle("Incorrect password.")
@@ -255,10 +258,25 @@ class OpenDb(QWidget):
             error.setStandardButtons(QMessageBox.StandardButton.Ok)
             error.exec()
             return
-        if self.database != "":
-            self.decrypted_flag = True  
+        
+        if self.decrypted_flag == True:
+            print            
+            self.destroy() 
+
 
 class EncryptDb(QWidget):
     def __init__(self):
         super().__init__()
-        #create ppt slide3 ui
+
+    def encrypt(self):
+        #encrypt the database file
+        #self.database = self.opendb.database
+        # self.db_master_password = self.opendb.db_master_passwd
+        # self.dir_name = self.opendb.dir_name
+        # self.file_name = self.opendb.file_name
+        # self.salt = self.opendb.salt
+        encryptor = Passwords.encryptor(bytes(self.db_master_password,'utf-8'), bytes(self.salt,'utf-8'))
+        encrypted_db = encryptor.encrypt(bytes(self.self.database))
+        with open (self.dir_name + "//" + self.file_name +".cipm", 'w+') as file:
+            file.write(encrypted_db)
+        return
