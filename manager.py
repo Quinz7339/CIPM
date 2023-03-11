@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import QApplication,QMainWindow, QTableWidgetItem, QPushButton, QLineEdit, QMessageBox
+from PyQt6.QtWidgets import QApplication,QMainWindow, QTableWidgetItem, QPushButton, QLineEdit, QMessageBox, QSlider, QLabel
 from PyQt6 import uic
 from PyQt6.QtGui import QColor, QIcon, QAction
 from PyQt6.QtCore import QDate
@@ -10,7 +10,6 @@ import sys
 
 import resource_rc
 
-
 class Manager(QMainWindow): 
     def __init__(self):
         super().__init__()
@@ -18,6 +17,12 @@ class Manager(QMainWindow):
         self.setWindowTitle("Passwords - CIPM")
         self.toolBar.setStyleSheet('QToolBar {spacing: 30px; background-color: #BFBFBF;}')
         self.toolBar.layout().setContentsMargins(5,5,5,5) #left, top, right, bottom
+
+        #initialization of session variables
+        self.togglePwd_action_Entry = ''
+        self.togglePwd_action_Frame = ''
+        self.genPwd_action = ''
+        self.pwdLength = 8
 
         self.database = None
         with open ('D:\Studies\Degree Year 3\FYP\CIPM\dict.txt','r') as f:
@@ -34,6 +39,7 @@ class Manager(QMainWindow):
         #index 0 = main page
         #index 1 = add entry page
         #index 2 = edit entry page
+        #index 3 = settings page
         self.stackedWidget.setCurrentIndex(0)
 
         #hiding the frame containing the specific entry details
@@ -50,6 +56,7 @@ class Manager(QMainWindow):
         #estalishing connections for the stacked widget -- called to change the page
         self.actionAdd_Entry.triggered.connect(lambda:self.stackedWidget.setCurrentIndex(1))
         self.actionEdit_Entry.triggered.connect(lambda:self.stackedWidget.setCurrentIndex(1))
+        self.actionSettings.triggered.connect(lambda:self.stackedWidget.setCurrentIndex(2))
         
         #estalishing connections for showing/hiding the frame displaying the specific entry details
         self.table_credentialList.cellClicked.connect(self.showCredentialDetails)
@@ -57,12 +64,15 @@ class Manager(QMainWindow):
         #establishing connections for the buttons in the credential entry pages
         self.stackedWidget.widget(1).findChild(QPushButton,'btn_Cancel').clicked.connect(lambda:self.stackedWidget.setCurrentIndex(0))
         self.stackedWidget.widget(1).findChild(QPushButton,'btn_Confirm').clicked.connect(lambda:self.stackedWidget.setCurrentIndex(0))
+
+        #establishing connections and styleSheets for the buttons in the settings page
+        self.stackedWidget.widget(2).findChild(QPushButton,'btn_settingConfirm').clicked.connect(self.confirmSettings)
+        self.stackedWidget.widget(2).findChild(QPushButton,'btn_settingCancel').clicked.connect(lambda:self.stackedWidget.setCurrentIndex(0))
+        self.stackedWidget.widget(2).findChild(QPushButton,'btn_settingConfirm').setStyleSheet('QPushButton {background-color: #5B9BD5; color: #FFFFFF; border: 1px #2F528F; border-radius: 5px; font-size: 18px}')
+        self.stackedWidget.widget(2).findChild(QPushButton,'btn_settingCancel').setStyleSheet('QPushButton {background-color: #40444B; color: #A6A6A6; border-radius: 5px; font-size: 18px}')
+        self.stackedWidget.widget(2).findChild(QLabel,'lbl_sliderPasswdLength').setText(str(self.pwdLength))
+        self.stackedWidget.widget(2).findChild(QSlider,'slider_PasswordLength').valueChanged.connect(self.changePwdLength)  
         
-        #initialization of session variables
-        self.togglePwd_action_Entry = ''
-        self.togglePwd_action_Frame = ''
-        self.genPwd_action = ''
-        self.pwdLength = 8
         self.show()
         
     '''----------------------------------------------------------------
@@ -346,9 +356,54 @@ class Manager(QMainWindow):
             print("Cancel Delete")
         return
     
+    '''-------------------------------------------------------------------------
+    function - called when user clicks on the "Settings" button
+    ----------------------------------------------------------------------------'''
     def settings(self):
+        self.lbl_sliderPasswdLength.setText(str(self.pwdLength))
+        self.slider_PasswordLength.setValue(self.pwdLength)
+        self.btn_settingConfirm.setStyleSheet('QPushButton {background-color: #5B9BD5; color: #FFFFFF; border: 1px #2F528F; border-radius: 5px; font-size: 18px}')
+        self.btn_settingCancel.setStyleSheet('QPushButton {background-color: #40444B; color: #A6A6A6; border-radius: 5px; font-size: 18px}')
         print("Settings")
         return
+    
+    def changePwdLength(self):
+        self.lbl_sliderPasswdLength.setText(str(self.slider_PasswordLength.value()))
+        return
+    
+    #confirmation of changing length of generated password
+    def confirmSettings(self):
+        self.passwordConfirm = QMessageBox()
+        self.passwordConfirm.setIcon(QMessageBox.Icon.Question)
+        self.passwordConfirm.setWindowIcon(QIcon(":Icons/Logo.svg"))
+        self.passwordConfirm.setWindowTitle("Confirm Settings")
+        self.passwordConfirm.setText("Changing default generated password length to: " + str(self.slider_PasswordLength.value()) + " characters")
+        self.passwordConfirm.setStandardButtons(QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+        self.passwordConfirm.button(QMessageBox.StandardButton.Yes).setStyleSheet("background-color: #961212; color: #FFFFFF; border: 1px #2F528F; border-radius: 5px; font-size: 18px")
+        self.passwordConfirm.button(QMessageBox.StandardButton.No).setStyleSheet("background-color: #5B9BD5; color: #FFFFFF; border: 1px #2F528F; border-radius: 5px; font-size: 18px")
+        self.passwordConfirm.buttonClicked.connect(self.completeSettings)
+        self.passwordConfirm.exec()
+        
+        print("Confirm Settings")
+        return
+
+    def completeSettings(self):
+        if self.passwordConfirm.clickedButton() == self.passwordConfirm.button(QMessageBox.StandardButton.Yes):
+            self.pwdLength = self.slider_PasswordLength.value()
+            self.stackedWidget.setCurrentIndex(0)
+            self.populateCredentials()
+            return
+        else:
+            self.passwordConfirm.close()
+            self.stackedWidget.widget(2).findChild(QSlider,'slider_PasswordLength').setValue(self.pwdLength)
+            self.stackedWidget.widget(2).findChild(QLabel,'lbl_sliderPasswdLength').setText(str(self.pwdLength))
+          
+        return
+
+
+
+
+
 
 '''comment the code block below after testing'''
 if __name__ == "__main__":

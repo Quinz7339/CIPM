@@ -59,11 +59,6 @@ class Main(QWidget):
             print("Database is not empty")
             self.close()
             self.dashboard = Manager()
-            
-        
-        #self.dashboard = 
-        # inputText = self.input_masterpassword.text()
-        # self.output.setText("You entered {0}".format(inputText))
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
