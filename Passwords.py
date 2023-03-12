@@ -33,7 +33,6 @@ function to establish the object to decrypt the password database
 ------------------------------------------------------------------''' 
 def decryptor(input_password,input_salt):
     '''decryption portion'''
-    #master_password = input("Please enter your master password: ")
     password_hash = argon2.hash_password_raw(password=input_password, salt=input_salt)
     encoded_hash = base64.urlsafe_b64encode(password_hash[:32])
     decryptor = Fernet(encoded_hash)

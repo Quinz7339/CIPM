@@ -145,8 +145,6 @@ class CreateDb(QWidget):
             #reads the empty database file and encrypts it
             with open(db_filename,'rb') as db:
                 unencrypted_db = db.read()
-            
-            print(unencrypted_db)
 
             #encrypts the database file
             encrypted_db = encryptor.encrypt(unencrypted_db)
@@ -245,8 +243,6 @@ class OpenDb(QWidget):
         try:
             decryptor = Passwords.decryptor(bytes(self.db_master_passwd,'utf-8'), bytes(self.salt,'utf-8'))
             decrypted_db = decryptor.decrypt(encrypted_db)
-            print ("Decrypt db " + self.dir_name)
-            print ("Content of db : " + decrypted_db.decode())
             self.database = decrypted_db.decode()
             self.decrypted_flag = True
         except: 
@@ -262,7 +258,6 @@ class OpenDb(QWidget):
         
         if self.decrypted_flag == True:
             self.btn_unlockDb.clicked.disconnect(self.DecryptDb)
-            #self.btn_unlockDb.clicked.connect(self.parent)   
             self.btn_unlockDb.animateClick()         
             self.close()
             return
@@ -274,13 +269,10 @@ class EncryptDb(QWidget):
 
     def encrypt(self):
         #encrypt the database file
-        #self.database = self.opendb.database
-        # self.db_master_password = self.opendb.db_master_passwd
-        # self.dir_name = self.opendb.dir_name
-        # self.file_name = self.opendb.file_name
-        # self.salt = self.opendb.salt
         encryptor = Passwords.encryptor(bytes(self.db_master_password,'utf-8'), bytes(self.salt,'utf-8'))
-        encrypted_db = encryptor.encrypt(bytes(self.self.database))
-        with open (self.dir_name + "//" + self.file_name +".cipm", 'w+') as file:
+        encrypted_db = encryptor.encrypt(bytes(self.database,'utf-8'))
+
+        encrypted_db.decode()
+        with open (self.dir_name + "//" + self.file_name +".cipm", 'wb+') as file:
             file.write(encrypted_db)
         return

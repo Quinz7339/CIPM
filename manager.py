@@ -23,17 +23,19 @@ class Manager(QMainWindow):
         self.togglePwd_action_Frame = ''
         self.genPwd_action = ''
         self.pwdLength = 8
+        self.database = ''
 
-        # self.database = None
-        # with open ('D:\Studies\Degree Year 3\FYP\CIPM\dict.txt','r') as f:
-        #     self.database = f.readlines()
+        return
+
+    def secondaryInit(self):    
         self.credList=[]
         try:
-            for lines in self.database:
+            for lines in self.database.splitlines():
                 cred = ast.literal_eval(lines) #literal_eval is used to convert the string to a dictionary
                 self.credList.append(cred)
         except:
             pass
+        print (self.credList)
         self.populateCredentials()
 
         #index 0 = main page
@@ -145,7 +147,9 @@ class Manager(QMainWindow):
     -------------------------------------------------------------------------'''
     def lockDatabase(self):
         print("Lock Database")
-        #self.close()
+        self.database =''
+        for creds in self.credList:
+            self.database += str(creds) + '\n'
         return
     
     '''-------------------------------------------------------------------------
@@ -406,41 +410,3 @@ class Manager(QMainWindow):
         else:
             self.passwordConfirm.close()
         return
-    
-    def hi(self):
-        print (self.opendb.database)
-
-
-
-
-'''comment the code block below after testing'''
-# if __name__ == "__main__":
-#     app = QApplication(sys.argv)
-#     app.setStyleSheet('''
-#         QWidget {
-#             background-color: #40444B;
-#             font-size: 18px;  
-#         }
-#         QPushButton {
-#             font-size: 25px;
-#         }
-#         QLabel {
-#             color: #FFFFFF;
-#         }
-#         QToolButton{
-#             background-color: #BFBFBF;
-#             border-radius: 15px;
-#         }
-#         QTextEdit{
-#             background-color: #BFBFBF;
-#             border-radius: 15px;
-#         }    
-#     ''')
-#     window = Manager()
-#     window.show()
-
-#     #wraps QApplication with sys.exit() to ensure the application is closed properly
-#     try:
-#         sys.exit(app.exec())
-#     except SystemExit:
-#         print("Closing Window...")

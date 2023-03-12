@@ -41,10 +41,6 @@ class Main(QWidget):
     def OpenDatabase(self):
         print ("\nOpen Database function is called in main.py")
         self.opendb = OpenDb()
-
-        #need to make sure the child can trigger the parent's function
-        #which the password manager function
-
         self.opendb.btn_unlockDb.clicked.connect(self.Password_Manager)
 
         
@@ -60,13 +56,16 @@ class Main(QWidget):
             print ("Database is: ", self.opendb.database)
             self.hide()
             self.dashboard = Manager()
+            self.dashboard.database = self.opendb.database
+            self.dashboard.secondaryInit()
+            #setattr(self.dashboard,'database',self.opendb.database)
             self.dashboard.actionLock.triggered.connect(self.Lock)
         
     def Lock(self):
         print ("Lock function is called in main.py")
         self.dashboard.close() #closes the password manager UI
         self.encryptdb = EncryptDb()
-        self.encryptdb.database = self.opendb.database
+        self.encryptdb.database = self.dashboard.database
         self.encryptdb.db_master_password = self.opendb.db_master_passwd
         self.encryptdb.dir_name = self.opendb.dir_name
         self.encryptdb.file_name = self.opendb.file_name
