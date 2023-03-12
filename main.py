@@ -58,8 +58,8 @@ class Main(QWidget):
             self.dashboard = Manager()
             self.dashboard.database = self.opendb.database
             self.dashboard.secondaryInit()
-            #setattr(self.dashboard,'database',self.opendb.database)
             self.dashboard.actionLock.triggered.connect(self.Lock)
+            self.dashboard.actionExit.triggered.connect(self.Exit)
         
     def Lock(self):
         print ("Lock function is called in main.py")
@@ -72,6 +72,10 @@ class Main(QWidget):
         self.encryptdb.salt = self.opendb.salt
         self.encryptdb.encrypt()
         self.show() #shows the landing page UI
+    
+    def Exit(self):
+        self.Lock()
+        self.close()
     
 
 if __name__ == "__main__":

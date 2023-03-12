@@ -35,7 +35,6 @@ class Manager(QMainWindow):
                 self.credList.append(cred)
         except:
             pass
-        print (self.credList)
         self.populateCredentials()
 
         #index 0 = main page
@@ -53,7 +52,7 @@ class Manager(QMainWindow):
         self.actionEdit_Entry.triggered.connect(self.editEntry)
         self.actionDelete_Entry.triggered.connect(self.deleteEntry)
         self.actionSettings.triggered.connect(self.settings)
-        self.actionExit.triggered.connect(self.exitManager)
+        self.actionExit.triggered.connect(self.lockDatabase)
 
         #estalishing connections for the stacked widget -- called to change the page
         self.actionAdd_Entry.triggered.connect(lambda:self.stackedWidget.setCurrentIndex(1))
@@ -136,10 +135,10 @@ class Manager(QMainWindow):
     '''----------------------------------------------------------------------
     function called when the user clicks on the "Exit" button
     -------------------------------------------------------------------------'''
+    ##gonna delete this prolly
     def exitManager(self):
         print("Exit Manager")
         self.lockDatabase()
-        self.close()
         return
     
     '''----------------------------------------------------------------------
@@ -362,6 +361,7 @@ class Manager(QMainWindow):
     ------------------------------------------------------------------------------------'''
     def deleteEntryConfirm(self):
         if self.deleteMsg.clickedButton() == self.deleteMsg.button(QMessageBox.StandardButton.Yes):
+            print("POP")
             self.credList.pop(self.table_credentialList.currentRow())
             self.populateCredentials()
         else:
