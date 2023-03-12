@@ -44,16 +44,18 @@ class Main(QWidget):
 
         #need to make sure the child can trigger the parent's function
         #which the password manager function
-        #self.opendb.btn_unlockDb.clicked.connect(self.Password_Manager)
+
+        self.opendb.btn_unlockDb.clicked.connect(self.Password_Manager)
 
         
     '''---------------------------------------------------------------
     function to call password_manager UI - main interface
     ------------------------------------------------------------------'''
     def Password_Manager(self):
-        #self.opendb.btn_unlockDb.clicked.disconnect()
+        self.opendb.btn_unlockDb.clicked.disconnect(self.Password_Manager)
         if self.opendb.decrypted_flag == False:
             print ("Decryption failed")
+            self.opendb.btn_unlockDb.clicked.connect(self.Password_Manager)
         else:
             print ("Database is: ", self.opendb.database)
             self.hide()

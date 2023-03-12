@@ -247,7 +247,6 @@ class OpenDb(QWidget):
             decrypted_db = decryptor.decrypt(encrypted_db)
             print ("Decrypt db " + self.dir_name)
             print ("Content of db : " + decrypted_db.decode())
-            self.close()
             self.database = decrypted_db.decode()
             self.decrypted_flag = True
         except: 
@@ -262,9 +261,11 @@ class OpenDb(QWidget):
             return
         
         if self.decrypted_flag == True:
-            self.btn_unlockDb.clicked.disconnect()
-            #self.btn_unlockDb.clicked.connect(self.parent)            
-            self.destroy() 
+            self.btn_unlockDb.clicked.disconnect(self.DecryptDb)
+            #self.btn_unlockDb.clicked.connect(self.parent)   
+            self.btn_unlockDb.animateClick()         
+            self.close()
+            return
 
 
 class EncryptDb(QWidget):
