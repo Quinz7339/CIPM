@@ -1,3 +1,10 @@
+#Author         : Chua Philip
+#Name of program: CIPM - Cybersecurity Integrated Password Manager
+#Program name   : manager.py
+#Description    : This holds the all the functionalities of the password manager. Credential creation, editing, deletion and password generation.
+#First written on: 19/02/2023
+#Last modified  : 13/03/2023
+
 from PyQt6.QtWidgets import QApplication,QMainWindow, QTableWidgetItem, QPushButton, QLineEdit, QMessageBox, QSlider, QLabel
 from PyQt6 import uic
 from PyQt6.QtGui import QColor, QIcon, QAction

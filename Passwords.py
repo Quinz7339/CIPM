@@ -1,3 +1,10 @@
+#Author         : Chua Philip
+#Name of program: CIPM - Cybersecurity Integrated Password Manager
+#Program name   : Passwords.py
+#Description    : This holds the functions that utilize the entered password and generated salt file as well as to setup the file encryptor and decryptor.
+#First written on: 19/02/2023
+#Last modified  : 13/03/2023
+
 import argon2
 import base64
 import secrets
