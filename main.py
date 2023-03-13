@@ -1,3 +1,10 @@
+#Author         : Chua Philip
+#Name of program: CIPM - Cybersecurity Integrated Password Manager
+#Program name   : main.py
+#Description    : This is the main program that will be executed.
+#First written on: 19/02/2023
+#Last modified  : 13/03/2023
+
 from PyQt6.QtWidgets import QApplication, QWidget, QLineEdit, QPushButton, QLabel, QVBoxLayout, QTextEdit,QFileDialog
 from PyQt6.QtGui import QIcon, QFont, QFontDatabase
 from PyQt6.QtCore import Qt
@@ -7,6 +14,7 @@ import sys
 import resource_rc
 from database import CreateDb, OpenDb, EncryptDb
 from manager import Manager
+
 
 #main class to initialize the landing page
 #this class will hold abstracted functions to call the corresponding UIs
