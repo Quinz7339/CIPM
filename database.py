@@ -121,19 +121,16 @@ class CreateDb(QWidget):
             os.mkdir(folderPath)
             print("Folder created.")
         except:
-            print("Exception caught.")
             error = QMessageBox(self)
             error.setIcon(QMessageBox.Icon.Critical)
             error.setText("No files were selected.")
             error.setInformativeText("Please select a folder to create a new folder to store your password database files.")
             error.setStandardButtons(QMessageBox.StandardButton.Ok)
             error.exec()
-            print("Exception message closed.")
 
         #if a folder is selected, the salt file is created and the database file is created and encrypted
         if folderPath != '':
             salt = str(Passwords.salter())
-            print("Salt: " + salt)
 
             #w is used instead of wb because salt is a string, not bytes
             with open(os.path.join(folderPath, db_name + "_salt.txt"), 'w') as salt_file:
@@ -200,10 +197,8 @@ class OpenDb(QWidget):
                 )
             file_path = response[0]
             if file_path == '':
-                print ("No file selected. Closing file dialog.")
                 raise Exception("No directories/folders were selected.")
         except:
-            print ("Exception caught.")
             error = QMessageBox(self)
             error.setIcon(QMessageBox.Icon.Critical)
             error.setWindowTitle("No file selected.")
@@ -211,7 +206,6 @@ class OpenDb(QWidget):
             error.setInformativeText("Please select a .cipm file to unlock.")
             error.setStandardButtons(QMessageBox.StandardButton.Ok)
             error.exec()
-            print ("Exception message closed.")
             self.close()
             return
         
@@ -221,7 +215,6 @@ class OpenDb(QWidget):
         if ".cipm" not in self.file_path:
             return ""
         else:
-            print (self.file_path)
             self.lbl_unlockFileName.setText("Unlocking [{}] CIPM database".format(os.path.basename(self.file_path)))
             self.lbl_unlockFileDir.setText("Location: {}".format(self.dir_name))
             self.show()
@@ -240,11 +233,21 @@ class OpenDb(QWidget):
     -------------------------------------------------------------'''
     def DecryptDb(self):
         self.file_name = os.path.basename(self.file_path).split(".")[0]
-        with open (self.dir_name + "//" + self.file_name + "_salt.txt", 'r') as salt_file:
-           self.salt = salt_file.read()
-        with open (self.file_path, 'rb') as db:
-            encrypted_db = db.read()
-           
+        try:
+            with open (self.dir_name + "//" + self.file_name + "_salt.txt", 'r') as salt_file:
+                self.salt = salt_file.read()
+            with open (self.file_path, 'rb') as db:
+                encrypted_db = db.read()  
+        except:
+            error = QMessageBox(self)
+            error.setIcon(QMessageBox.Icon.Critical)
+            error.setWindowTitle("File not found.")
+            error.setText("The salt file was not found.")
+            error.setInformativeText("Please ensure that the salt file is in the same directory as the database file.")
+            error.setStandardButtons(QMessageBox.StandardButton.Ok)
+            error.exec()
+            return
+        
         self.db_master_passwd = self.lineEdit_MasterPasswd.text()
         try:
             decryptor = Passwords.decryptor(bytes(self.db_master_passwd,'utf-8'), bytes(self.salt,'utf-8'))

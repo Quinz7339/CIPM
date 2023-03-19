@@ -10,6 +10,9 @@ import base64
 import secrets
 import random
 import string
+import hashlib
+import requests
+
 from cryptography.fernet import Fernet
 
 ##############################################################################################
@@ -60,3 +63,27 @@ def gen_password(length):
     password = ''.join(random.choice(characters) for i in range(length))
     return password
 
+
+
+def checkPwnedPasswords(password):
+    sha_password = hashlib.sha1(password.encode()).hexdigest() #hashes the password for comparison with the API request
+    sha_prefix = sha_password[0:5] #takes the first 5 characters of the hash
+    sha_postfix = sha_password[5:].upper() #takes the remaining characters of the hash
+    
+    #API requests that returns a list of compromised hashs starting with the first 5 hashed characters
+    url = 'https://api.pwnedpasswords.com/range/' + sha_prefix
+
+    
+    pwnedDict = {} #dictionary to store the hash and number of occurences
+
+    response = requests.request("GET", url, headers={}, data={})
+    pwnList = response.text.split('\r\n') #split by newline/return (enter key)
+    for pwnedPass in pwnList:
+        pwnedHash = pwnedPass.split(':') 
+        pwnedDict[pwnedHash[0]] = pwnedHash[1] #stores the hash : number of occurences in a dictionary
+    
+    if sha_postfix in pwnedDict.keys(): #checks if the hash is in the dictionary
+        dictToReturn = {password:pwnedDict[sha_postfix]} #creates a new dictionary with the hash and number of occurences
+        return dictToReturn
+    else:
+        return False

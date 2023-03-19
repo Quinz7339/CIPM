@@ -28,7 +28,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(841, 603)
+        MainWindow.resize(894, 603)
         icon = QIcon()
         icon.addFile(u":/Icons/Logo.svg", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)
@@ -81,7 +81,7 @@ class Ui_MainWindow(object):
         self.frame_secTips.setFrameShadow(QFrame.Raised)
         self.verticalLayout_2 = QVBoxLayout(self.frame_secTips)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.verticalLayout_2.setContentsMargins(0, -1, -1, -1)
+        self.verticalLayout_2.setContentsMargins(0, -1, -1, 0)
         self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Fixed)
 
         self.verticalLayout_2.addItem(self.verticalSpacer)
@@ -99,21 +99,20 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_2.addWidget(self.label_12)
 
-        self.label = QLabel(self.frame_secTips)
-        self.label.setObjectName(u"label")
+        self.lbl_Alert = QLabel(self.frame_secTips)
+        self.lbl_Alert.setObjectName(u"lbl_Alert")
         sizePolicy1 = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
-        self.label.setSizePolicy(sizePolicy1)
-        self.label.setMaximumSize(QSize(100, 16777215))
-        self.label.setWordWrap(True)
+        sizePolicy1.setHeightForWidth(self.lbl_Alert.sizePolicy().hasHeightForWidth())
+        self.lbl_Alert.setSizePolicy(sizePolicy1)
+        self.lbl_Alert.setMaximumSize(QSize(100, 16777215))
+        font1 = QFont()
+        font1.setPointSize(7)
+        self.lbl_Alert.setFont(font1)
+        self.lbl_Alert.setWordWrap(True)
 
-        self.verticalLayout_2.addWidget(self.label)
-
-        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Fixed)
-
-        self.verticalLayout_2.addItem(self.verticalSpacer_2)
+        self.verticalLayout_2.addWidget(self.lbl_Alert)
 
 
         self.horizontalLayout.addWidget(self.frame_secTips)
@@ -344,9 +343,9 @@ class Ui_MainWindow(object):
 
         self.lineEdit_Title = QLineEdit(self.page_credEntry)
         self.lineEdit_Title.setObjectName(u"lineEdit_Title")
-        font1 = QFont()
-        font1.setPointSize(20)
-        self.lineEdit_Title.setFont(font1)
+        font2 = QFont()
+        font2.setPointSize(20)
+        self.lineEdit_Title.setFont(font2)
         self.lineEdit_Title.setStyleSheet(u"background-color: #595959; \n"
 "color: #FFFFFF;\n"
 "border: 1px #7F7F7F;\n"
@@ -368,7 +367,7 @@ class Ui_MainWindow(object):
 
         self.lineEdit_Username = QLineEdit(self.page_credEntry)
         self.lineEdit_Username.setObjectName(u"lineEdit_Username")
-        self.lineEdit_Username.setFont(font1)
+        self.lineEdit_Username.setFont(font2)
         self.lineEdit_Username.setStyleSheet(u"background-color: #595959; \n"
 "color: #FFFFFF;\n"
 "border: 1px #7F7F7F;\n"
@@ -378,7 +377,7 @@ class Ui_MainWindow(object):
 
         self.lineEdit_Password = QLineEdit(self.page_credEntry)
         self.lineEdit_Password.setObjectName(u"lineEdit_Password")
-        self.lineEdit_Password.setFont(font1)
+        self.lineEdit_Password.setFont(font2)
         self.lineEdit_Password.setStyleSheet(u"background-color: #595959; \n"
 "color: #FFFFFF;\n"
 "border: 1px #7F7F7F;\n"
@@ -390,7 +389,7 @@ class Ui_MainWindow(object):
 
         self.lineEdit_URL = QLineEdit(self.page_credEntry)
         self.lineEdit_URL.setObjectName(u"lineEdit_URL")
-        self.lineEdit_URL.setFont(font1)
+        self.lineEdit_URL.setFont(font2)
         self.lineEdit_URL.setStyleSheet(u"background-color: #595959; \n"
 "color: #FFFFFF;\n"
 "border: 1px #7F7F7F;\n"
@@ -490,10 +489,10 @@ class Ui_MainWindow(object):
         self.label_9.setObjectName(u"label_9")
         sizePolicy.setHeightForWidth(self.label_9.sizePolicy().hasHeightForWidth())
         self.label_9.setSizePolicy(sizePolicy)
-        font2 = QFont()
-        font2.setFamilies([u"HYWenHei"])
-        font2.setPointSize(17)
-        self.label_9.setFont(font2)
+        font3 = QFont()
+        font3.setFamilies([u"HYWenHei"])
+        font3.setPointSize(17)
+        self.label_9.setFont(font3)
 
         self.verticalLayout_7.addWidget(self.label_9)
 
@@ -501,10 +500,10 @@ class Ui_MainWindow(object):
         self.label_10.setObjectName(u"label_10")
         sizePolicy.setHeightForWidth(self.label_10.sizePolicy().hasHeightForWidth())
         self.label_10.setSizePolicy(sizePolicy)
-        font3 = QFont()
-        font3.setFamilies([u"HYWenHei"])
-        font3.setPointSize(10)
-        self.label_10.setFont(font3)
+        font4 = QFont()
+        font4.setFamilies([u"HYWenHei"])
+        font4.setPointSize(10)
+        self.label_10.setFont(font4)
 
         self.verticalLayout_7.addWidget(self.label_10)
 
@@ -517,7 +516,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_6.setContentsMargins(0, -1, -1, 88)
         self.label_11 = QLabel(self.frame_3)
         self.label_11.setObjectName(u"label_11")
-        self.label_11.setFont(font3)
+        self.label_11.setFont(font4)
 
         self.horizontalLayout_6.addWidget(self.label_11)
 
@@ -620,7 +619,7 @@ class Ui_MainWindow(object):
         self.actionDelete_Entry.setText(QCoreApplication.translate("MainWindow", u"Delete Entry", None))
         self.actionSettings.setText(QCoreApplication.translate("MainWindow", u"Settings", None))
         self.label_12.setText(QCoreApplication.translate("MainWindow", u"Password alerts:", None))
-        self.label.setText(QCoreApplication.translate("MainWindow", u"<insert security tip here ", None))
+        self.lbl_Alert.setText(QCoreApplication.translate("MainWindow", u"<insert security tip here ", None))
         ___qtablewidgetitem = self.table_credentialList.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("MainWindow", u"Title", None));
         ___qtablewidgetitem1 = self.table_credentialList.horizontalHeaderItem(1)

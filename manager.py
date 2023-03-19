@@ -11,7 +11,7 @@ from PyQt6.QtGui import QIcon, QAction
 from PyQt6.QtCore import QDate
 
 from datetime import date
-from Passwords import gen_password
+from Passwords import gen_password, checkPwnedPasswords
 import ast
 import sys
 
@@ -23,6 +23,7 @@ class Manager(QMainWindow):
         uic.loadUi('password_manager.ui',self)
         self.setWindowTitle("Passwords - CIPM")
         self.toolBar.setStyleSheet('QToolBar {spacing: 30px; background-color: #BFBFBF;}')
+        self.lbl_Alert.setStyleSheet('font-size:17px')
         self.toolBar.layout().setContentsMargins(5,5,5,5) #left, top, right, bottom
 
         #initialization of session variables
@@ -31,6 +32,7 @@ class Manager(QMainWindow):
         self.genPwd_action = ''
         self.pwdLength = 8
         self.database = ''
+        
 
         return
 
@@ -88,6 +90,7 @@ class Manager(QMainWindow):
     ------------------------------------------------------------------'''
     def populateCredentials(self):
         self.table_credentialList.clearContents()
+        self.showPwnedPassword()
         
         #sorting the list of dictionaries by the title key
         self.credList = sorted(self.credList, key=lambda k: k['title']) 
@@ -106,11 +109,25 @@ class Manager(QMainWindow):
             self.table_credentialList.setItem(index,4,QTableWidgetItem(creds['dateMod']))
         return
     
-    def checkPwnedPassword(self):
+    '''----------------------------------------------------------------
+    function to display breached passwords and its count
+    ------------------------------------------------------------------'''
+    def showPwnedPassword(self):
         #checking if the password is pwned
-        for index, creds in enumerate(self.credList):
-            print("Checking if password is pwned...")
-            
+        creds=''
+        pwnedPasswords = [] #list of dictionaries containing the hashed pwned passwords
+        string =''
+        print("Checking if password is pwned...")
+        for creds in self.credList:
+            pwned = checkPwnedPasswords(creds['password'])
+            if pwned:
+                pwnedPasswords.append(pwned)
+
+        for pwned in pwnedPasswords:
+            for key in pwned:
+                string += "-> Password: " + key + " has been pwned for " + str(pwned[key]) + " times.\n"
+
+        self.lbl_Alert.setText(string)
         return
 
 
@@ -344,7 +361,6 @@ class Manager(QMainWindow):
         self.credList[self.table_credentialList.currentRow()]['remarks'] = self.textEdit_Remark.toPlainText()
         self.credList[self.table_credentialList.currentRow()]['dateMod'] = date.today().strftime("%d/%m/%Y")
 
-        print (self.credList[self.table_credentialList.currentRow()]['dateExp'])
         self.btn_Confirm.disconnect()
         self.btn_Confirm.clicked.connect(lambda:self.stackedWidget.setCurrentIndex(0))
         self.populateCredentials()

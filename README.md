@@ -31,6 +31,7 @@ Markdown [Link](https://www.markdownguide.org/cheat-sheet/)
 ## To-do
 - main.py --> ensure initializing of resources 
 - main.py --> include a requirement.txt to enable users to install required libraries
+- main.py --> catch exception if salt file cant be found
 - readme.md --> include an installation guide
 
 ~~- manager.py (Main) --> visual bug whr new duplicated entries are hidden~~ (solved by using var enumerating the credList for table population instead)
