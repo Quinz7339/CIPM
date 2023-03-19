@@ -6,6 +6,7 @@ Password manager with cyber education and awareness components. Heavily inspired
 Python -> version 3.11.1 
 <br>PyQt6 -> version 6.4.2
 <br>Argon2-cffi-bindings -> version 21.3.0
+<br>requests
 
 
 ## To Refactor/Rename files

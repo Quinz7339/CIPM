@@ -5,9 +5,8 @@
 #First written on: 19/02/2023
 #Last modified  : 13/03/2023
 
-from PyQt6.QtWidgets import QApplication, QWidget, QLineEdit, QPushButton, QLabel, QVBoxLayout, QTextEdit,QFileDialog
-from PyQt6.QtGui import QIcon, QFont, QFontDatabase
-from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QApplication, QWidget
+from PyQt6.QtGui import QFontDatabase
 from PyQt6 import uic
 
 import sys

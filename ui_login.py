@@ -16,8 +16,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QLabel,
-    QSizePolicy, QTextEdit, QToolButton, QVBoxLayout,
-    QWidget)
+    QSizePolicy, QToolButton, QVBoxLayout, QWidget)
 import resources_rc
 
 class Ui_Form(object):
@@ -83,7 +82,7 @@ class Ui_Form(object):
         sizePolicy2.setHeightForWidth(self.btn_CreateDb.sizePolicy().hasHeightForWidth())
         self.btn_CreateDb.setSizePolicy(sizePolicy2)
         self.btn_CreateDb.setMinimumSize(QSize(80, 80))
-        self.btn_CreateDb.setMaximumSize(QSize(200, 200))
+        self.btn_CreateDb.setMaximumSize(QSize(300, 300))
         self.btn_CreateDb.setLayoutDirection(Qt.RightToLeft)
         icon1 = QIcon()
         icon1.addFile(u":/Icons/Add.svg", QSize(), QIcon.Normal, QIcon.Off)
@@ -98,7 +97,7 @@ class Ui_Form(object):
         sizePolicy2.setHeightForWidth(self.btn_OpenDb.sizePolicy().hasHeightForWidth())
         self.btn_OpenDb.setSizePolicy(sizePolicy2)
         self.btn_OpenDb.setMinimumSize(QSize(80, 80))
-        self.btn_OpenDb.setMaximumSize(QSize(200, 200))
+        self.btn_OpenDb.setMaximumSize(QSize(300, 300))
         icon2 = QIcon()
         icon2.addFile(u":/Icons/Folder.svg", QSize(), QIcon.Normal, QIcon.Off)
         self.btn_OpenDb.setIcon(icon2)
@@ -109,35 +108,6 @@ class Ui_Form(object):
 
 
         self.verticalLayout_3.addWidget(self.frame, 0, Qt.AlignHCenter)
-
-        self.frame_2 = QFrame(self.frame_3)
-        self.frame_2.setObjectName(u"frame_2")
-        self.frame_2.setMinimumSize(QSize(500, 200))
-        self.frame_2.setMaximumSize(QSize(500, 450))
-        self.frame_2.setFrameShape(QFrame.StyledPanel)
-        self.frame_2.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_2 = QVBoxLayout(self.frame_2)
-        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.lbl_RecentFiles = QLabel(self.frame_2)
-        self.lbl_RecentFiles.setObjectName(u"lbl_RecentFiles")
-        self.lbl_RecentFiles.setFont(font)
-
-        self.verticalLayout_2.addWidget(self.lbl_RecentFiles)
-
-        self.txtEdit_RecentFiles = QTextEdit(self.frame_2)
-        self.txtEdit_RecentFiles.setObjectName(u"txtEdit_RecentFiles")
-        sizePolicy3 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Maximum)
-        sizePolicy3.setHorizontalStretch(0)
-        sizePolicy3.setVerticalStretch(0)
-        sizePolicy3.setHeightForWidth(self.txtEdit_RecentFiles.sizePolicy().hasHeightForWidth())
-        self.txtEdit_RecentFiles.setSizePolicy(sizePolicy3)
-        self.txtEdit_RecentFiles.setFont(font)
-        self.txtEdit_RecentFiles.setReadOnly(True)
-
-        self.verticalLayout_2.addWidget(self.txtEdit_RecentFiles)
-
-
-        self.verticalLayout_3.addWidget(self.frame_2)
 
 
         self.verticalLayout.addWidget(self.frame_3, 0, Qt.AlignHCenter)
@@ -154,6 +124,5 @@ class Ui_Form(object):
         self.lbl_Welcome.setText(QCoreApplication.translate("Form", u"Welcome to CIPM", None))
         self.btn_CreateDb.setText(QCoreApplication.translate("Form", u"Create New Database", None))
         self.btn_OpenDb.setText(QCoreApplication.translate("Form", u"Open Existing Database", None))
-        self.lbl_RecentFiles.setText(QCoreApplication.translate("Form", u"Recent databases:", None))
     # retranslateUi
 

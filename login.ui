@@ -122,8 +122,8 @@
            </property>
            <property name="maximumSize">
             <size>
-             <width>200</width>
-             <height>200</height>
+             <width>300</width>
+             <height>300</height>
             </size>
            </property>
            <property name="layoutDirection">
@@ -163,8 +163,8 @@
            </property>
            <property name="maximumSize">
             <size>
-             <width>200</width>
-             <height>200</height>
+             <width>300</width>
+             <height>300</height>
             </size>
            </property>
            <property name="text">
@@ -182,60 +182,6 @@
            </property>
            <property name="toolButtonStyle">
             <enum>Qt::ToolButtonTextUnderIcon</enum>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item>
-       <widget class="QFrame" name="frame_2">
-        <property name="minimumSize">
-         <size>
-          <width>500</width>
-          <height>200</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>500</width>
-          <height>450</height>
-         </size>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout_2">
-         <item>
-          <widget class="QLabel" name="lbl_RecentFiles">
-           <property name="font">
-            <font>
-             <family>HYWenHei</family>
-            </font>
-           </property>
-           <property name="text">
-            <string>Recent databases:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QTextEdit" name="txtEdit_RecentFiles">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="font">
-            <font>
-             <family>HYWenHei</family>
-            </font>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
            </property>
           </widget>
          </item>

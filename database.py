@@ -5,8 +5,7 @@
 #First written on: 19/02/2023
 #Last modified  : 13/03/2023
 
-from PyQt6.QtWidgets import QFileDialog, QLineEdit, QPushButton, QLabel, QVBoxLayout, QWidget, QMessageBox
-from PyQt6.QtGui import QIcon, QFont, QFontDatabase
+from PyQt6.QtWidgets import QFileDialog, QLineEdit, QWidget, QMessageBox
 from PyQt6 import uic
 
 import os

@@ -3,11 +3,11 @@
 #Program name   : manager.py
 #Description    : This holds the all the functionalities of the password manager. Credential creation, editing, deletion and password generation.
 #First written on: 19/02/2023
-#Last modified  : 13/03/2023
+#Last modified  : 19/03/2023
 
-from PyQt6.QtWidgets import QApplication,QMainWindow, QTableWidgetItem, QPushButton, QLineEdit, QMessageBox, QSlider, QLabel
+from PyQt6.QtWidgets import QMainWindow, QTableWidgetItem, QPushButton, QLineEdit, QMessageBox, QSlider, QLabel
 from PyQt6 import uic
-from PyQt6.QtGui import QColor, QIcon, QAction
+from PyQt6.QtGui import QIcon, QAction
 from PyQt6.QtCore import QDate
 
 from datetime import date
@@ -106,6 +106,14 @@ class Manager(QMainWindow):
             self.table_credentialList.setItem(index,4,QTableWidgetItem(creds['dateMod']))
         return
     
+    def checkPwnedPassword(self):
+        #checking if the password is pwned
+        for index, creds in enumerate(self.credList):
+            print("Checking if password is pwned...")
+            
+        return
+
+
     '''-----------------------------------------------------------------------------------------------------
     function called when the user clicks any row on the QTableWidget - shows detailed credential information
     --------------------------------------------------------------------------------------------------------'''

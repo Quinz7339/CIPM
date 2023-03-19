@@ -81,17 +81,39 @@ class Ui_MainWindow(object):
         self.frame_secTips.setFrameShadow(QFrame.Raised)
         self.verticalLayout_2 = QVBoxLayout(self.frame_secTips)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.label = QLabel(self.frame_secTips)
-        self.label.setObjectName(u"label")
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
+        self.verticalLayout_2.setContentsMargins(0, -1, -1, -1)
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Fixed)
+
+        self.verticalLayout_2.addItem(self.verticalSpacer)
+
+        self.label_12 = QLabel(self.frame_secTips)
+        self.label_12.setObjectName(u"label_12")
+        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
-        self.label.setSizePolicy(sizePolicy)
+        sizePolicy.setHeightForWidth(self.label_12.sizePolicy().hasHeightForWidth())
+        self.label_12.setSizePolicy(sizePolicy)
+        font = QFont()
+        font.setFamilies([u"HYWenHei"])
+        self.label_12.setFont(font)
+
+        self.verticalLayout_2.addWidget(self.label_12)
+
+        self.label = QLabel(self.frame_secTips)
+        self.label.setObjectName(u"label")
+        sizePolicy1 = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
+        self.label.setSizePolicy(sizePolicy1)
         self.label.setMaximumSize(QSize(100, 16777215))
         self.label.setWordWrap(True)
 
         self.verticalLayout_2.addWidget(self.label)
+
+        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Fixed)
+
+        self.verticalLayout_2.addItem(self.verticalSpacer_2)
 
 
         self.horizontalLayout.addWidget(self.frame_secTips)
@@ -120,8 +142,6 @@ class Ui_MainWindow(object):
         __qtablewidgetitem4 = QTableWidgetItem()
         self.table_credentialList.setHorizontalHeaderItem(4, __qtablewidgetitem4)
         self.table_credentialList.setObjectName(u"table_credentialList")
-        font = QFont()
-        font.setFamilies([u"HYWenHei"])
         self.table_credentialList.setFont(font)
         self.table_credentialList.setLayoutDirection(Qt.LeftToRight)
         self.table_credentialList.setAutoFillBackground(True)
@@ -150,11 +170,11 @@ class Ui_MainWindow(object):
 
         self.frame_credDetail = QFrame(self.frame_credList)
         self.frame_credDetail.setObjectName(u"frame_credDetail")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.MinimumExpanding)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.frame_credDetail.sizePolicy().hasHeightForWidth())
-        self.frame_credDetail.setSizePolicy(sizePolicy1)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.MinimumExpanding)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.frame_credDetail.sizePolicy().hasHeightForWidth())
+        self.frame_credDetail.setSizePolicy(sizePolicy2)
         self.frame_credDetail.setStyleSheet(u"#frame_bodyCredDetail { border: 1px solid #BFBFBF;}")
         self.frame_credDetail.setFrameShape(QFrame.StyledPanel)
         self.frame_credDetail.setFrameShadow(QFrame.Raised)
@@ -163,11 +183,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_3.setContentsMargins(0, -1, -1, -1)
         self.frame_headerCredInfo = QFrame(self.frame_credDetail)
         self.frame_headerCredInfo.setObjectName(u"frame_headerCredInfo")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Maximum)
-        sizePolicy2.setHorizontalStretch(0)
-        sizePolicy2.setVerticalStretch(0)
-        sizePolicy2.setHeightForWidth(self.frame_headerCredInfo.sizePolicy().hasHeightForWidth())
-        self.frame_headerCredInfo.setSizePolicy(sizePolicy2)
+        sizePolicy.setHeightForWidth(self.frame_headerCredInfo.sizePolicy().hasHeightForWidth())
+        self.frame_headerCredInfo.setSizePolicy(sizePolicy)
         self.frame_headerCredInfo.setFrameShape(QFrame.StyledPanel)
         self.frame_headerCredInfo.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_3 = QHBoxLayout(self.frame_headerCredInfo)
@@ -222,8 +239,8 @@ class Ui_MainWindow(object):
 
         self.frame_2 = QFrame(self.frame_leftCredDetail)
         self.frame_2.setObjectName(u"frame_2")
-        sizePolicy.setHeightForWidth(self.frame_2.sizePolicy().hasHeightForWidth())
-        self.frame_2.setSizePolicy(sizePolicy)
+        sizePolicy1.setHeightForWidth(self.frame_2.sizePolicy().hasHeightForWidth())
+        self.frame_2.setSizePolicy(sizePolicy1)
         self.frame_2.setFrameShape(QFrame.StyledPanel)
         self.frame_2.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_5 = QHBoxLayout(self.frame_2)
@@ -305,62 +322,6 @@ class Ui_MainWindow(object):
         self.horizontalLayout.addWidget(self.frame_credList)
 
         self.stackedWidget.addWidget(self.page_Manager)
-        self.page_Settings = QWidget()
-        self.page_Settings.setObjectName(u"page_Settings")
-        self.verticalLayout_7 = QVBoxLayout(self.page_Settings)
-        self.verticalLayout_7.setObjectName(u"verticalLayout_7")
-        self.verticalLayout_7.setContentsMargins(15, 65, 0, 15)
-        self.label_9 = QLabel(self.page_Settings)
-        self.label_9.setObjectName(u"label_9")
-        sizePolicy2.setHeightForWidth(self.label_9.sizePolicy().hasHeightForWidth())
-        self.label_9.setSizePolicy(sizePolicy2)
-        font1 = QFont()
-        font1.setFamilies([u"HYWenHei"])
-        font1.setPointSize(17)
-        self.label_9.setFont(font1)
-
-        self.verticalLayout_7.addWidget(self.label_9)
-
-        self.label_10 = QLabel(self.page_Settings)
-        self.label_10.setObjectName(u"label_10")
-        sizePolicy2.setHeightForWidth(self.label_10.sizePolicy().hasHeightForWidth())
-        self.label_10.setSizePolicy(sizePolicy2)
-        font2 = QFont()
-        font2.setFamilies([u"HYWenHei"])
-        font2.setPointSize(10)
-        self.label_10.setFont(font2)
-
-        self.verticalLayout_7.addWidget(self.label_10)
-
-        self.frame_3 = QFrame(self.page_Settings)
-        self.frame_3.setObjectName(u"frame_3")
-        self.frame_3.setFrameShape(QFrame.StyledPanel)
-        self.frame_3.setFrameShadow(QFrame.Raised)
-        self.horizontalLayout_6 = QHBoxLayout(self.frame_3)
-        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
-        self.horizontalLayout_6.setContentsMargins(0, -1, -1, 88)
-        self.label_11 = QLabel(self.frame_3)
-        self.label_11.setObjectName(u"label_11")
-        self.label_11.setFont(font2)
-
-        self.horizontalLayout_6.addWidget(self.label_11)
-
-        self.slider_PasswordLength = QSlider(self.frame_3)
-        self.slider_PasswordLength.setObjectName(u"slider_PasswordLength")
-        self.slider_PasswordLength.setOrientation(Qt.Horizontal)
-
-        self.horizontalLayout_6.addWidget(self.slider_PasswordLength)
-
-        self.lbl_sliderPasswdLength = QLabel(self.frame_3)
-        self.lbl_sliderPasswdLength.setObjectName(u"lbl_sliderPasswdLength")
-        self.lbl_sliderPasswdLength.setFont(font)
-
-        self.horizontalLayout_6.addWidget(self.lbl_sliderPasswdLength)
-
-
-        self.verticalLayout_7.addWidget(self.frame_3)
-
-        self.stackedWidget.addWidget(self.page_Settings)
         self.page_credEntry = QWidget()
         self.page_credEntry.setObjectName(u"page_credEntry")
         self.verticalLayout_5 = QVBoxLayout(self.page_credEntry)
@@ -383,9 +344,9 @@ class Ui_MainWindow(object):
 
         self.lineEdit_Title = QLineEdit(self.page_credEntry)
         self.lineEdit_Title.setObjectName(u"lineEdit_Title")
-        font3 = QFont()
-        font3.setPointSize(20)
-        self.lineEdit_Title.setFont(font3)
+        font1 = QFont()
+        font1.setPointSize(20)
+        self.lineEdit_Title.setFont(font1)
         self.lineEdit_Title.setStyleSheet(u"background-color: #595959; \n"
 "color: #FFFFFF;\n"
 "border: 1px #7F7F7F;\n"
@@ -407,7 +368,7 @@ class Ui_MainWindow(object):
 
         self.lineEdit_Username = QLineEdit(self.page_credEntry)
         self.lineEdit_Username.setObjectName(u"lineEdit_Username")
-        self.lineEdit_Username.setFont(font3)
+        self.lineEdit_Username.setFont(font1)
         self.lineEdit_Username.setStyleSheet(u"background-color: #595959; \n"
 "color: #FFFFFF;\n"
 "border: 1px #7F7F7F;\n"
@@ -417,7 +378,7 @@ class Ui_MainWindow(object):
 
         self.lineEdit_Password = QLineEdit(self.page_credEntry)
         self.lineEdit_Password.setObjectName(u"lineEdit_Password")
-        self.lineEdit_Password.setFont(font3)
+        self.lineEdit_Password.setFont(font1)
         self.lineEdit_Password.setStyleSheet(u"background-color: #595959; \n"
 "color: #FFFFFF;\n"
 "border: 1px #7F7F7F;\n"
@@ -429,7 +390,7 @@ class Ui_MainWindow(object):
 
         self.lineEdit_URL = QLineEdit(self.page_credEntry)
         self.lineEdit_URL.setObjectName(u"lineEdit_URL")
-        self.lineEdit_URL.setFont(font3)
+        self.lineEdit_URL.setFont(font1)
         self.lineEdit_URL.setStyleSheet(u"background-color: #595959; \n"
 "color: #FFFFFF;\n"
 "border: 1px #7F7F7F;\n"
@@ -520,6 +481,91 @@ class Ui_MainWindow(object):
         self.verticalLayout_5.addLayout(self.grid_credEntry)
 
         self.stackedWidget.addWidget(self.page_credEntry)
+        self.page_Settings = QWidget()
+        self.page_Settings.setObjectName(u"page_Settings")
+        self.verticalLayout_7 = QVBoxLayout(self.page_Settings)
+        self.verticalLayout_7.setObjectName(u"verticalLayout_7")
+        self.verticalLayout_7.setContentsMargins(15, 65, 0, 15)
+        self.label_9 = QLabel(self.page_Settings)
+        self.label_9.setObjectName(u"label_9")
+        sizePolicy.setHeightForWidth(self.label_9.sizePolicy().hasHeightForWidth())
+        self.label_9.setSizePolicy(sizePolicy)
+        font2 = QFont()
+        font2.setFamilies([u"HYWenHei"])
+        font2.setPointSize(17)
+        self.label_9.setFont(font2)
+
+        self.verticalLayout_7.addWidget(self.label_9)
+
+        self.label_10 = QLabel(self.page_Settings)
+        self.label_10.setObjectName(u"label_10")
+        sizePolicy.setHeightForWidth(self.label_10.sizePolicy().hasHeightForWidth())
+        self.label_10.setSizePolicy(sizePolicy)
+        font3 = QFont()
+        font3.setFamilies([u"HYWenHei"])
+        font3.setPointSize(10)
+        self.label_10.setFont(font3)
+
+        self.verticalLayout_7.addWidget(self.label_10)
+
+        self.frame_3 = QFrame(self.page_Settings)
+        self.frame_3.setObjectName(u"frame_3")
+        self.frame_3.setFrameShape(QFrame.StyledPanel)
+        self.frame_3.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_6 = QHBoxLayout(self.frame_3)
+        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
+        self.horizontalLayout_6.setContentsMargins(0, -1, -1, 88)
+        self.label_11 = QLabel(self.frame_3)
+        self.label_11.setObjectName(u"label_11")
+        self.label_11.setFont(font3)
+
+        self.horizontalLayout_6.addWidget(self.label_11)
+
+        self.slider_PasswordLength = QSlider(self.frame_3)
+        self.slider_PasswordLength.setObjectName(u"slider_PasswordLength")
+        self.slider_PasswordLength.setMinimum(8)
+        self.slider_PasswordLength.setMaximum(30)
+        self.slider_PasswordLength.setSliderPosition(8)
+        self.slider_PasswordLength.setOrientation(Qt.Horizontal)
+
+        self.horizontalLayout_6.addWidget(self.slider_PasswordLength)
+
+        self.lbl_sliderPasswdLength = QLabel(self.frame_3)
+        self.lbl_sliderPasswdLength.setObjectName(u"lbl_sliderPasswdLength")
+        self.lbl_sliderPasswdLength.setFont(font)
+
+        self.horizontalLayout_6.addWidget(self.lbl_sliderPasswdLength)
+
+
+        self.verticalLayout_7.addWidget(self.frame_3)
+
+        self.frame_4 = QFrame(self.page_Settings)
+        self.frame_4.setObjectName(u"frame_4")
+        self.frame_4.setLayoutDirection(Qt.RightToLeft)
+        self.frame_4.setFrameShape(QFrame.StyledPanel)
+        self.frame_4.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_7 = QHBoxLayout(self.frame_4)
+        self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
+        self.btn_settingCancel = QPushButton(self.frame_4)
+        self.btn_settingCancel.setObjectName(u"btn_settingCancel")
+        self.btn_settingCancel.setFont(font)
+
+        self.horizontalLayout_7.addWidget(self.btn_settingCancel)
+
+        self.btn_settingConfirm = QPushButton(self.frame_4)
+        self.btn_settingConfirm.setObjectName(u"btn_settingConfirm")
+        self.btn_settingConfirm.setFont(font)
+
+        self.horizontalLayout_7.addWidget(self.btn_settingConfirm)
+
+        self.horizontalSpacer_5 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_7.addItem(self.horizontalSpacer_5)
+
+
+        self.verticalLayout_7.addWidget(self.frame_4)
+
+        self.stackedWidget.addWidget(self.page_Settings)
 
         self._2.addWidget(self.stackedWidget)
 
@@ -559,7 +605,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(1)
+        self.stackedWidget.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -573,6 +619,7 @@ class Ui_MainWindow(object):
         self.actionEdit_Entry.setText(QCoreApplication.translate("MainWindow", u"Edit Entry", None))
         self.actionDelete_Entry.setText(QCoreApplication.translate("MainWindow", u"Delete Entry", None))
         self.actionSettings.setText(QCoreApplication.translate("MainWindow", u"Settings", None))
+        self.label_12.setText(QCoreApplication.translate("MainWindow", u"Password alerts:", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"<insert security tip here ", None))
         ___qtablewidgetitem = self.table_credentialList.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("MainWindow", u"Title", None));
@@ -592,10 +639,6 @@ class Ui_MainWindow(object):
         self.lbl_Remarks.setText(QCoreApplication.translate("MainWindow", u"remarks", None))
         self.lbl_URL.setText(QCoreApplication.translate("MainWindow", u"url", None))
         self.lbl_dateExp.setText(QCoreApplication.translate("MainWindow", u"expiry", None))
-        self.label_9.setText(QCoreApplication.translate("MainWindow", u"Settings", None))
-        self.label_10.setText(QCoreApplication.translate("MainWindow", u"Configure your desired randomly generated password length", None))
-        self.label_11.setText(QCoreApplication.translate("MainWindow", u"Password length:", None))
-        self.lbl_sliderPasswdLength.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.label_7.setText(QCoreApplication.translate("MainWindow", u"URL:", None))
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"Password:", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"Username:", None))
@@ -604,6 +647,12 @@ class Ui_MainWindow(object):
         self.btn_Cancel.setText(QCoreApplication.translate("MainWindow", u"Cancel", None))
         self.btn_Confirm.setText(QCoreApplication.translate("MainWindow", u"Confirm", None))
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"Title:", None))
+        self.label_9.setText(QCoreApplication.translate("MainWindow", u"Settings", None))
+        self.label_10.setText(QCoreApplication.translate("MainWindow", u"Configure your desired randomly generated password length", None))
+        self.label_11.setText(QCoreApplication.translate("MainWindow", u"Password length:", None))
+        self.lbl_sliderPasswdLength.setText(QCoreApplication.translate("MainWindow", u"8", None))
+        self.btn_settingCancel.setText(QCoreApplication.translate("MainWindow", u"Cancel", None))
+        self.btn_settingConfirm.setText(QCoreApplication.translate("MainWindow", u"Confirm", None))
         self.toolBar.setWindowTitle(QCoreApplication.translate("MainWindow", u"toolBar", None))
 #if QT_CONFIG(tooltip)
         self.toolBar.setToolTip(QCoreApplication.translate("MainWindow", u"Add Entry", None))
