@@ -155,6 +155,15 @@ class CreateDb(QWidget):
             #writes the encrypted database file
             with open(db_filename,'wb') as db:
                 db.write(encrypted_db)
+
+            output = QMessageBox(self)
+            output.setIcon(QMessageBox.Icon.Information)
+            output.setWindowTitle("Database created.")
+            output.setText("Database created successfully.")
+            output.setInformativeText("Please remember your master password. You can unlock the database by clicking the 'Unlock Database' button.")
+            output.setStandardButtons(QMessageBox.StandardButton.Ok)
+            output.exec()
+            self.close()
             self.close()       
 
 ############################################################################################################
