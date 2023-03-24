@@ -123,10 +123,11 @@ class CreateDb(QWidget):
         except:
             error = QMessageBox(self)
             error.setIcon(QMessageBox.Icon.Critical)
-            error.setText("No files were selected.")
-            error.setInformativeText("Please select a folder to create a new folder to store your password database files.")
+            error.setText("No folder were selected or an identical named folder is found in the selected location..")
+            error.setInformativeText("Please select a location (or another directory) to create a new folder to store your password database files.")
             error.setStandardButtons(QMessageBox.StandardButton.Ok)
             error.exec()
+            return
 
         #if a folder is selected, the salt file is created and the database file is created and encrypted
         if folderPath != '':
@@ -163,8 +164,7 @@ class CreateDb(QWidget):
             output.setInformativeText("Please remember your master password. You can unlock the database by clicking the 'Unlock Database' button.")
             output.setStandardButtons(QMessageBox.StandardButton.Ok)
             output.exec()
-            self.close()
-            self.close()       
+            self.close()      
 
 ############################################################################################################
 ################             Class to unlock selected database      ########################################
