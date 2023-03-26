@@ -47,9 +47,8 @@ class Manager(QMainWindow):
         self.populateCredentials()
 
         #index 0 = main page
-        #index 1 = add entry page
-        #index 2 = edit entry page
-        #index 3 = settings page
+        #index 1 = add entry and edit entry page
+        #index 2 = settings page
         self.stackedWidget.setCurrentIndex(0)
 
         #hiding the frame containing the specific entry details
@@ -291,8 +290,8 @@ class Manager(QMainWindow):
     function - called when user clicks on "Edit Entry" button
     ----------------------------------------------------------------------------''' 
     def editEntry(self):
-        self.actionEdit_Entry.triggered.disconnect()
         try:
+            print("Edit Entry")
             self.entry_UI()
             self.dateEdit_dateExp.setMinimumDate(QDate().currentDate())
 
@@ -317,14 +316,16 @@ class Manager(QMainWindow):
             self.lineEdit_URL.textChanged.connect(self.enableConfirm)
             self.dateEdit_dateExp.dateChanged.connect(self.enableConfirm)
             self.textEdit_Remark.textChanged.connect(self.enableConfirm)
-            
             self.btn_Confirm.clicked.connect(self.confirmEditEntry)
         except:
+            print("Error: No entry selected.")
             QMessageBox.information(self, "Error", "The database is either blank or no entry is selected.")
             self.stackedWidget.setCurrentIndex(0)
             self.btn_Confirm.setEnabled(True)
             self.populateCredentials()
-            self.actionEdit_Entry.triggered.connect(self.editEntry)
+        # self.actionEdit_Entry.triggered.disconnect()
+        # self.actionEdit_Entry.triggered.connect(lambda:self.stackedWidget.setCurrentIndex(1))
+        # self.actionEdit_Entry.triggered.connect(self.editEntry)
         return
     
     '''----------------------------------------------------------------------------------------------------------------------
