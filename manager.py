@@ -32,8 +32,6 @@ class Manager(QMainWindow):
         self.genPwd_action = ''
         self.pwdLength = 8
         self.database = ''
-        
-
         return
 
     def secondaryInit(self):    
@@ -323,9 +321,6 @@ class Manager(QMainWindow):
             self.stackedWidget.setCurrentIndex(0)
             self.btn_Confirm.setEnabled(True)
             self.populateCredentials()
-        # self.actionEdit_Entry.triggered.disconnect()
-        # self.actionEdit_Entry.triggered.connect(lambda:self.stackedWidget.setCurrentIndex(1))
-        # self.actionEdit_Entry.triggered.connect(self.editEntry)
         return
     
     '''----------------------------------------------------------------------------------------------------------------------
@@ -382,7 +377,7 @@ class Manager(QMainWindow):
             self.deleteMsg.button(QMessageBox.StandardButton.Yes).setStyleSheet("background-color: #961212; color: #FFFFFF; border: 1px #2F528F; border-radius: 5px; font-size: 18px")
             self.deleteMsg.button(QMessageBox.StandardButton.No).setStyleSheet("background-color: #5B9BD5; color: #FFFFFF; border: 1px #2F528F; border-radius: 5px; font-size: 18px")
             self.deleteMsg.setDefaultButton(QMessageBox.StandardButton.No)
-            self.deleteMsg.buttonClicked.connect(self.deleteEntryConfirm)
+            self.deleteMsg.buttonClicked.connect(self.confirmDeleteEntry)
             self.deleteMsg.exec()
         except:
             QMessageBox.information(self, "Error", "The database is either blank or no entry is selected.")
@@ -391,7 +386,7 @@ class Manager(QMainWindow):
     '''---------------------------------------------------------------------------------
     helper function - called when user clicks on "Yes" or "No" upon delete confirmation
     ------------------------------------------------------------------------------------'''
-    def deleteEntryConfirm(self):
+    def confirmDeleteEntry(self):
         if self.deleteMsg.clickedButton() == self.deleteMsg.button(QMessageBox.StandardButton.Yes):
             print("POP")
             self.credList.pop(self.table_credentialList.currentRow())
