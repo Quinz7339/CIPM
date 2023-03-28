@@ -63,8 +63,9 @@ def gen_password(length):
     password = ''.join(random.choice(characters) for i in range(length))
     return password
 
-
-
+'''------------------------------------------------------------------------
+function to check if the stored passwords has been compromised
+---------------------------------------------------------------------------'''
 def checkPwnedPasswords(password):
     sha_password = hashlib.sha1(password.encode()).hexdigest() #hashes the password for comparison with the API request
     sha_prefix = sha_password[0:5] #takes the first 5 characters of the hash
@@ -73,7 +74,6 @@ def checkPwnedPasswords(password):
     #API requests that returns a list of compromised hashs starting with the first 5 hashed characters
     url = 'https://api.pwnedpasswords.com/range/' + sha_prefix
 
-    
     pwnedDict = {} #dictionary to store the hash and number of occurences
 
     response = requests.request("GET", url, headers={}, data={})
