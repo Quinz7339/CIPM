@@ -60,7 +60,6 @@ class Main(QWidget):
             print ("Decryption failed")
             self.opendb.btn_unlockDb.clicked.connect(self.Password_Manager)
         else:
-            print ("Database is: ", self.opendb.database)
             self.hide()
             self.dashboard = Manager()
             self.dashboard.database = self.opendb.database
