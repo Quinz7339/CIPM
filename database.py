@@ -33,7 +33,6 @@ class CreateDb(QWidget):
                 background-color: #BFBFBF;
             }
         ''')
-        print("CreateDb UI loaded")
         self.user_path = os.path.expanduser('~')     #'C:\Users\<username>'
         self.default_dir = self.user_path+"\\Documents"   #'C:\Users\<username>\Documents'
 
@@ -101,7 +100,6 @@ class CreateDb(QWidget):
     main function for file creation and encryption using entered database name and password
     ----------------------------------------------------------------------------------------''' 
     def CreateDb_checkout(self):
-        print("Entering folder and file creation phase.")
         db_name = self.lineEdit_dbName.text()
         db_master_passwd = self.lineEdit_MasterPasswd.text()
         folderPath = ''
@@ -136,7 +134,6 @@ class CreateDb(QWidget):
             #w is used instead of wb because salt is a string, not bytes
             with open(os.path.join(folderPath, db_name + "_salt.txt"), 'w') as salt_file:
                 salt_file.write(salt)
-                print ("Salt file created. Salt: ",salt)
 
             #establishing the parameters for the encryptor function    
             encryptor = Passwords.encryptor(bytes(db_master_passwd,'utf-8'), bytes(salt,'utf-8'))
