@@ -71,7 +71,7 @@ def checkPwnedPasswords(password):
     sha_prefix = sha_password[0:5] #takes the first 5 characters of the hash
     sha_postfix = sha_password[5:].upper() #takes the remaining characters of the hash
     
-    #API requests that returns a list of compromised hashs starting with the first 5 hashed characters
+    #API requests that returns a list of compromised hashs excluding the first 5 hashed characters, by providing the first 5 characters of the hash
     url = 'https://api.pwnedpasswords.com/range/' + sha_prefix
 
     pwnedDict = {} #dictionary to store the hash and number of occurences
