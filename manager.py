@@ -13,7 +13,6 @@ from PyQt6.QtCore import QDate
 from datetime import date
 from Passwords import gen_password, checkPwnedPasswords
 import ast
-import sys
 
 import resource_rc
 

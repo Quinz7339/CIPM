@@ -1,12 +1,21 @@
 # CIPM
 Password manager with cyber education and awareness components. Heavily inspired by KeePassXC but developed using the Qt(Python) GUI framework.
 
+## Prerequisites
+### Ensure Python is installed. The running version is 3.11.1
+Install the latest version [here](https://www.python.org/ftp/python/3.11.2/python-3.11.2-amd64.exe)
+
+
+
+
 
 ## Working environment
 Python -> version 3.11.1 
 <br>PyQt6 -> version 6.4.2
 <br>Argon2-cffi-bindings -> version 21.3.0
 <br>requests
+
+
 
 
 ## To Refactor/Rename files
