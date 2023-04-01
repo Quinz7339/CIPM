@@ -7,9 +7,13 @@ Install the latest version [here](https://www.python.org/ftp/python/3.11.2/pytho
 
 ## Installation
 To install the application to your system, you can either download or clone the repo using the command as shown:
-``` git clone https://github.com/Quinz7339/CIPM.git```
+```bash
+git clone https://github.com/Quinz7339/CIPM.git
+```
 ### Install the required libraries
-```pip3 install requirements.txt ```
+```bash
+pip3 install requirements.txt 
+```
 
 
 # External references/Lessons Learnt Register
