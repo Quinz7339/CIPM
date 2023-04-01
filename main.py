@@ -10,6 +10,7 @@ from PyQt6.QtGui import QFontDatabase
 from PyQt6 import uic
 
 import sys
+import importlib
 import resource_rc
 from database import CreateDb, OpenDb, EncryptDb
 from manager import Manager
@@ -83,8 +84,23 @@ class Main(QWidget):
         self.Lock()
         self.close()
     
+def check_libraries():
+    lib= ['PyQt6', 'cryptography', 'PySide6', 'argon2', 'requests']
+    missing_libraries = []
+    for library in lib:
+        try:
+            importlib.import_module(library)
+        except ModuleNotFoundError:
+            missing_libraries.append(library)
+    if missing_libraries:
+        print(f"The following libraries are missing: {missing_libraries}. Please install them before running the application.")
+        return False
+    return True
+
 
 if __name__ == "__main__":
+    if not check_libraries():
+        sys.exit()
     app = QApplication(sys.argv)
     #declaration of the application wide stylesheet
     #setStyleSheet method applies to all child widgets
