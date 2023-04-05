@@ -69,6 +69,7 @@ class Manager(QMainWindow):
 
         #establishing connections for the buttons in the credential entry pages
         self.stackedWidget.widget(1).findChild(QPushButton,'btn_Cancel').clicked.connect(lambda:self.stackedWidget.setCurrentIndex(0))
+        self.stackedWidget.widget(1).findChild(QPushButton,'btn_Cancel').clicked.connect(self.showCredentialDetails)
         self.stackedWidget.widget(1).findChild(QPushButton,'btn_Confirm').clicked.connect(lambda:self.stackedWidget.setCurrentIndex(0))
 
         #establishing connections and styleSheets for the buttons in the settings page
@@ -281,6 +282,7 @@ class Manager(QMainWindow):
         self.populateCredentials()
         self.btn_Confirm.disconnect()
         self.btn_Confirm.clicked.connect(lambda:self.stackedWidget.setCurrentIndex(0))
+        self.togglePwd_action_Frame.setChecked(False)
         return 
 
     '''-------------------------------------------------------------------------
@@ -358,6 +360,8 @@ class Manager(QMainWindow):
 
         self.btn_Confirm.disconnect()
         self.btn_Confirm.clicked.connect(lambda:self.stackedWidget.setCurrentIndex(0))
+        #toggle the frame password button to hidden
+        self.togglePwd_action_Frame.setChecked(False)
         self.populateCredentials()
         return
     
