@@ -3,7 +3,7 @@
 #Program name   : manager.py
 #Description    : This holds the all the functionalities of the password manager. Credential creation, editing, deletion and password generation.
 #First written on: 19/02/2023
-#Last modified  : 19/03/2023
+#Last modified  : 22/04/2023
 
 from PyQt6.QtWidgets import QMainWindow, QTableWidgetItem, QPushButton, QLineEdit, QMessageBox, QSlider, QLabel
 from PyQt6 import uic
@@ -71,6 +71,7 @@ class Manager(QMainWindow):
         self.stackedWidget.widget(1).findChild(QPushButton,'btn_Cancel').clicked.connect(lambda:self.stackedWidget.setCurrentIndex(0))
         self.stackedWidget.widget(1).findChild(QPushButton,'btn_Cancel').clicked.connect(self.showCredentialDetails)
         self.stackedWidget.widget(1).findChild(QPushButton,'btn_Confirm').clicked.connect(lambda:self.stackedWidget.setCurrentIndex(0))
+        self.stackedWidget.widget(1).findChild(QPushButton,'btn_Confirm').clicked.connect(self.showCredentialDetails)
 
         #establishing connections and styleSheets for the buttons in the settings page
         self.stackedWidget.widget(2).findChild(QPushButton,'btn_settingConfirm').clicked.connect(self.confirmSettings)
@@ -282,7 +283,7 @@ class Manager(QMainWindow):
         self.populateCredentials()
         self.btn_Confirm.disconnect()
         self.btn_Confirm.clicked.connect(lambda:self.stackedWidget.setCurrentIndex(0))
-        self.togglePwd_action_Frame.setChecked(False)
+        #self.togglePwd_action_Frame.setChecked(False)
         return 
 
     '''-------------------------------------------------------------------------
